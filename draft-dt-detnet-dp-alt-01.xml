@@ -193,7 +193,7 @@
   </front>
 
  <middle>
- <section title="Introduction">
+ <section title="Introduction" anchor="sec_intro">
   <t>
     Deterministic Networking (DetNet) <xref
     target="I-D.finn-detnet-problem-statement"/> provides a capability to carry
@@ -327,6 +327,21 @@ title="A Simple DetNet Enabled Network">
    document's service and network layering.]
   </t>
   <t>
+   The protocol stack model of the data plane described in <xref
+   target="I-D.finn-detnet-architecture"/> defines functional primitives for
+   ingress and egress packets, which are used by the three techniques (see
+   <xref target="sec_intro"/>) to ensure deterministic forwarding. <xref
+   target="I-D.finn-detnet-architecture"/> does not specify the relationship
+   between layers. The goal of this draft is to evaluate possible data plane
+   technologies and compare their characteristics from DetNet perspective. The
+   two logical sub-layers defined here has helped to identify which data plane
+   technology can be used for what purposes in the DetNet context, and they are
+   not contradicting the protocol stack model.  This sub-layering is similar to
+   the data plane concept of MPLS, where some part of the label stack is
+   "Service" specific (e.g., PW labels, VPN labels) and an other part is
+   "Transport" specific (e.g, LSP label, TE label(s)).
+  </t>
+  <t>
   This DetNet data plane is logically divided into two layers:
    <list style="symbols">
     <t>
@@ -412,7 +427,7 @@ title="DetNet adaptation to data plane">
     <t hangText="#5"> Packet replication and elimination (note: only the packet deletion for
        seamless redundancy)</t>
     <t hangText="#6"> Operations, Administration and Maintenance (capabilities)</t>
-    <t hangText="#7"> Time synchronization (e.g., time stamping)</t>
+    <!--t hangText="#7"> Time synchronization (e.g., time stamping)</t-->
     <t hangText="#8"> Class and quality of service capabilities (DetNet Service specific)</t>
     <t hangText="#10"> Technical maturity</t>
   </list>  
@@ -610,7 +625,7 @@ title="DetNet adaptation to data plane">
     </t>
   </section>
 
-  <section title="#7 Time synchronization" anchor="sec_crit_sync">
+  <!--section title="#7 Time synchronization" anchor="sec_crit_sync">
     <t>
       Time synchronization between DetNet systems and nodes can be used
       to enable fine grain scheduling of traffic along an end-to-end
@@ -632,7 +647,7 @@ title="DetNet adaptation to data plane">
       being timestamps in the payload data units of the transport
       protocol.
     </t>
-  </section>
+  </section-->
 
   <section title="#8 Class and quality of service capabilities"
       anchor="sec_crit_qos">
@@ -1019,7 +1034,7 @@ title="DetNet adaptation to data plane">
   </section>
  
   <section title="Multiprotocol Label Switching (MPLS)" anchor="sec_alt_mpls">
-   <section title="Solution description">
+   <section title="MPLS used for DetNet">
      
     <t>
       Multiprotocol Label Switching Architecture (MPLS) <xref target="RFC3031"/>
@@ -1082,6 +1097,8 @@ title="MPLS-based Services">
       MPLS service data plane can be found below in
       <xref target="sec_alt_mpls_svc"/>.
     </t>
+   </section>
+   <section title="Solution description">
     <t>
       The following is a work in progress and draws
       heavily from <xref target="RFC5960"/> and may be updated, replaced
@@ -1191,7 +1208,12 @@ title="MPLS-based Services">
           flows across a network.  MPLS labels are compact and highly
           flexible.  They can be stacked to support client adaptation,
           protection, network layering, source routing, etc.
+          <vspace blankLines="1"/>
+          The number of DetNet Transport layer specific labels
+          depends on related functions and the MPLS domain characteristics
+          (e.g., TE-tunnels, Hierarchical-LSPs, etc.).
       <vspace blankLines="1"/> </t>
+     
      <t hangText="#2 Flow identification (M)">
         <vspace blankLines="1"/>
 
@@ -1199,7 +1221,13 @@ title="MPLS-based Services">
           flows.  Basically, they enable the complete separation of
           traffic classification from traffic treatment and thereby enable
           arbitrary combinations of both.
-
+          <vspace blankLines="1"/> 
+		  For the DetNet flow identification the label stack can be 
+		  used partly or entirely. For example, using dedicated LSP per DetNet flow
+		  would simplify flow identification for intermediate transport nodes but 
+		  may challenge scalability. Some part of the labels stack can not be used 
+		  for flow identification (e.g., entropy label).
+        <vspace blankLines="1"/>
 
 [Janos: Well, it is true if all kinds of fetarures are considered to be part of
 MPLS, e.g. PWs, which is an understandable argument. However, MPLS here is ment
@@ -1207,21 +1235,6 @@ as transport, i.e. we are at the DetNet Transport layer, hence it is more
 about LSPs only here.]
   
           
-      <vspace blankLines="1"/> </t>
-     <t hangText="#3 Packet sequencing (M)">
-        <vspace blankLines="1"/>
-
-[Janos: Well, packet sequencing is part of the DetNet Service layer. Why do we 
-have it here? (MPLS is DetNet Transport layer.)]
-      
-          Packet ordering in MPLS is generally similar to packet ordering
-          in Ethernet. MPLS implementations can also support ECMP for
-          certain types of traffic which can to lead to out of order
-          delivery.  There are defined techniques to avoid ECMP and
-          ensure in order delivery during normal operation. Out of order
-          delivery is still possible in certain MPLS protection
-          scenarios.  If additional ordering mechanisms are required,
-          these are likely to be implemented at the DetNet Service Layer.
       <vspace blankLines="1"/> </t>
      <t hangText="#4 Explicit routes (M)">
         <vspace blankLines="1"/>
@@ -1235,16 +1248,17 @@ have it here? (MPLS is DetNet Transport layer.)]
      <t hangText="#5 Packet replication and elimination (M/W)">
         <vspace blankLines="1"/>
 
-          At the MPLS LSP level, there are mechanisms defined to provide
-          1+1 protection.  The current definitions
-          <xref target="RFC6378"/> and <xref target="RFC7271"/> use OAM
-          mechanisms to support and coordinate protection switching and
-          packet loss is possible during a switch.  While such this level
-          of protection may be sufficient for man DetNet applications,
-          when truly hitless (i.e., zero loss) switching is required
-          additional mechanisms will be needed.  It is expected that these
-          additional mechanisms will be defined at the DetNet Service
-          Layer.
+          MPLS as DetNet Transport layer supports the replication via
+          point-to-multipoint LSPs. Duplicate elimination is a DetNet Service
+          layer function, however, at the MPLS LSP level, there are mechanisms
+          defined to provide 1+1 protection.  The current definitions <xref
+          target="RFC6378"/> and <xref target="RFC7271"/> use OAM mechanisms to
+          support and coordinate protection switching and packet loss is
+          possible during a switch.  While such this level of protection may be
+          sufficient for man DetNet applications, when truly hitless (i.e.,
+          zero loss) switching is required additional mechanisms will be
+          needed.  It is expected that these additional mechanisms will be
+          defined at the DetNet Service Layer.
       <vspace blankLines="1"/> </t>
      <t hangText="#6 Operations, Administration and Maintenance (M/W)">
         <vspace blankLines="1"/>
@@ -1255,20 +1269,6 @@ have it here? (MPLS is DetNet Transport layer.)]
           <eref target="http://www.iana.org/assignments/g-ach-parameters/g-ach-parameters.xhtml">
           IANA</eref>.
       <vspace blankLines="1"/> </t>
-     <t hangText="#7 Time synchronization (M/W)">
-        <vspace blankLines="1"/>
-
-          MPLS itself does not provide any time synchronization service.
-          The expectations is that the actual time-based scheduling will
-          be provided by the sub-network layer, e.g., by
-          <xref target="TSNTG"/>, and that the DetNet transport layer will
-          merely need to facilitate time synchronization (with hardware
-          support) across multiple sub-network domains and technologies.
-          Work is in progress
-          <xref target="I-D.ietf-mpls-residence-time"/> that may satisfy,
-          or serve as a building block for, DetNet time synchronization.
-      <vspace blankLines="1"/>
-     </t>
      <t hangText="#8 Class and quality of service capabilities (M/W)">
         <vspace blankLines="1"/>
 
@@ -1285,13 +1285,8 @@ have it here? (MPLS is DetNet Transport layer.)]
 
       <vspace blankLines="1"/>
      </t>
-     <t hangText="#9 Packet traceability (M)">
+     <t hangText="#9 Packet traceability (M/W)">
         <vspace blankLines="1"/>
-  
-
-[Janos: All packet traceability features needed for DetNet availvable? If not, 
-then it is M/W.]
-
        
       MPLS supports multiple tracing mechanisms.  A control based one
           is defined in  <xref target="RFC3209"/>.  An OAM based mechanism
@@ -2055,12 +2050,12 @@ title="Enabled Adjacencies">
        transport layer.
       <vspace blankLines="1"/></t>
      
-     <t hangText="#7 Time synchronization (W/N)">
+     <!--t hangText="#7 Time synchronization (W/N)">
       <vspace blankLines="1"/>
       It is possible to carry time synchronization information by extending
       the optional fields of the GRE encapsulation. However, the available
       lenght in the header is limited.
-     <vspace blankLines="1"/></t>
+     <vspace blankLines="1"/></t-->
      
      <t hangText="#8 Class and quality of service capabilities (W) ">
       <vspace blankLines="1"/>
@@ -2098,8 +2093,77 @@ title="Enabled Adjacencies">
     </section>
    </section>
     
-  <section title="MPLS-based Services" anchor="sec_alt_mpls_svc">
-    <section title="Solution description">      
+  <section title="MPLS-based Services for DetNet" anchor="sec_alt_mpls_svc">
+    <t>
+      MPLS based technologies supports both the DetNet Service and DetNet
+      Transport layers.  This, as well as a general overview of MPLS, is
+      covered above in <xref target="sec_alt_mpls"/>. These sections focus 
+	  on the DetNet Service Layer it provides client service
+      adaption, via Pseudowires  <xref 
+      target="sec_alt_pwe"/> and via native and other label-like
+      mechanisms such as EPVN in <xref 
+      target="sec_alt_evpn"/>.  A representation of these options was
+      previously discussed and is shown in
+      <xref target="fig_mpls_clients"/>.
+    </t>  
+ 
+    <t> The following text is adapted from <xref target="RFC5921"/>:
+	 <list style="none">
+	  <t>
+       The MPLS native service adaptation functions interface the client
+       layer network service to MPLS.  For Pseudowires, these adaptation
+       functions are the payload encapsulation described in Section 4.4
+       of <xref target="RFC3985"/> and Section 6 of
+       <xref target="RFC5659"/>.  For network layer client services, the
+       adaptation function uses the MPLS encapsulation format as defined
+       in <xref target="RFC3032"/>.
+	  <vspace blankLines="1"/></t>
+
+      <t>
+       The purpose of this encapsulation is to abstract the data plane of
+       the client layer network from the MPLS data plane, thus
+       contributing to the independent operation of the MPLS network.
+      <vspace blankLines="1"/></t>
+
+      <t>
+       MPLS may itself be a client of an underlying server layer.  MPLS
+       can thus also bounded by a set of adaptation functions to this
+       server layer network, which may itself be MPLS.  These adaptation
+       functions provide encapsulation of the MPLS frames and for the
+       transparent transport of those frames over the server layer
+       network.  
+      <vspace blankLines="1"/></t>
+
+      <t>
+       While MPLS service can provided on and true end-system to end-system
+       basis, it's more likely that DetNet service will be provided over
+       Pseudowires as described in <xref target="sec_alt_pwe"/> or via an
+       EPVN-based service described in <xref target="sec_alt_evpn"/> .
+      <vspace blankLines="1"/></t>
+	
+      <t>
+       MPLS labels in the label stack may be used to identify
+       transport paths, see <xref target="sec_alt_mpls"/>, or as
+       service identifiers.  Typically a single label is used for
+       service identification.  
+      <vspace blankLines="1"/></t>
+
+      <t>
+       Packet sequencing mechanisms are added in client-related adaptation
+       processing, see Sections <xref format="counter" target="sec_alt_pwe"/> and
+       <xref format="counter" target="sec_alt_evpn"/>.            
+      <vspace blankLines="1"/></t>
+
+      <t>
+       The MPLS client inherits its Quality of Service (QoS) from
+       the MPLS transport layer, which in turn inherits its QoS from the
+       server (sub-network) layer.  The server layer therefore needs to
+       provide the necessary QoS to ensure that the MPLS client QoS
+       commitments can be satisfied.
+      </t>
+     </list>
+     </t>
+    <!--section title="Solution description">      
     <t>
       MPLS supports the equivalent of both the DetNet Service and DetNet
       Transport layers.  This, as well as a general overview of MPLS, is
@@ -2217,14 +2281,6 @@ title="Enabled Adjacencies">
 
             <vspace blankLines="1"/> 
           </t>
-          <t hangText="#7 Time synchronization (TBD)">
-            <vspace blankLines="1"/>
-
-            It's unclear at this time if any additional capability is
-            needed at this level.
-            
-            <vspace blankLines="1"/> 
-          </t>
           <t hangText="#8 Class and quality of service capabilities (M/W)">
             <vspace blankLines="1"/>
 
@@ -2253,9 +2309,9 @@ title="Enabled Adjacencies">
         </list>
       </t>
 
-    </section>
+    </section-->
  
-    <section title="Summary">
+    <!--section title="Summary">
       <t>
         This is the same as MPLS at the DetNet transport layer.
         MPLS is a mature technology that has been widely deployed.
@@ -2265,7 +2321,7 @@ title="Enabled Adjacencies">
         today. Aspects of the DetNet data plane that are not fully
         supported can be incrementally added.
     </t>
-    </section>
+    </section-->
    </section>
 
   <section title="Pseudo Wire Emulation Edge-to-Edge (PWE3)" anchor="sec_alt_pwe">
@@ -2368,12 +2424,14 @@ title="Enabled Adjacencies">
       layers.]
       <vspace blankLines="1"/>
       PWs provide multiple layers of flow identification, especially in the case
-      of the MPLS PSN. The PWs are typically prepended with a PW label that can be
-      used to identify a specific PW. Furthermore, the PSN also uses one or more
-      labels to transport packets over a specific label switched paths (that then
-      would carry PWs). IP (and other) PSNs may need other mechanisms, such as, 
-      UDP port numbers, upper layer protocol header (like RTP) or some IP extension
-      header to provide required flow identification.
+      of the MPLS PSN. The PWs are typically prepended with an endpoint specific
+      PW label that can be used to identify a specific PW per endpoint.
+      Furthermore, the MPLS PSN also uses one or more labels to transport
+      packets over a specific label switched paths (that then would carry PWs).
+      So, a DetNet flow can be identified in this example by the service and
+      transport layer labels.  IP (and other) PSNs may need other mechanisms,
+      such as, UDP port numbers, upper layer protocol header (like RTP) or some
+      IP extension header to provide required flow identification.
      <vspace blankLines="1"/></t>
      
      <t hangText="#3 Packet sequencing (M)">
@@ -2398,16 +2456,6 @@ title="Enabled Adjacencies">
       IP PSN have the full toolbox of IP network  OAM tools. There could be,
       however, need for deterministic networking specific extensions for the
       mentioned control planes.
-     <vspace blankLines="1"/></t>
-     
-     <t hangText="#7 Time synchronization (M/W)">
-      <vspace blankLines="1"/>
-      It is possible to carry time synchronization information as part of the PW
-      encapsulation layer (see for example <xref target="RFC5087"/>). Whether
-      the timing precision is enough for all deterministic networking use cases
-      vary, and it is possible existing mechanisms are not adequate for all use
-      cases. IP PSNs have already demonstrated the use of time synchronization 
-      as a part of PWE3  <xref target="RFC5086"/>.
      <vspace blankLines="1"/></t>
      
      <t hangText="#8 Class and quality of service capabilities (M)">
@@ -2557,7 +2605,7 @@ title="Enabled Adjacencies">
 
             <vspace blankLines="1"/> 
           </t>
-          <t hangText="#7 Time synchronization (W)">
+          <!--t hangText="#7 Time synchronization (W)">
             <vspace blankLines="1"/>
 
 	    The interface to the DetNet time synchronization service is
@@ -2567,7 +2615,7 @@ title="Enabled Adjacencies">
 	    discussed in <xref target="sec_alt_mpls"/>.
 
             <vspace blankLines="1"/> 
-          </t>
+          </t-->
           <t hangText="#8 Class and quality of service capabilities (M/W)">
             <vspace blankLines="1"/>
 
@@ -2700,7 +2748,7 @@ title="Enabled Adjacencies">
           <c> #4</c><c>Explicit routes</c>
           <c> #5</c><c>Packet replication and elimination</c> 
           <c> #6</c><c>Operations, Administration and Maintenance</c>
-          <c> #7</c><c>Time synchronization</c>
+          <!--c> #7</c><c>Time synchronization</c-->
           <c> #8</c><c>Class and quality of service capabilities</c>
           <c> #9</c><c>Packet traceability</c>
           <c>#10</c><c>Technical maturity</c>
@@ -2718,7 +2766,7 @@ title="Enabled Adjacencies">
           <ttcol align="left"> #4</ttcol>
           <ttcol align="left"> #5</ttcol>
           <ttcol align="left"> #6</ttcol>
-          <ttcol align="left"> #7</ttcol>
+          <!--ttcol align="left"> #7</ttcol-->
           <ttcol align="left"> #8</ttcol>
           <ttcol align="left"> #9</ttcol>
           <ttcol align="left">#10</ttcol>
@@ -2730,7 +2778,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>W</c>
           <!-- 5--> <c>W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 7--> <c></c>
+          <!-- 7> <c></c-->
           <!-- 8--> <c>M</c>
           <!-- 9--> <c>M/W</c>
           <!--10--> <c>M/W</c>
@@ -2743,7 +2791,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>M/W</c>
           <!-- 5--> <c>W/N</c>
           <!-- 6--> <c>M</c>
-          <!-- 7--> <c></c>
+          <!-- 7> <c></c-->
           <!-- 8--> <c>M</c>
           <!-- 9--> <c>W/N</c>
           <!--10--> <c>M/W</c>
@@ -2757,9 +2805,9 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>M</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 7--> <c>?</c>
+          <!-- 7> <c>?</c-->
           <!-- 8--> <c>M/W</c>
-          <!-- 9--> <c>M</c>
+          <!-- 9--> <c>M/W</c>
           <!--10--> <c>M</c>
           
           
@@ -2771,7 +2819,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>M</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 7--> <c></c>
+          <!-- 7> <c></c-->
           <!-- 8--> <c>M</c>
           <!-- 9--> <c>M</c>
           <!--10--> <c>M</c>
@@ -2783,7 +2831,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>N</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>W</c>
-          <!-- 7--> <c></c>
+          <!-- 7> <c></c-->
           <!-- 8--> <c>M</c>
           <!-- 9--> <c>W</c>
           <!--10--> <c>M</c>
@@ -2805,7 +2853,7 @@ title="Enabled Adjacencies">
           <ttcol align="left"> #4</ttcol>
           <ttcol align="left"> #5</ttcol>
           <ttcol align="left"> #6</ttcol>
-          <ttcol align="left"> #7</ttcol>
+          <!--ttcol align="left"> #7</ttcol-->
           <ttcol align="left"> #8</ttcol>
           <ttcol align="left"> #9</ttcol>
           <ttcol align="left">#10</ttcol>
@@ -2817,7 +2865,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c></c>
           <!-- 5--> <c>W/N</c>
           <!-- 6--> <c>M</c>
-          <!-- 7--> <c>W/N</c>
+          <!-- 7> <c>W/N</c-->
           <!-- 8--> <c>W</c>
           <!-- 9--> <c></c>
           <!--10--> <c>M</c>
@@ -2830,7 +2878,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c></c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M</c>
-          <!-- 7--> <c>TBD</c>
+          <!-- 7> <c>TBD</c-->
           <!-- 8--> <c>M/W</c>
           <!-- 9--> <c>?</c>
           <!--10--> <c>M</c>
@@ -2843,7 +2891,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c></c>
           <!-- 5--> <c>W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 7--> <c>M/W</c>
+          <!-- 7> <c>M/W</c-->
           <!-- 8--> <c>M</c>
           <!-- 9--> <c></c>
           <!--10--> <c>M</c>
@@ -2856,7 +2904,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>?</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 7--> <c>W</c>
+          <!-- 7> <c>W</c-->
           <!-- 8--> <c>M/W</c>
           <!-- 9--> <c>?</c>
           <!--10--> <c>W</c>
