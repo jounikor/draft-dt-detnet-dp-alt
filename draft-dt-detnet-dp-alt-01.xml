@@ -232,14 +232,6 @@
   </t>
  </section>
 
- <!--section title="Terminology">
-  <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-   document are to be interpreted as described in <xref
-   target="RFC2119"></xref>.</t>
- </section-->
-
-
 <section title="DetNet Data Plane Overview" anchor="sec_dt_dp">
  <t>
    A "Deterministic Network" will be composed of DetNet enabled "End Systems",
@@ -427,7 +419,7 @@ title="DetNet adaptation to data plane">
     <t hangText="#5"> Packet replication and elimination (note: only the packet deletion for
        seamless redundancy)</t>
     <t hangText="#6"> Operations, Administration and Maintenance (capabilities)</t>
-    <!--t hangText="#7"> Time synchronization (e.g., time stamping)</t-->
+    <t hangText="#7"> DetNet Service Interface</t>
     <t hangText="#8"> Class and quality of service capabilities (DetNet Service specific)</t>
     <t hangText="#10"> Technical maturity</t>
   </list>  
@@ -443,7 +435,6 @@ title="DetNet adaptation to data plane">
        for seamless redundancy)</t>
     <t hangText="#6"> Operations, Administration and Maintenance (capabilities,
           performance management, packet traceability)</t>
-    <t hangText="#8"> Class and quality of service capabilities (DetNet Transport specific)</t>
     <t hangText="#9"> Packet traceability (can be part of OAM)</t>
     <t hangText="#10"> Technical maturity</t>
    </list> 
@@ -475,19 +466,6 @@ title="DetNet adaptation to data plane">
    alternative for the data plane solution. 
   </t>
  
-
-  <section title="#? DetNet Service Interface" anchor="sec_crit_svc">
-    <t>
-     [Editor's note: this criteria needs a bit more discussion.]
-    </t>
-    <t>
-      One of the most fundamental differences between different potential
-      data plane options is the basic addressing and headers used by DetNet
-      clients.  For example, is the basic service a Layer 2 (e.g., Ethernet) or
-      Layer 3 (i.e., IP) service. This decision impacts how DetNet end points
-      are addressed, and the basic forwarding logic of the DetNet Service layer.
-    </t>
-  </section>
 
   <section title="#1 Encapsulation and overhead" anchor="sec_crit_encap">
     <t>
@@ -625,29 +603,15 @@ title="DetNet adaptation to data plane">
     </t>
   </section>
 
-  <!--section title="#7 Time synchronization" anchor="sec_crit_sync">
+  <section title="#7 DetNet Service Interface" anchor="sec_crit_svc">
     <t>
-      Time synchronization between DetNet systems and nodes can be used
-      to enable fine grain scheduling of traffic along an end-to-end
-      data path.  Such scheduling can be used to deliver very low jitter
-      and latency.  [DetNet-ARCH] refers to a synchronization target of
-      less than 1 microsecond.  Meeting such time synchronization
-      objectives is likely to require specific hardware support, both at
-      the synchronization protocol level and at the (time synchronized)
-      packet scheduling level. It is worth noting that certain aspects
-      of time synchronization and packet scheduling may be provided by
-      the underlying sub-net technology, e.g.,
-      <xref target="IEEE802.1Qbv"/> and <xref target="IEEE802.1Qch"/>.
+      One of the most fundamental differences between different potential
+      data plane options is the basic addressing and headers used by DetNet
+      clients.  For example, is the basic service a Layer 2 (e.g., Ethernet) or
+      Layer 3 (i.e., IP) service. This decision impacts how DetNet end points
+      are addressed, and the basic forwarding logic of the DetNet Service layer.
     </t>
-    <t>
-      This criteria is not about clock distribution or time synchronization
-      between networking nodes per se. Rather whether the DetNet dataplane
-      alternative has any support for primitives that would help, for
-      example, the service layer flows have a sense of time. One example
-      being timestamps in the payload data units of the transport
-      protocol.
-    </t>
-  </section-->
+  </section>
 
   <section title="#8 Class and quality of service capabilities"
       anchor="sec_crit_qos">
@@ -1185,12 +1149,6 @@ title="MPLS-based Services">
    <section title="Analysis and Discussion">
 
     <t><list style="hanging">
-     <t hangText="#? DetNet Service Interface (M)">
-        <vspace blankLines="1"/> The DetNet service interface is enabled through
-        the DetNet Service Layer it provides client service adaption, directly,
-        via Pseudowires <xref target="sec_alt_pwe"/> and via other label-like
-        mechanisms such as EPVN <xref target="sec_alt_evpn"/>.
-      <vspace blankLines="1"/> </t>
      <t hangText="#1 Encapsulation and overhead (M)">
       <vspace blankLines="1"/> 
           There are two perspectives to consider when looking at
@@ -1269,6 +1227,14 @@ about LSPs only here.]
           <eref target="http://www.iana.org/assignments/g-ach-parameters/g-ach-parameters.xhtml">
           IANA</eref>.
       <vspace blankLines="1"/> </t>
+     
+     <!--t hangText="#7 DetNet Service Interface (M)">
+        <vspace blankLines="1"/> The DetNet service interface is enabled through
+        the DetNet Service Layer it provides client service adaption, directly,
+        via Pseudowires <xref target="sec_alt_pwe"/> and via other label-like
+        mechanisms such as EPVN <xref target="sec_alt_evpn"/>.
+      <vspace blankLines="1"/> </t-->
+     
      <t hangText="#8 Class and quality of service capabilities (M/W)">
         <vspace blankLines="1"/>
 
@@ -1849,11 +1815,6 @@ title="Enabled Adjacencies">
   
     <section title="Analysis and Discussion">
       <t><list style="hanging">
-          <t hangText="#? DetNet Service Interface (M)">
-            <vspace blankLines="1"/> 
-            To be defined
-            <vspace blankLines="1"/> 
-          </t>
           <t hangText="#1 Encapsulation and overhead (W/M)">
             <vspace blankLines="1"/>
             The size of the BIER header depends on the number of segments in the
@@ -1900,11 +1861,6 @@ title="Enabled Adjacencies">
             the link for the user.
             <vspace blankLines="1"/> 
           </t>
-          <!--t hangText="#7 Time synchronization (N)">
-            <vspace blankLines="1"/>
-            Not provided
-            <vspace blankLines="1"/> 
-          </t-->
           <t hangText="#8 Class and quality of service capabilities (N)">
             <vspace blankLines="1"/>
             BIER-TE does not signal that explicitly.
@@ -2049,13 +2005,6 @@ title="Enabled Adjacencies">
        GRE uses the network management provided by the IP protocols as
        transport layer.
       <vspace blankLines="1"/></t>
-     
-     <!--t hangText="#7 Time synchronization (W/N)">
-      <vspace blankLines="1"/>
-      It is possible to carry time synchronization information by extending
-      the optional fields of the GRE encapsulation. However, the available
-      lenght in the header is limited.
-     <vspace blankLines="1"/></t-->
      
      <t hangText="#8 Class and quality of service capabilities (W) ">
       <vspace blankLines="1"/>
@@ -2523,16 +2472,6 @@ title="Enabled Adjacencies">
  
     <section title="Analysis and Discussion">
       <t><list style="hanging">
-          <t hangText="#? DetNet Service Interface (M/W)">
-            <vspace blankLines="1"/> 
-
-	    The service supported by EVPN is a layer 2 Ethernet virtual
-	    private network.  While EVPN is typically envisioned to be
-	    deployed on provider edge systems, it is also possible to
-	    extent the EVPN service to a DetNet end or edge system if
-	    such service is needed.
-            <vspace blankLines="1"/> 
-          </t>
           <t hangText="#1 Encapsulation and overhead (M)">
             <vspace blankLines="1"/>
 
@@ -2605,17 +2544,16 @@ title="Enabled Adjacencies">
 
             <vspace blankLines="1"/> 
           </t>
-          <!--t hangText="#7 Time synchronization (W)">
-            <vspace blankLines="1"/>
-
-	    The interface to the DetNet time synchronization service is
-	    still to be determined.  If the service is accessed by end
-	    systems via IEEE defined mechanisms, then those mechanisms
-	    will need to be mapped to the MPLS provided mechanisms
-	    discussed in <xref target="sec_alt_mpls"/>.
-
+          <t hangText="#7 DetNet Service Interface (M/W)">
             <vspace blankLines="1"/> 
-          </t-->
+
+	    The service supported by EVPN is a layer 2 Ethernet virtual
+	    private network.  While EVPN is typically envisioned to be
+	    deployed on provider edge systems, it is also possible to
+	    extent the EVPN service to a DetNet end or edge system if
+	    such service is needed.
+            <vspace blankLines="1"/> 
+          </t>
           <t hangText="#8 Class and quality of service capabilities (M/W)">
             <vspace blankLines="1"/>
 
@@ -2748,7 +2686,7 @@ title="Enabled Adjacencies">
           <c> #4</c><c>Explicit routes</c>
           <c> #5</c><c>Packet replication and elimination</c> 
           <c> #6</c><c>Operations, Administration and Maintenance</c>
-          <!--c> #7</c><c>Time synchronization</c-->
+          <c> #7</c><c>DetNet Service Interface</c>
           <c> #8</c><c>Class and quality of service capabilities</c>
           <c> #9</c><c>Packet traceability</c>
           <c>#10</c><c>Technical maturity</c>
@@ -2766,7 +2704,7 @@ title="Enabled Adjacencies">
           <ttcol align="left"> #4</ttcol>
           <ttcol align="left"> #5</ttcol>
           <ttcol align="left"> #6</ttcol>
-          <!--ttcol align="left"> #7</ttcol-->
+          <ttcol align="left"> #7</ttcol>
           <ttcol align="left"> #8</ttcol>
           <ttcol align="left"> #9</ttcol>
           <ttcol align="left">#10</ttcol>
@@ -2778,7 +2716,6 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>W</c>
           <!-- 5--> <c>W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 7> <c></c-->
           <!-- 8--> <c>M</c>
           <!-- 9--> <c>M/W</c>
           <!--10--> <c>M/W</c>
@@ -2791,7 +2728,6 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>M/W</c>
           <!-- 5--> <c>W/N</c>
           <!-- 6--> <c>M</c>
-          <!-- 7> <c></c-->
           <!-- 8--> <c>M</c>
           <!-- 9--> <c>W/N</c>
           <!--10--> <c>M/W</c>
@@ -2805,7 +2741,6 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>M</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 7> <c>?</c-->
           <!-- 8--> <c>M/W</c>
           <!-- 9--> <c>M/W</c>
           <!--10--> <c>M</c>
@@ -2819,7 +2754,6 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>M</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 7> <c></c-->
           <!-- 8--> <c>M</c>
           <!-- 9--> <c>M</c>
           <!--10--> <c>M</c>
@@ -2831,7 +2765,6 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>N</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>W</c>
-          <!-- 7> <c></c-->
           <!-- 8--> <c>M</c>
           <!-- 9--> <c>W</c>
           <!--10--> <c>M</c>
@@ -2853,7 +2786,7 @@ title="Enabled Adjacencies">
           <ttcol align="left"> #4</ttcol>
           <ttcol align="left"> #5</ttcol>
           <ttcol align="left"> #6</ttcol>
-          <!--ttcol align="left"> #7</ttcol-->
+          <ttcol align="left"> #7</ttcol>
           <ttcol align="left"> #8</ttcol>
           <ttcol align="left"> #9</ttcol>
           <ttcol align="left">#10</ttcol>
@@ -2865,7 +2798,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c></c>
           <!-- 5--> <c>W/N</c>
           <!-- 6--> <c>M</c>
-          <!-- 7> <c>W/N</c-->
+          <!-- 7--> <c>?/?</c>
           <!-- 8--> <c>W</c>
           <!-- 9--> <c></c>
           <!--10--> <c>M</c>
@@ -2878,7 +2811,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c></c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M</c>
-          <!-- 7> <c>TBD</c-->
+          <!-- 7--> <c>TBD</c>
           <!-- 8--> <c>M/W</c>
           <!-- 9--> <c>?</c>
           <!--10--> <c>M</c>
@@ -2891,7 +2824,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c></c>
           <!-- 5--> <c>W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 7> <c>M/W</c-->
+          <!-- 7--> <c>?/?</c>
           <!-- 8--> <c>M</c>
           <!-- 9--> <c></c>
           <!--10--> <c>M</c>
@@ -2904,7 +2837,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>?</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 7> <c>W</c-->
+          <!-- 7--> <c>M/W</c>
           <!-- 8--> <c>M/W</c>
           <!-- 9--> <c>?</c>
           <!--10--> <c>W</c>
