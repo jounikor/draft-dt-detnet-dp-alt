@@ -240,7 +240,8 @@
    All DetNet enabled systems and nodes will be interconnected by sub-networks.
    These sub-networks will provide DetNet compatible service for support of
    DetNet traffic.  Examples of sub-networks include 802.1TSN and a
-   point-to-point OTN link.  Of course, multi-layer DetNet systems may be
+   point-to-point OTN link. A sub-network may or may not be DetNet enabled.
+    Of course, multi-layer DetNet systems may be
    possible too, where one DetNet appears as a sub-network, and provides service
    to, a higher layer DetNet system. A simple DetNet is shown in <xref
    target="fig_detnet"/>.
@@ -248,31 +249,32 @@
 <figure anchor="fig_detnet" align="center"
 title="A Simple DetNet Enabled Network">
 <artwork align="center"><![CDATA[
-   _   "any" End system                        DetNet-aware End System  _ 
-  / \    |                                                        |    / \
- /App\   |          DetNet node                                   |   /App\
-/-----\<-+               |                                        +->/--O--\
-| NIC |               ___|____                                       | NIC |
-+--+--+     _____    /   |    \           DetNet edge node           +--+--+
-   |       /     \__/    v     \           |           |                |
-   |      / +----+    +----+    \_____     |           |                |
-   |     /  |    |    |    |          \____|__         |                |
-   +--------X PE +----+ P  +----+          |  \        |     _          |
-         |  |    |    |    |    |          v   |       | ___/ \         |
-         |  +--+-+    +----+    |       +----+ |       v/      \_       |
-         \     |                |       |    | |       /         \      |
-          \    |   +----+    +--+-+  +--+ PE X---------X         X------+
-           \   |   |    |    |    |  |  |    | |       \_      _/       
-            \  +---+ P  +----+ P  +--+  +----+ |         \____/       
-             \___  |    |    |    |     Domain-1      |-- Domain-2 --------|
-                 \ +----+__  +----+     ______/                            
-                  \_____/  \___________/                                 
+
+
+
+  End           Edge          Transit        Relay          End
+ System         Node            Node         Node          System
+
++---------+                                              +---------+
+|  Appl.  |<--------- End to End DetNet Service -------->|  Appl.  |
++---------+   +---------+                  +---------+   +---------+
+| Service |<--| Service |--- DetNet flow --| Service |-->| Service |
++---------+   +---------+    +---------+   +---------+   +---------+
+|Transport|   |Trp| |Trp|    |Transport|   |Transport|   |Transport|
++-------.-+   +-.-+ +-.-+    +--.---.--+   +--.---.--+   +----.----+
+        : Link  :    /  ,-----.  \  : Link    :   :   Link    :
+        +.......+    +-[  Sub  ]-+  +.........+   +...........+
+                       [Network]                               
+                        `-----'               
+                                              
+|------ Domain 1 ------|     |------- Domain 2 --------------------|    
+
 ]]></artwork>
 </figure>
 
 	<t>
-     From service model perspective a fundamental question is where the service
-     i.e., DetNet flow starts or ends.  Two use-cases can be distinguished: (i)
+     From a service model perspective a fundamental question is where the service
+     i.e., DetNet flow starts or ends.  Two cases can be distinguished: (i)
      the DetNet flow originates from an end system (depicted as 'O')  or (ii)
      from an edge node (depicted as 'X') as shown in <xref target="fig_detnet"/>.
     </t>
@@ -292,13 +294,14 @@ title="A Simple DetNet Enabled Network">
     <t>
      The DetNet Service layer provides adaptation of DetNet services.  It is
      composed of a shim layer to carry deterministic  flow specific attributes,
-     which are needed during forwarding. End systems originate and terminate the
-     DetNet Service layer and are peers at the DetNet Service layer.
+     which are needed during forwarding. DetNet enabled end systems originate
+     and terminate the DetNet Service layer and are peers at the DetNet Service
+     layer.
     </t>
     <t>
      The DetNet Transport layer is supported by all DetNet nodes.  It operates
-     below the DetNet Service layer. The DetNet Transport layer is used to relay
-     traffic end to end across a DetNet domain.
+     below the DetNet Service layer. The DetNet Transport layer is used to
+     forward traffic end to end across a DetNet domain.
     </t>
    </list>
    Distinguishing the function of these two DetNet data plane layers helps to
@@ -344,18 +347,6 @@ title="DetNet adaptation to data plane">
     .
 ]]></artwork>
 </figure>
- <!--t>
-  Both the DetNet Service and the DetNet Transport layers are provided by a
-  single technology in some solutions, e.g. the DetNet Service layer is PW and
-  the DetNet Transport layer is MPLS in case of PW over MPLS. Nonetheless, both
-  the DetNet Service and the DetNet Transport layers can include multiple
-  technology layers in other solutions in order to provide the capabilities
-  needed for DetNet flows. For instance, the DetNet Transport layer can comprise
-  MPLS-in-GRE (<xref target="sec_alt_pwe"/>) in one solution. In another
-  solution, the DetNet Service layer can include, e.g.,  RTP in UDP (<xref
-  target="sec_alt_higher"/>).
- </t-->
-  
  <t>
   There are many valid options to create a data plane solution for DetNet
   traffic by selecting a technology approach for the DetNet Service layer and
@@ -433,10 +424,10 @@ title="DetNet adaptation to data plane">
   <section title="#1 Encapsulation and overhead" anchor="sec_crit_encap">
     <t>
       Encapsulation and overhead is related to how the DetNet data plane
-      carries DetNet user traffic.  In several cases a deterministic flow has to
+      carries DetNet flow.  In several cases a DetNet flow has to
       be encapsulated inside other protocols, for example, when transporting a
       layer-2 Ethernet frame over an IP transport network. In some cases a
-      former tunneling like encapsulation can be avoided by underlying transport
+      tunneling like encapsulation can be avoided by underlying transport
       protocol translation, for example, translating layer-2 Ethernet frame
       including addressing and flow identification into native IP traffic. Last
       it is possible that talkers and listeners handle deterministic flows
