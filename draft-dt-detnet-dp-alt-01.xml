@@ -32,6 +32,7 @@
 <!ENTITY rfc4875 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4875.xml">
 <!ENTITY rfc5086 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.5086.xml">
 <!ENTITY rfc5087 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.5087.xml">
+<!ENTITY rfc5254 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.5254.xml">
 <!ENTITY rfc5129 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.5129.xml">
 <!ENTITY rfc5305 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.5305.xml">
 <!ENTITY rfc5331 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.5331.xml">
@@ -234,24 +235,19 @@
 
 <section title="DetNet Data Plane Overview" anchor="sec_dt_dp">
  <t>
-   A "Deterministic Network" will be composed of DetNet enabled "End Systems",
-   DetNet enabled "Edge Nodes", and DetNet enabled "Network Nodes".  DetNet
-   enabled nodes will provide a DetNet service to attached DetNet End Systems.
-   All DetNet enabled systems and nodes will be interconnected by sub-networks.
-   These sub-networks will provide DetNet compatible service for support of
-   DetNet traffic.  Examples of sub-networks include 802.1TSN and a
-   point-to-point OTN link. A sub-network may or may not be DetNet enabled.
-    Of course, multi-layer DetNet systems may be
-   possible too, where one DetNet appears as a sub-network, and provides service
-   to, a higher layer DetNet system. A simple DetNet is shown in <xref
-   target="fig_detnet"/>.
+   A "Deterministic Network" will be composed of DetNet enabled node i.e., End
+   Systems, Edge Nodes, Relay Nodes and Transit Nodes.  DetNet enabled nodes
+   will provide a DetNet services.  All DetNet enabled nodes will be
+   interconnected by sub-networks.  These sub-networks will provide DetNet
+   compatible service for support of DetNet traffic.  Examples of sub-networks
+   include 802.1TSN and a point-to-point OTN link.  Of course, multi-layer
+   DetNet systems may be possible too, where one DetNet appears as a
+   sub-network, and provides service to, a higher layer DetNet system. A simple
+   DetNet concept network is shown in <xref target="fig_detnet"/>.
  </t>
 <figure anchor="fig_detnet" align="center"
 title="A Simple DetNet Enabled Network">
 <artwork align="center"><![CDATA[
-
-
-
   End           Edge          Transit        Relay          End
  System         Node            Node         Node          System
 
@@ -272,7 +268,16 @@ title="A Simple DetNet Enabled Network">
 ]]></artwork>
 </figure>
 
-<figure anchor="fig_arch_pw" align="center" 
+ <t>
+  In an attempt to concretise DetNet date plane this document uses Multi-Segment
+  Pseudowire Emulation Edge-to-Edge (PWE3) <xref target="RFC5254"/> reference
+  model shown in <xref target="fig_pw_detnet"/> as a basis for different DetNet
+  data plane deployment options and how layering could work.
+ </t> 
+  
+
+
+<figure anchor="fig_pw_detnet" align="center" 
 title="Pseudo Wire switching reference model">
 <artwork><![CDATA[
       Native  |<--------Multi-Segment Pseudowire----->|  Native
@@ -296,6 +301,13 @@ title="Pseudo Wire switching reference model">
 ]]></artwork>
 </figure>
 
+ <t>
+  <xref target="fig_8021_detnet"/> illustrates how DetNet provides services for
+  "legacy" IEEE 802.1TSN end systems over packet switched, potentially routed
+  network. The 'X' in the edge and relay nodes represents a potential DetNet flow  
+  packet replication and elimination point.   
+ </t>
+
 <figure align="center" anchor="fig_8021_detnet"
  title="IEEE 802.1TSN over DetNet">
 <artwork><![CDATA[
@@ -304,7 +316,7 @@ title="Pseudo Wire switching reference model">
  TSN    (AC)   |     |<-Tunnel->|     |<-Tunnel->|     |  (AC)    TSN
  End     |     V     V     1    V     V     2    V     V   |      End
 System   |     +-----+          +-----+          +---- +   |    System
- +---+   |     |     |==========|     |==========|     |   |    +---+
+ +---+   |     |T-PE1|==========|S-PE1|==========|T-PE2|   |    +---+
  |   |---|-----|..DetNet Flow1.....X......DF3..........|---|----|   |
  |CE1|   |     |     |          |     |          |     |   |    |CE2|
  |   |---------|........DF2........X......DF4..........|--------|   |
@@ -320,6 +332,13 @@ System   |     +-----+          +-----+          +---- +   |    System
 ]]></artwork>
 </figure>
 
+ <t>
+  <xref target="fig_native_detnet"/> illustrates how end to end DetNet service could be
+  deployed. Here the assumtion is that end systems are able to source and
+  receive native DetNet flows.  Like earlier the 'X' in the end systems, edge
+  and relay nodes represents potential DetNet flow split and merge points.   
+ </t>
+
 <figure align="center" anchor="fig_native_detnet"
  title="Native DetNet">
 <artwork><![CDATA[
@@ -327,11 +346,11 @@ System   |     +-----+          +-----+          +---- +   |    System
        Service          Transit          Transit        Service
 DetNet  (AC)         |<-Tunnel->|     |<-Tunnel->|       (AC)   DetNet
 End      |           V     1    V     V     2    V         |    End
-System   |     +-----+          +-----+          +---- +   |    System
- +---+   |     |     |==========|     |==========|     |   |    +---+
- |  .....DFa...|.X........DF1......X......DF3........X.....DFa....  |
- |CE1|   |     |  \  |          |     |          |  /  |   |    |CE2|
- |   |         |   X......DF2......X......DF4......X   |        |   |
+System   |     +-----+          +-----+          +-----+   |    System
+ +---+   |     |T-PE1|==========|S-PE1|==========|T-PE2|   |    +---+
+ |  X....DFa...|.X_.......DF1.......X_....DF3........X.....DFa...X  |
+ |CE1|   |     |  \  |          |  /  |          |  /  |   |    |CE2|
+ |   |         |   \......DF2.....X_......DF4....../   |        |   |
  +---+         |     |==========|     |==========|     |        +---+
      ^         +-----+          +-----+          +-----+        ^
      |     Provider Edge 1         ^         Provider Edge 3    |
@@ -344,6 +363,13 @@ System   |     +-----+          +-----+          +---- +   |    System
 ]]></artwork>
 </figure>
 
+ <t>
+  <xref target="fig_iw_detnet"/> illustrates how a "legacy" IEEE 802.1TSN end
+  system could communicate with a native DetNet end system through an
+  interworking function implemented in an edge node.  Just like earlier the 'X'
+  in the end systems, edge and relay nodes represents potential DetNet flow
+  split and merge points.   
+ </t>
 <figure align="center" anchor="fig_iw_detnet"
  title="IEEE 802.1TSN to native DetNet">
  <artwork><![CDATA[
@@ -351,15 +377,15 @@ System   |     +-----+          +-----+          +---- +   |    System
        Service |        Transit          Transit                |
  TSN    (AC)   |     |<-Tunnel->|     |<-Tunnel->|              | DetNet    
  End     |     V     V     1    V     V     2    V              | End
-System   |     +-----+          +-----+          +---- +        V System
- +---+   |     |     |==========|     |==========|     |   |    +---+
- |   |---|-----|.X........DF1......X......DF3........X.....DFa....  |
+System   |     +-----+          +-----+          +-----+        V System
+ +---+   |     |T-PE1|==========|S-PE1|==========|T-PE2|   |    +---+
+ |   |---|-----|.X_.......DF1......X......DF3........X.....DFa...X  |
  |CE1|   |     |  \  |          |     |          |  /  |   |    |CE2|
- |   |---------|   X.....DF2.......X......DF4......X   |   |    |   |
- +---+   |     |     |==========|     |==========|     |   |    +---+
+ |   |         |   \.....DF2.......X......DF4....../   |   |    |   |
+ +---+         |     |==========|     |==========|     |   |    +---+
      ^         +-----+          +-----+          +-----+   |    ^
      |     Provider Edge 1         ^       Provider Edge 3 |    |
-     |          Edge Node          |           Relay Node  |    |
+     |        Edge Node          |             Relay Node  |    |
      |                             |                      (AC)  |
      |                     PW switching point           DetNet  |
      |                         Relay Node               Service |
@@ -370,10 +396,10 @@ System   |     +-----+          +-----+          +---- +        V System
 
 
 	<t>
-     From a service model perspective a fundamental question is where the service
+     From a DetNet service model perspective a fundamental question is where the service
      i.e., DetNet flow starts or ends.  Two cases can be distinguished: (i)
-     the DetNet flow originates from an end system (depicted as 'O')  or (ii)
-     from an edge node (depicted as 'X') as shown in <xref target="fig_detnet"/>.
+     the DetNet flow originates from an end system or (ii)
+     from an edge node as shown e.g., in <xref target="fig_íw_detnet"/>.
     </t>
     <t>
      The protocol stack model of the data plane described in <xref
@@ -2975,6 +3001,7 @@ title="Summary of the data plane options most suitable for DetNet">
    &rfc5086;
    &rfc5087;
    &rfc5129;
+   &rfc5254;
    &rfc5305;
    &rfc5331;
    &rfc5332;
