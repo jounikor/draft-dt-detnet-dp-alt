@@ -2597,7 +2597,8 @@ title="Enabled Adjacencies">
 <!-- ===================================================================== -->
 
 <section title="Summary of data plane alternatives">
-  <t>TBD.
+  <t>The following table summarizes the criteria (<xref target="sec_crit"/>)
+  used for the evaluation of data plane options.
   </t>
    
   <!--texttable anchor="tab_all_summary" title="PseudoWire criteria summary">
@@ -2619,9 +2620,9 @@ title="Enabled Adjacencies">
    <c>..</c>
   </texttable-->
   
+
   
-  
- <texttable anchor="Items" title="Evaluation items">
+ <texttable anchor="Items" title="Evaluation criteria (#7 obsolated)">
           <preamble>Applicability per Alternative</preamble>
 
           <ttcol align="center">Item #</ttcol>
@@ -2638,154 +2639,176 @@ title="Enabled Adjacencies">
           <c>#10</c><c>Technical maturity</c>
           
         </texttable>
-  
+
+   <t>There is no single technology that could meet all the criteria on its
+   own. Distinguishing the DetNet Service and the DetNet Transport, as explained
+   in (<xref target="sec_dt_dp"/>), allows a number of combinations, which can
+   meet most of the criteria. There is no room here to evaluate all possible 
+   combinations. Therefore, only some combinations are highlighted here, which
+   are selected based on the number of criteria that are met and the maturity of 
+   the technology (#10).
+   </t>  
+		
+   <t>The following table summarizes the evaluation of the data plane options
+   that can be used for the DetNet Transport Layer against the evaluation
+   criteria. Each value in the table is from the corresponding section.
+   </t>
+ 
  <texttable anchor="SumDTL" title="DetNet Transport Layer">
-          <preamble>Applicability per Alternative</preamble>
+          <preamble>Applicability per Transport Alternative</preamble>
 
           <ttcol align="center">Solution</ttcol>
 
           <ttcol align="left"> #1</ttcol>
           <ttcol align="left"> #2</ttcol>
-          <ttcol align="left"> #3</ttcol>
           <ttcol align="left"> #4</ttcol>
           <ttcol align="left"> #5</ttcol>
           <ttcol align="left"> #6</ttcol>
-          <ttcol align="left"> #8</ttcol>
           <ttcol align="left"> #9</ttcol>
           <ttcol align="left">#10</ttcol>
 
           <c>IPv6</c> 
-          <!-- 1--> <c>M/W</c>
+          <!-- 1--> <c>M</c>
           <!-- 2--> <c>M/W</c>
-          <!-- 3--> <c></c>
           <!-- 4--> <c>W</c>
           <!-- 5--> <c>W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 8--> <c>M</c>
           <!-- 9--> <c>M/W</c>
-          <!--10--> <c>M/W</c>
-          
+          <!--10--> <c>M</c>
           
           <c>IPv4</c> 
           <!-- 1--> <c>M</c>
           <!-- 2--> <c>W/N</c>
-          <!-- 3--> <c></c>
-          <!-- 4--> <c>M/W</c>
+          <!-- 4--> <c>W</c>
           <!-- 5--> <c>W/N</c>
           <!-- 6--> <c>M</c>
-          <!-- 8--> <c>M</c>
           <!-- 9--> <c>W/N</c>
           <!--10--> <c>M/W</c>
-          
-          
 
           <c>MPLS</c>
           <!-- 1--> <c>M</c>
           <!-- 2--> <c>M</c>
-          <!-- 3--> <c>?</c>
           <!-- 4--> <c>M</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 8--> <c>M/W</c>
           <!-- 9--> <c>M/W</c>
           <!--10--> <c>M</c>
-          
-          
 
           <c>BIER</c> 
           <!-- 1--> <c>M</c>
           <!-- 2--> <c>M</c>
-          <!-- 3--> <c></c>
           <!-- 4--> <c>M</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 8--> <c>M</c>
           <!-- 9--> <c>M</c>
-          <!--10--> <c>M</c>
+          <!--10--> <c>W</c>
           
           <c>BIER-TE</c> 
           <!-- 1--> <c>M/W</c>
           <!-- 2--> <c>N</c>
-          <!-- 3--> <c></c>
           <!-- 4--> <c>N</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>W</c>
-          <!-- 8--> <c>M</c>
           <!-- 9--> <c>W</c>
-          <!--10--> <c>M</c>
-          
-          
+          <!--10--> <c>W</c>
 
-          <postamble>Summarizing capabilities
+          <postamble>Summarizing Transport capabilities
           </postamble>
         </texttable>
-    
+
+   <t>The following table summarizes the evaluation of the data plane options
+   that can be used for the DetNet Service Layer against the criteria 
+   evaluation criteria. Each value in the table is from the corresponding 
+   section.
+  </t>        
+ 
  <texttable anchor="SumDSL" title="DetNet Service Layer">
-          <preamble>Applicability per Alternative</preamble>
+          <preamble>Applicability per Service Alternative</preamble>
 
           <ttcol align="center">Solution</ttcol>
 
           <ttcol align="left"> #1</ttcol>
           <ttcol align="left"> #2</ttcol>
           <ttcol align="left"> #3</ttcol>
-          <ttcol align="left"> #4</ttcol>
           <ttcol align="left"> #5</ttcol>
           <ttcol align="left"> #6</ttcol>
           <ttcol align="left"> #8</ttcol>
-          <ttcol align="left"> #9</ttcol>
           <ttcol align="left">#10</ttcol>
 
           <c>GRE</c> 
           <!-- 1--> <c>M</c>
           <!-- 2--> <c>W</c>
           <!-- 3--> <c>M</c>
-          <!-- 4--> <c></c>
           <!-- 5--> <c>W/N</c>
           <!-- 6--> <c>M</c>
           <!-- 8--> <c>W</c>
-          <!-- 9--> <c></c>
           <!--10--> <c>M</c>
-          
-          
-          <c>MPLS</c> 
-          <!-- 1--> <c>M</c>
-          <!-- 2--> <c>M</c>
-          <!-- 3--> <c>M</c>
-          <!-- 4--> <c></c>
-          <!-- 5--> <c>M/W</c>
-          <!-- 6--> <c>M</c>
-          <!-- 8--> <c>M/W</c>
-          <!-- 9--> <c>?</c>
-          <!--10--> <c>M</c>
-          
           
           <c>PWE3</c> 
           <!-- 1--> <c>M</c>
           <!-- 2--> <c>M</c>
           <!-- 3--> <c>M</c>
-          <!-- 4--> <c></c>
           <!-- 5--> <c>W</c>
           <!-- 6--> <c>M/W</c>
           <!-- 8--> <c>M</c>
-          <!-- 9--> <c></c>
           <!--10--> <c>M</c>
-          
           
           <c>EVPN</c> 
           <!-- 1--> <c>M</c>
           <!-- 2--> <c>W</c>
           <!-- 3--> <c>M/W</c>
-          <!-- 4--> <c>?</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
           <!-- 8--> <c>M/W</c>
-          <!-- 9--> <c>?</c>
           <!--10--> <c>W</c>
+
+		  <c>RTP</c> 
+          <!-- 1--> <c>M</c>
+          <!-- 2--> <c>M</c>
+          <!-- 3--> <c>M</c>
+          <!-- 5--> <c>W</c>
+          <!-- 6--> <c>M</c>
+          <!-- 8--> <c>W</c>
+          <!--10--> <c>M</c>
           
 
-          <postamble>Summarizing capabilities
+          <postamble>Summarizing Service capabilities
           </postamble>
         </texttable>
+  
+   <t>PseudoWire (<xref target="sec_alt_pwe"/>) is the technology that is 
+   mature and meets most of the criteria for the DetNet Service layer as shown 
+   in the table above. From upper layer protocols RTP can be a candidate for 
+   non-MPLS PSNs. The identified work is to figure out how to implement 
+   duplicate detection for these protocols (e.g., based on <xref target="RFC3985"/>).
+   </t>
+   
+   <t>MPLS is the most common technology that is used as PSN for PseudoWires;
+   furthermore, MPLS is a mature technology and meets most DetNet Transport
+   layer criteria. IP can be also used as PSN and IP is a mature
+   technology as well. Both DetNet Service layer candidates can be supported by 
+   IP.
+   </t>
+  
+   <t>The figure below summarizes the most suitable data plane options for 
+   DetNet.
+   </t>
+   
+ <figure anchor="fig_sum" align="center"
+title="Summary of the data plane options most suitable for DetNet">
+<artwork align="center"><![CDATA[
+    .
+    .
++-----------------+
+|     PW    | RTP | DetNet Service
+~~~~~~~~~~~~~~~~~~~
+|  MPLS  |   IP   | DetNet Transport
++-----------------+
+    .
+    .
+]]></artwork>
+</figure> 
+  
   
 </section>
 
