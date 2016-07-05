@@ -267,10 +267,107 @@ title="A Simple DetNet Enabled Network">
                        [Network]                               
                         `-----'               
                                               
-|------ Domain 1 ------|     |------- Domain 2 --------------------|    
+|--- Admin Domain 1 ---|     |--- Admin Domain 2 ------------------|    
 
 ]]></artwork>
 </figure>
+
+<figure anchor="fig_arch_pw" align="center" 
+title="Pseudo Wire switching reference model">
+<artwork><![CDATA[
+      Native  |<--------Multi-Segment Pseudowire----->|  Native
+      Service |         PSN              PSN          |  Service
+       (AC)   |     |<-Tunnel->|     |<-Tunnel->|     |  (AC)
+        |     V     V     1    V     V     2    V     V   |
+        |     +-----+          +-----+          +---- +   |
++---+   |     |T-PE1|==========|S-PE1|==========|T-PE2|   |    +---+
+|   |---|-----|........PW1...............PW3..........|---|----|   |
+|CE1|   |     |     |          |     |          |     |   |    |CE2|
+|   |---------|........PW2...............PW4..........|--------|   |
++---+   |     |     |==========|     |==========|     |   |    +---+
+    ^         +-----+          +-----+          +-----+        ^
+    |     Provider Edge 1         ^        Provider Edge 3     |
+    |                             |                            |
+    |                             |                            |
+    |                     PW switching point                   |
+    |                                                          |
+    |                                                          |
+    |<------------------- Emulated Service ------------------->|
+]]></artwork>
+</figure>
+
+<figure align="center" anchor="fig_8021_detnet"
+ title="IEEE 802.1TSN over DetNet">
+<artwork><![CDATA[
+        TSN    |<----- End to End DetNet Service ----->|  TSN
+       Service |        Transit          Transit       | Service
+ TSN    (AC)   |     |<-Tunnel->|     |<-Tunnel->|     |  (AC)    TSN
+ End     |     V     V     1    V     V     2    V     V   |      End
+System   |     +-----+          +-----+          +---- +   |    System
+ +---+   |     |     |==========|     |==========|     |   |    +---+
+ |   |---|-----|..DetNet Flow1.....X......DF3..........|---|----|   |
+ |CE1|   |     |     |          |     |          |     |   |    |CE2|
+ |   |---------|........DF2........X......DF4..........|--------|   |
+ +---+   |     |     |==========|     |==========|     |   |    +---+
+     ^         +-----+          +-----+          +-----+        ^
+     |     Provider Edge 1         ^        Provider Edge 3     |
+     |        Edge Node            |            Edge Node       |
+     |                             |                            |
+     |                     PW switching point                   |
+     |                         Relay Node                       |
+     |                                                          |
+     |<--------------- Emulated TSN Service ------------------->|
+]]></artwork>
+</figure>
+
+<figure align="center" anchor="fig_native_detnet"
+ title="Native DetNet">
+<artwork><![CDATA[
+       DetNet                                           DetNet
+       Service          Transit          Transit        Service
+DetNet  (AC)         |<-Tunnel->|     |<-Tunnel->|       (AC)   DetNet
+End      |           V     1    V     V     2    V         |    End
+System   |     +-----+          +-----+          +---- +   |    System
+ +---+   |     |     |==========|     |==========|     |   |    +---+
+ |  .....DFa...|.X........DF1......X......DF3........X.....DFa....  |
+ |CE1|   |     |  \  |          |     |          |  /  |   |    |CE2|
+ |   |         |   X......DF2......X......DF4......X   |        |   |
+ +---+         |     |==========|     |==========|     |        +---+
+     ^         +-----+          +-----+          +-----+        ^
+     |     Provider Edge 1         ^         Provider Edge 3    |
+     |        Relay Node           |            Relay Node      |
+     |                             |                            |
+     |                     PW switching point                   |
+     |                         Relay Node                       |
+     |                                                          |
+     |<------------- End to End DetNet Service ---------------->|
+]]></artwork>
+</figure>
+
+<figure align="center" anchor="fig_iw_detnet"
+ title="IEEE 802.1TSN to native DetNet">
+ <artwork><![CDATA[
+        TSN    |<----- End to End DetNet Service -------------->| 
+       Service |        Transit          Transit                |
+ TSN    (AC)   |     |<-Tunnel->|     |<-Tunnel->|              | DetNet    
+ End     |     V     V     1    V     V     2    V              | End
+System   |     +-----+          +-----+          +---- +        V System
+ +---+   |     |     |==========|     |==========|     |   |    +---+
+ |   |---|-----|.X........DF1......X......DF3........X.....DFa....  |
+ |CE1|   |     |  \  |          |     |          |  /  |   |    |CE2|
+ |   |---------|   X.....DF2.......X......DF4......X   |   |    |   |
+ +---+   |     |     |==========|     |==========|     |   |    +---+
+     ^         +-----+          +-----+          +-----+   |    ^
+     |     Provider Edge 1         ^       Provider Edge 3 |    |
+     |          Edge Node          |           Relay Node  |    |
+     |                             |                      (AC)  |
+     |                     PW switching point           DetNet  |
+     |                         Relay Node               Service |
+     |                                                          |
+     |<--------------- Emulated TSN Service ------------------->|
+ ]]></artwork>
+</figure>
+
 
 	<t>
      From a service model perspective a fundamental question is where the service
