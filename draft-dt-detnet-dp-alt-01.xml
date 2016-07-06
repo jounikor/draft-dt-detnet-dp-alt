@@ -521,7 +521,7 @@ title="DetNet adaptation to data plane">
     <t hangText="#10">Technical maturity</t>
    </list> 
  </t> 
- <t>[Editor's Note: numbering is off.]</t>
+ <t>[Editor's Note: numbering is off because #7 is removed.]</t>
 
  <t>
   Most of the criteria is relevant for both the DetNet Service and DetNet
@@ -774,23 +774,24 @@ title="DetNet adaptation to data plane">
       e.g., explicit routing or seamless redundancy if any of these is applied.     
       <vspace blankLines="1"/>
       IPv6 has two types of Extension Headers that are processed by intermediate
-      routers between the source and the final destination and may be of interest
-      for the data plane signaling, the Routing Header that is used to direct the
-      traffic via intermediate routers in a strict or loose source routing way,
-      and the Hop-by-Hop Options Header that carries optional information that
-      must be examined by every node along a packet's delivery path. The 
-      Hop-by-Hop Options Header, when present, must immediately follow the IPv6
-      Header and it is not possible to limit its processing to the end points of
-      Source Routed segments. 
+      routers between the source and the final destination and may be of
+      interest for the data plane signaling, the Routing Header that is used to
+      direct the traffic via intermediate routers in a strict or loose source
+      routing way, and the Hop-by-Hop Options Header that carries optional
+      information that must be examined by every node along a packet's delivery
+      path. The Hop-by-Hop Options Header, when present, must immediately follow
+      the IPv6 Header and it is not possible to limit its processing to the end
+      points of Source Routed segments. 
       <vspace blankLines="1"/>
       IPv6 also provides a Destination Options Header that is used to carry
-      optional information to be examined only by a packet's destination node(s).
-      The encoding of the options used in the Hop-by-Hop and in the Destination
-      Options Header indicates the expected behavior when a processing IPv6 node
-      does not recognize the Option Type, e.g. skip or drop; it should be noted
-      that due to performance restrictions nodes may ignore the Hop-by-Hop Option
-      Header, drop packets containing a Hop-by-Hop Option Header, or assign
-      packets containing a Hop-by-Hop Option Header to a slow processing path
+      optional information to be examined only by a packet's destination
+      node(s).  The encoding of the options used in the Hop-by-Hop and in the
+      Destination Options Header indicates the expected behavior when a
+      processing IPv6 node does not recognize the Option Type, e.g. skip or
+      drop; it should be noted that due to performance restrictions nodes may
+      ignore the Hop-by-Hop Option Header, drop packets containing a Hop-by-Hop
+      Option Header, or assign packets containing a Hop-by-Hop Option Header to
+      a slow processing path
       <xref target="I-D.ietf-6man-rfc2460bis"/> (e.g. punt packets from hardware
       to software forwarding which is highly detrimental to the performance).
       <vspace blankLines="1"/>
@@ -842,15 +843,13 @@ title="DetNet adaptation to data plane">
      
      <t hangText="#5 Packet replication and elimination (W)">
       <vspace blankLines="1"/>
-      The functionality of replicating a packet exists in IPv6 but is limited
-      to multicast flows.
-      In order to enforce replicated packets to take different routes, 
-      IP-in-IP encapsulation and Segment Routing could be leveraged to signal
-      a segment in a packet. 
-      A replication point would insert a different routing header in each copy it
-      makes, the routing header providing explicitly the hops to the elimination
-      point for that particular replica of the packet, in a strict or in a loose
-      source routing fashion.
+      The functionality of replicating a packet exists in IPv6 but is limited to
+      multicast flows.  In order to enforce replicated packets to take different
+      routes, IP-in-IP encapsulation and Segment Routing could be leveraged to
+      signal a segment in a packet.  A replication point would insert a
+      different routing header in each copy it makes, the routing header
+      providing explicitly the hops to the elimination point for that particular
+      replica of the packet, in a strict or in a loose source routing fashion.
       An elimination point would pop the routing headers from the various copies
       it gets and forward or receive the packet if it is the final destination.
       <vspace blankLines="1"/>
@@ -860,41 +859,43 @@ title="DetNet adaptation to data plane">
       <vspace blankLines="1"/>
       IPv6 enjoys the existing toolbox for generic IP network management.
       However, IPv6 specific management features are still not at the level of
-      that IPv4 has. This specifically concerns the areas that are IPv6 specific,
-      for example, related to neighbor discovery protocol (ND), stateless address
-      autoconfiguration (SLAAC), subscriber identification, and security.
-      While the standards are already mostly in place the implementations in
-      deployed equipment can be lacking or inadequate for commercial
-      deployments. This is largely only an issue with old existing equipment.
+      that IPv4 has. This specifically concerns the areas that are IPv6
+      specific, for example, related to neighbor discovery protocol (ND),
+      stateless address autoconfiguration (SLAAC), subscriber identification,
+      and security.  While the standards are already mostly in place the
+      implementations in deployed equipment can be lacking or inadequate for
+      commercial deployments. This is largely only an issue with old existing
+      equipment.
     <vspace blankLines="1"/></t>
     
     
      <t hangText="#8 Class and quality of service capabilities (M)">
       <vspace blankLines="1"/>
-      The traffic class field of the fixed IPv6 header is designed for this purpose.
+      The traffic class field of the fixed IPv6 header is designed for this
+      purpose.
      <vspace blankLines="1"/></t>
     
      <t hangText="#9 Packet traceability (M/W)">
       <vspace blankLines="1"/>
       The traceability of replicated packets involves the capability to resolve
-      which replication point issued a particular copy of a packet, which segment
-      was intended for that replica, and which particular packet of which
-      particular flow this is. Sequence also depends on the sequencing
-      mechanism. As an example, the replication point may be indicated as the source of the
-      packet if IP-in-IP encapsulation is used to forward along segments.
-      Another alternate to IP-in-IP tunneling along segments would be to protect the
-      original source address in a destination option similar to the Home Address
-      option <xref target="RFC6275"/> and then use the address of the replication
-      point as source in the IP header.
+      which replication point issued a particular copy of a packet, which
+      segment was intended for that replica, and which particular packet of
+      which particular flow this is. Sequence also depends on the sequencing
+      mechanism. As an example, the replication point may be indicated as the
+      source of the packet if IP-in-IP encapsulation is used to forward along
+      segments.  Another alternate to IP-in-IP tunneling along segments would be
+      to protect the original source address in a destination option similar to
+      the Home Address option <xref target="RFC6275"/> and then use the address
+      of the replication point as source in the IP header.
       <vspace blankLines="1"/>
       The traceability also involves the capability to determine if a particular
       segment is operational. While IPv6 as such has no support for reversing a
       path, it appears source route extensions such as the one defined for
-      segment routing could be used for tracing purposes. Though it is not a 
+      segment routing could be used for tracing purposes. Though it is not a
       usual practice, IPv6 <xref target="RFC2460"/> expects that a Source Route
-      path may be reversed, and the standard insists that a node must not include
-      the reverse of a Routing Header in the response unless the received Routing
-      Header was authenticated.
+      path may be reversed, and the standard insists that a node must not
+      include the reverse of a Routing Header in the response unless the
+      received Routing Header was authenticated.
       <vspace blankLines="1"/></t>
     
      <t hangText="#10 Technical maturity (M/W)">
@@ -1969,17 +1970,11 @@ title="Enabled Adjacencies">
      <figure anchor="fig_gre_encap" title="Encapsulation of a GRE packet">
      <artwork align="center"><![CDATA[
 +-------------------------------+
-|                               |
 |        Delivery Header        |
-|                               |
 +-------------------------------+
-|                               |
 |          GRE Header           |
-|                               |
 +-------------------------------+
-|                               |
 |         Payload packet        |
-|                               |
 +-------------------------------+
     ]]></artwork></figure>
 
@@ -2361,28 +2356,28 @@ title="Enabled Adjacencies">
      is, for example, capable of frame sequencing and duplicate detection.  The
      encapsulation layer may also provide timing  <xref target="RFC5087"/>.
      Furthermore, advances DetNet node functions are conceptually already
-     supported by PW framework (with some added functional required), such as the
-     DetNet Relay node modeled after the Multi-Segment PWE3 <xref
+     supported by PW framework (with some added functional required), such as
+     the DetNet Relay node modeled after the Multi-Segment PWE3 <xref
      target="RFC5254"/>.
     </t>
     <t>
      PWs can be also used if the PSN is IP, which enables the application of PWs
      in networks that do not have MPLS enabled in their core routers. One
-     approach to provide PWs over IP is to provide MPLS over IP in some way and 
+     approach to provide PWs over IP is to provide MPLS over IP in some way and
      then leverage what is available for PWs over MPLS. The following standard
      solutions are available both for IPv4 and IPv6 to follow this approach. The
-     different solutions have different overhead as discussed in the following 
-     subsection. The MPLS-in-IP encapsulation is specified by
-     <xref target="RFC4023"/>. The IPv4 Protocol Number field or the IPv6 Next 
-     Header field is set to 137, which indicates an MPLS unicast packet. (The use
-     of the MPLS-in-IP encapsulation for MPLS multicast packets is not supported.)
-     The MPLS-in-GRE encapsulation is specified in <xref target="RFC4023"/>, 
-     where the IP header (either IPv4 or IPv6) is followed by a GRE header, which
-     is followed by an MPLS label stack. The protocol type field in the GRE
-     header is set to MPLS Unicast (0x8847) or Multicast (0x8848). MPLS over
+     different solutions have different overhead as discussed in the following
+     subsection. The MPLS-in-IP encapsulation is specified by <xref
+     target="RFC4023"/>. The IPv4 Protocol Number field or the IPv6 Next Header
+     field is set to 137, which indicates an MPLS unicast packet. (The use of
+     the MPLS-in-IP encapsulation for MPLS multicast packets is not supported.)
+     The MPLS-in-GRE encapsulation is specified in <xref target="RFC4023"/>,
+     where the IP header (either IPv4 or IPv6) is followed by a GRE header,
+     which is followed by an MPLS label stack. The protocol type field in the
+     GRE header is set to MPLS Unicast (0x8847) or Multicast (0x8848). MPLS over
      L2TPv3 over IP encapsulation is specified by <xref target="RFC4817"/>. The
-     MPLS-in-UDP encapsulation is specified by <xref target="RFC7510"/>, where 
-     the UDP Destination Port indicates tunneled MPLS packet and the UDP Source 
+     MPLS-in-UDP encapsulation is specified by <xref target="RFC7510"/>, where
+     the UDP Destination Port indicates tunneled MPLS packet and the UDP Source
      Port is an entropy value that is generated by the encapsulator to uniquely
      identify a flow. MPLS-in-UDP encapsulation can be applied to enable
      UDP-based ECMP (Equal-Cost Multipath) or Link Aggregation. All these
@@ -2444,8 +2439,9 @@ title="Enabled Adjacencies">
      
      <t hangText="#5 Packet replication and elimination (W)">
       <vspace blankLines="1"/>
-      The PW duplicate detection mechanism is already conceptually specified <xref
-      target="RFC3985"/> but no emulated service makes use of it currently.  
+      The PW duplicate detection mechanism is already conceptually specified
+      <xref target="RFC3985"/> but no emulated service makes use of it
+      currently.  
      <vspace blankLines="1"/></t>
      
      <t hangText="#6 Operations, Administration and Maintenance (M/W)">
@@ -2478,9 +2474,9 @@ title="Enabled Adjacencies">
       <vspace blankLines="1"/>
       PWs, IP and MPLS are proven technologies with wide variety of deployments
       and years of operational experience. Furthermore, the estimated work for
-      missing functionality (packet replication and elimination) does not appear to
-      be extensive, since the existing protection mechanism already get close to
-      what is needed from the deterministic networking data plane solution.
+      missing functionality (packet replication and elimination) does not appear
+      to be extensive, since the existing protection mechanism already get close
+      to what is needed from the deterministic networking data plane solution.
      <vspace blankLines="1"/></t>
     </list></t>
    </section>
