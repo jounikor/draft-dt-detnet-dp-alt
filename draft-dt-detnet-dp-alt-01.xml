@@ -323,8 +323,9 @@ title="Pseudo Wire switching reference model">
  <t>
   <xref target="fig_8021_detnet"/> illustrates how DetNet provides services for
   IEEE 802.1TSN end systems over packet switched, potentially routed network.
-  The 'X' in the edge and relay nodes represents a potential DetNet flow packet
-  replication and elimination point.   
+  The edge nodes insert and also remove required DetNet data plane
+  encapsulation. The 'X' in the edge and relay nodes represents a potential
+  DetNet flow packet replication and elimination point.   
  </t>
 
 <figure align="center" anchor="fig_8021_detnet"
@@ -336,9 +337,9 @@ TSN    (AC)   |     |<-Tunnel->|     |<-Tunnel->|     |  (AC)     TSN
 End     |     V     V     1    V     V     2    V     V   |       End
 System  |     +-----+          +-----+          +---- +   |    System
 +---+   |     |T-PE1|==========|S-PE1|==========|T-PE2|   |    +---+
-|   |---|-----|..X..DetNet Flow1..X..|...DF3.......X..|---|----|   |
-|CE1|   |     |     |          |     |          |     |   |    |CE2|
-|   |---------|..X.....DF2........X..|...DF4.......X..|--------|   |
+|   |---|-----|.X_..DetNet Flow1..X..|...DF3........X.|---|----|   |
+|CE1|   |     |  \  |          |     |          |  /  |   |    |CE2|
+|   |---------|...X_...DF2........X..|...DF4......X_..|--------|   |
 +---+   |     |     |==========|     |==========|     |   |    +---+
     ^         +-----+          +-----+          +-----+        ^
     |        Edge Node        Relay Node       Edge Node       |
@@ -349,10 +350,11 @@ System  |     +-----+          +-----+          +---- +   |    System
 
  <t>
   <xref target="fig_native_detnet"/> illustrates how end to end native DetNet
-  service could be deployed. The assumption here is that end systems are able to
-  source and receive native DetNet flows.  Like earlier the 'X' in the end
-  systems, edge and relay nodes represents potential DetNet flow packet
-  replication and elimination points.   
+  service could be deployed. The assumption here is that end systems are able
+  to source and receive native DetNet flows, which in the example case of
+  PseudoWires (PW) would mean adequete PW encapsulation.  Like earlier the 'X'
+  in the end systems, edge and relay nodes represents potential DetNet flow
+  packet replication and elimination points.   
  </t>
 
 <figure align="center" anchor="fig_native_detnet"
@@ -365,8 +367,8 @@ End      |          V     1    V     V     2    V         |    End
 System   |    +-----+          +-----+          +-----+   |    System
 +---+    |    |S-PE1|==========|S-PE2|==========|S-PE3|   |    +---+
 |  X....DFa.....X_.......DF1.......X_....DF3........X.....DFa...X  |
-|CE1|    |    |  \  |          |  /  |          |  /  |   |    |CE2|
-|   |         |   \......DF2.....X_......DF4....../   |        |   |
+|CE1|=========|  \  |          |  /  |          |  /  |========|CE2|
+|   |    |    |   \......DF2.....X_......DF4....../   |   |    |   |
 +---+         |     |==========|     |==========|     |        +---+
     ^         +-----+          +-----+          +-----+        ^
     |        Relay Node       Relay Node       Relay Node      |
@@ -377,10 +379,10 @@ System   |    +-----+          +-----+          +-----+   |    System
 
  <t>
   <xref target="fig_iw_detnet"/> illustrates how a IEEE 802.1TSN end system
-  could communicate with a native DetNet end system through an interworking
-  function implemented in an edge node.  Just like earlier the 'X' in the end
-  systems, edge and relay nodes represents potential DetNet flow packet
-  duplication and elimination points.   
+  could communicate with a native DetNet end system through an edge node, which
+  adds and removes required DetNet data plane encapsulation.  Just like earlier
+  the 'X' in the end systems, edge and relay nodes represents potential DetNet
+  flow packet duplication and elimination points.   
  </t>
 <figure align="center" anchor="fig_iw_detnet"
  title="IEEE 802.1TSN to native DetNet">
@@ -392,7 +394,7 @@ End      |     V     V     1    V     V     2    V      Service | End
 System   |     +-----+          +-----+          +-----+   |    V System
  +---+   |     |T-PE1|==========|S-PE1|==========|S-PE2|   |    +---+
  |   |---|-----|.X_.......DF1......X..|...DF3........X.|...DFa...X  |
- |CE1|   |     |  \  |          |     |          |  /  |   |    |CE2|
+ |CE1|   |     |  \  |          |     |          |  /  |========|CE2|
  |   |         |   \.....DF2.......X..|...DF4....../   |   |    |   |
  +---+         |     |==========|     |==========|     |        +---+
      ^         +-----+          +-----+          +-----+        ^
