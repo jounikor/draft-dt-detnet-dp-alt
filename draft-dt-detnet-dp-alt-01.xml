@@ -239,16 +239,29 @@
    <xref target="I-D.finn-detnet-architecture"/> with the following
    clarifications and/or additions:
   </t>
-
+   <t hangText="DetNet Reliability"><vspace blankLines="1"/>
+    A set of mechanisms to increase the probability of lossless DetNet
+    flow transport across a network.  Example mechanisms include
+    packet replication and dulpicate elimination.
+    <vspace blankLines="1"/></t>
   <t><list style="hanging">
    <t hangText="Transit Node"><vspace blankLines="1"/>
-    Equals to DetNet Transport Node.
+    A node that provides link layer and network layer switching across
+    multiple links and/or sub-networks.  An MPLS LSR is an example of
+    a transit node.
     <vspace blankLines="1"/></t>
    <t hangText="Relay Node"><vspace blankLines="1"/>
-    Equals to DetNet Transport Relay Node.
+    A DetNet Service aware middle box that interconnects different
+    network layer protocols or networks (instances).  A relay node
+    also understands enough of the DetNet service and service
+    parameter semantics to make an intelligent processing (e.g.,
+    forwarding) decision.  It may provide service supporting functions
+    such as DetNet reliability.
     <vspace blankLines="1"/></t>
    <t hangText="Edge Node"><vspace blankLines="1"/>
-    Equals to DetNet Transport Edge Node.
+    A relay node with application level knowledge (i.e., basically a
+    "proxy" node). Egde nodes are needed when interfacing with nodes or
+    end systems that are not DetNet-enabled.
     </t>
   </list></t>
  </section>
