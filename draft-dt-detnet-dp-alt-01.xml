@@ -233,17 +233,48 @@
   </t>
  </section>
 
+ <section title="Terminology">
+  <t>
+   This document uses the terminology established in the DetNet architecture
+   <xref target="I-D.finn-detnet-architecture"/> with the following
+   clarifications and/or additions:
+  </t>
+
+  <t><list style="hanging">
+   <t hangText="DetNet Reliability"><vspace blankLines="1"/>
+    A set of mechanisms to increase the probability of lossless DetNet flow
+    transport across a network. Example mechanisms include packet replication
+    and dulpicate elimination.
+    <vspace blankLines="1"/></t>
+   <t hangText="DetNet Transit Node"><vspace blankLines="1"/>
+    A node that provide link layer and network layer switching across multiple
+    links and/or sub-networks. An MPLS LSR is an example of a transit node.
+    <vspace blankLines="1"/></t>
+   <t hangText="DetNet Relay Node"><vspace blankLines="1"/>
+    A DetNet Service aware middle box that interconnects different network layer
+    protocols or networks (instances).  A relay node also understands enough of
+    the DetNet service and service parameter semantics to make an intelligent
+    processing (e.g., forwarding) decision. It may provide service supporting
+    functions such as DetNet reliability.
+    <vspace blankLines="1"/></t>
+   <t hangText="DetNet Edge Node"><vspace blankLines="1"/>
+   A relay node with application level
+    knowledge (i.e., basically a "proxy" node).  
+    </t>
+  </list></t>
+ </section>
+
 <section title="DetNet Data Plane Overview" anchor="sec_dt_dp">
  <t>
    A "Deterministic Network" will be composed of DetNet enabled node i.e., End
    Systems, Edge Nodes, Relay Nodes and Transit Nodes.  DetNet enabled nodes
-   will provide a DetNet services.  All DetNet enabled nodes will be
-   interconnected by sub-networks.  These sub-networks will provide DetNet
-   compatible service for support of DetNet traffic.  Examples of sub-networks
-   include 802.1TSN and a point-to-point OTN link.  Of course, multi-layer
-   DetNet systems may be possible too, where one DetNet appears as a
-   sub-network, and provides service to, a higher layer DetNet system. A simple
-   DetNet concept network is shown in <xref target="fig_detnet"/>.
+   will provide a DetNet services.  All DetNet enabled nodes are interconnected
+   by sub-networks.  These sub-networks will provide DetNet compatible service
+   for support of DetNet traffic.  Examples of sub-networks include 802.1TSN and
+   a point-to-point OTN link.  Of course, multi-layer DetNet systems may be
+   possible too, where one DetNet appears as a sub-network, and provides
+   service to, a higher layer DetNet system. A simple DetNet concept network
+   is shown in <xref target="fig_detnet"/>.
  </t>
 <figure anchor="fig_detnet" align="center"
 title="A Simple DetNet Enabled Network">
@@ -271,12 +302,11 @@ title="A Simple DetNet Enabled Network">
  <t>
   In an attempt to concretise DetNet date plane this document uses Multi-Segment
   Pseudowire Emulation Edge-to-Edge (PWE3) <xref target="RFC5254"/> reference
-  model shown in <xref target="fig_pw_detnet"/> as a basis for different DetNet
-  data plane deployment options and how layering could work.
+  model shown in <xref target="fig_pw_detnet"/> as an example for different DetNet
+  data plane deployment options and how layering could work. Other reference
+  models are possible but not explicitly referenced in this document.
  </t> 
   
-
-
 <figure anchor="fig_pw_detnet" align="center" 
 title="Pseudo Wire switching reference model">
 <artwork><![CDATA[
@@ -295,7 +325,6 @@ title="Pseudo Wire switching reference model">
     |                             |                            |
     |                             |                            |
     |                     PW switching point                   |
-    |                                                          |
     |                                                          |
     |<------------------- Emulated Service ------------------->|
 ]]></artwork>
@@ -333,10 +362,11 @@ System   |     +-----+          +-----+          +---- +   |    System
 </figure>
 
  <t>
-  <xref target="fig_native_detnet"/> illustrates how end to end DetNet service could be
-  deployed. Here the assumtion is that end systems are able to source and
-  receive native DetNet flows.  Like earlier the 'X' in the end systems, edge
-  and relay nodes represents potential DetNet flow split and merge points.   
+  <xref target="fig_native_detnet"/> illustrates how end to end native DetNet
+  service could be deployed. Here the assumtion is that end systems are able to
+  source and receive native DetNet flows.  Like earlier the 'X' in the end
+  systems, edge and relay nodes represents potential DetNet flow packet
+  replicationa and elimination points.   
  </t>
 
 <figure align="center" anchor="fig_native_detnet"
@@ -368,7 +398,7 @@ System   |     +-----+          +-----+          +-----+   |    System
   system could communicate with a native DetNet end system through an
   interworking function implemented in an edge node.  Just like earlier the 'X'
   in the end systems, edge and relay nodes represents potential DetNet flow
-  split and merge points.   
+  packet duplication and elimination points.   
  </t>
 <figure align="center" anchor="fig_iw_detnet"
  title="IEEE 802.1TSN to native DetNet">
@@ -385,7 +415,7 @@ System   |     +-----+          +-----+          +-----+        V System
  +---+         |     |==========|     |==========|     |   |    +---+
      ^         +-----+          +-----+          +-----+   |    ^
      |     Provider Edge 1         ^       Provider Edge 3 |    |
-     |        Edge Node          |             Relay Node  |    |
+     |        Edge Node            |           Relay Node  |    |
      |                             |                      (AC)  |
      |                     PW switching point           DetNet  |
      |                         Relay Node               Service |
@@ -395,12 +425,12 @@ System   |     +-----+          +-----+          +-----+        V System
 </figure>
 
 
-	<t>
-     From a DetNet service model perspective a fundamental question is where the service
-     i.e., DetNet flow starts or ends.  Two cases can be distinguished: (i)
-     the DetNet flow originates from an end system or (ii)
-     from an edge node as shown e.g., in <xref target="fig_íw_detnet"/>.
-    </t>
+	<!--t>
+     From a DetNet service model perspective a fundamental question is where the
+     service i.e., DetNet flow starts or ends.  Two cases can be distinguished:
+     (i) the DetNet flow originates from an end system or (ii) from an edge node
+     as shown e.g., in <xref target="fig_iw_detnet"/>.
+    </t-->
     <t>
      The protocol stack model of the data plane described in <xref
      target="I-D.finn-detnet-architecture"/> defines functional primitives for
@@ -412,17 +442,19 @@ System   |     +-----+          +-----+          +-----+        V System
      perspective.
     </t>
   <t>
-  The DetNet data plane is logically divided into two layers:
-   <list style="symbols">
-    <t>
-     The DetNet Service layer provides adaptation of DetNet services.  It is
+  The DetNet data plane is logically divided into two layers as also shown in
+  <xref target="fig_adaptation"/>:
+   <list style="hanging">
+    <t hangText="DetNet Servive Layer"><vspace blankLines="1"/>
+     The DetNet service layer provides adaptation of DetNet services.  It is
      composed of a shim layer to carry deterministic  flow specific attributes,
      which are needed during forwarding. DetNet enabled end systems originate
      and terminate the DetNet Service layer and are peers at the DetNet Service
-     layer.
-    </t>
-    <t>
-     The DetNet Transport layer is supported by all DetNet nodes.  It operates
+     layer. DetNet relay and edge nodes also implement DetNet Service layer
+     functions.
+    <vspace blankLines="1"/></t>
+    <t hangText="DetNet Transport Layer"><vspace blankLines="1"/>
+     The DetNet transport layer is supported by all DetNet nodes.  It operates
      below the DetNet Service layer. The DetNet Transport layer is used to
      forward traffic end to end across a DetNet domain.
     </t>
@@ -433,6 +465,20 @@ System   |     +-----+          +-----+          +-----+        V System
    considered as formal requirement.  For example, some technologies may violate
    these strict layers and still be able to deliver a DetNet service.
   </t>
+<figure anchor="fig_adaptation" align="center"
+title="DetNet adaptation to data plane">
+<artwork align="center"><![CDATA[
+    .
+    .
++-----------+
+|  Service  | PW, RTP, UDP, GRE
++-----------+
+| Transport | IPv6, IPv4, MPLS LSPs, BIER, BIER-TE
++-----------+
+    .
+    .
+]]></artwork>
+</figure>
   <t>  
    The two logical layers defined here aim to help to identify which data
    plane technology can be used for what purposes in the DetNet context.  This
@@ -445,104 +491,77 @@ System   |     +-----+          +-----+          +-----+        V System
    encapsulation, which contains all information needed by DetNet nodes (e.g.,
    RTP based DetNet flow trasported over a native UDP/IP network). In other
    scenarios the encapsulation formats might differ significantly. As an
-   example, a CPRI IQ data mapped directly to Ethernet frames may have to be
-   transported over an MPLS based packet switched network (PSN).
+   example, a CPRI "application's" IQ data mapped directly to Ethernet frames
+   may have to be transported over an MPLS based packet switched network (PSN).
   </t>
- 
   <t>
-   A number of data plane technology candidates are discussed later in this
-   document. They can be mapped to the two layers as shown in
-   <xref target="fig_adaptation"/>.
-  </t>
-
-<figure anchor="fig_adaptation" align="center"
-title="DetNet adaptation to data plane">
-<artwork align="center"><![CDATA[
-    .
-    .
-    .
-+-----------+
-|  Service  | PW, RTP, UDP, GRE
-~~~~~~~~~~~~~
-| Transport | IPv6, IPv4, MPLS LSPs, BIER, BIER-TE
-+-----------+
-    .
-    .
-]]></artwork>
-</figure>
- <t>
-  There are many valid options to create a data plane solution for DetNet
-  traffic by selecting a technology approach for the DetNet Service layer and
-  also selecting a technology approach for the DetNet Transport layer. There are
-  a high number of valid combinations. Therefore, not the combinations but the
-  different technologies are evaluated along the criteria collected in <xref
-  target="sec_crit"/>. Different criteria apply for the DetNet Service layer and
-  the DetNet Transport layer, however, some of the criteria are valid for both
-  layers.
- </t> 
- <t>
+   There are many valid options to create a data plane solution for DetNet
+   traffic by selecting a technology approach for the DetNet Service layer and
+   also selecting a technology approach for the DetNet Transport layer. There are
+   a high number of valid combinations. Therefore, not the combinations but the
+   different technologies are evaluated along the criteria collected in <xref
+   target="sec_crit"/>. Different criteria apply for the DetNet Service layer and
+   the DetNet Transport layer, however, some of the criteria are valid for both
+   layers.
+  </t> 
+  <t>
    One of the most fundamental differences between different potential
    data plane options is the basic addressing and headers used by DetNet
    end systems.  For example, is the basic service a Layer 2 (e.g., Ethernet) or
    Layer 3 (i.e., IP) service. This decision impacts how DetNet end systems
-   are addressed, and the basic forwarding logic for the DetNet Service layer.
- </t>
-
+   are addressed, and the basic forwarding logic for the DetNet Service layer
+   [Editor's note: should probably be transport layer].
+   In a case of incompatible addressing an edge node is needed for interworking
+   between different addressing schemes as illustrated in <xref
+   target="fig_iw_detnet"/>.
+  </t>
+ </section>
+ <section title="Criteria for data plane solution alternatives" anchor="sec_crit">
+  <t>
+   This section provides criteria to help to evaluate potential options.  Each
+   deterministic networking data plane solution alternative is described and
+   evaluated using the criteria described in this section. The used criteria
+   enumerated in this section are selected so that they highlight the existence
+   or lack of features that are expected or seen important to a solution
+   alternative for the data plane solution. 
+  </t>
+ 
  <t>
   The criteria for the DetNet Service layer:
    <list style="hanging">
-    <t hangText="#1"> Encapsulation and overhead</t>
-    <t hangText="#2"> Flow identification (Service ID part of the DetNet flows)</t>
-    <t hangText="#3"> Packet sequencing (sequence number)</t>
-    <t hangText="#5"> Packet replication and elimination (note: only the packet deletion for
+    <t hangText="#1">Encapsulation and overhead</t>
+    <t hangText="#2">Flow identification (Service ID part of the DetNet flows)</t>
+    <t hangText="#3">Packet sequencing (sequence number)</t>
+    <t hangText="#5">Packet replication and elimination (note: only the packet deletion for
        seamless redundancy)</t>
-    <t hangText="#6"> Operations, Administration and Maintenance (capabilities)</t>
-    <t hangText="#8"> Class and quality of service capabilities (DetNet Service specific)</t>
-    <t hangText="#10"> Technical maturity</t>
+    <t hangText="#6">Operations, Administration and Maintenance (capabilities)</t>
+    <t hangText="#8">Class and quality of service capabilities (DetNet Service specific)</t>
+    <t hangText="#10">Technical maturity</t>
   </list>  
  </t> 
  
  <t>
   The criteria for the DetNet Transport layer:
    <list style="hanging">
-    <t hangText="#1"> Encapsulation and overhead</t>
-    <t hangText="#2"> Flow identification</t>
-    <t hangText="#4"> Explicit routes (network path)</t>
-    <t hangText="#5"> Packet replication and elimination (note: only the packet replication
-           or flow merging for seamless redundancy)</t>
-    <t hangText="#6"> Operations, Administration and Maintenance (capabilities,
+    <t hangText="#1">Encapsulation and overhead</t>
+    <t hangText="#2">Flow identification</t>
+    <t hangText="#4">Explicit routes (network path)</t>
+    <t hangText="#5">Packet replication and elimination (note: only the packet replication
+           and/or flow merging for seamless redundancy)</t>
+    <t hangText="#6">Operations, Administration and Maintenance (capabilities,
           performance management, packet traceability)</t>
-    <t hangText="#9"> Packet traceability (can be part of OAM)</t>
-    <t hangText="#10"> Technical maturity</t>
+    <t hangText="#9">Packet traceability (can be part of OAM)</t>
+    <t hangText="#10">Technical maturity</t>
    </list> 
  </t> 
- 
- <t>
-  Some of the criteria are relevant for both the DetNet Service and DetNet
-  Transport layers. The two layers provide together what is needed to meet
-  certain criteria, e.g., flow identification. Different aspects are valid for
-  the two different layers for other criteria, e.g., time synchronization.
-  Furthermore, technical maturity is a criteria valid for both layers.
- </t> 
-</section>
+ <t>[Editor's Note: numbering is off.]</t>
 
-<section title="Criteria for data plane solution alternatives" anchor="sec_crit">
  <t>
-   This section provides criteria to help to evaluate potential options.  The
-   criteria can be broken down based on layer.  That is if the criteria is
-   focused on delivering DetNet service adaptation, i.e., is concerned with the
-   DetNet Service layer, or if the criteria is focused on transporting flows
-   across an end to end DetNet domain. [Editor's note: which is TBD.]
- </t>
-  
-  <t>
-   Each deterministic networking data plane solution alternative is described
-   and evaluated using the criteria described in this section. The used criteria
-   enumerated in this section are selected so that they highlight the existence
-   or lack of features that are expected or seen important to a solution
-   alternative for the data plane solution. 
-  </t>
- 
+  Most of the criteria is relevant for both the DetNet Service and DetNet
+  Transport layers. However, different aspects of the same criteria may relevant
+  for different layers, for example, as it is the case with criteria #5 Packet
+  replication and elimination.
+ </t> 
 
   <section title="#1 Encapsulation and overhead" anchor="sec_crit_encap">
     <t>
@@ -743,8 +762,7 @@ title="DetNet adaptation to data plane">
      supported in, hardware.
     </t>
   </section>
-</section>
-
+ </section>
 
 <!-- ================================================================= -->
 
@@ -2337,7 +2355,7 @@ title="Enabled Adjacencies">
   <section title="Pseudo Wire Emulation Edge-to-Edge (PWE3)" anchor="sec_alt_pwe">
    <section title="Solution description">
     <t>
-     PSeudo Wire Emulation Edge-to-Edge (PWE3) <xref target="RFC3985"/> or
+     Pseudo Wire Emulation Edge-to-Edge (PWE3) <xref target="RFC3985"/> or
      simply PseudoWires (PW) provide means of emulating the essential attributes
      and behaviour of a telecommunications service over a packet switched
      network (PSN) using IP or MPLS transport.  In addition to traditional
@@ -2369,12 +2387,16 @@ title="Enabled Adjacencies">
     </artwork></figure>
     <t>
      PWs appear as a good data plane solution alternative for a number of
-     reasons. PWs are a proven and deployed technology with a rich OAM
-     control plane <xref target="RFC4447"/>, and enjoy the toolbox developed for
-     MPLS networks. Furthermore, PWs may have an optional Control Word (CW) as
-     part of the payload encapsulation between the PSN and the emulated service
-     that is, for example, capable of frame sequencing and duplicate detection.
-     The encapsulation layer may also provide timing  <xref target="RFC5087"/>.
+     reasons. PWs are a proven and deployed technology with a rich OAM control
+     plane <xref target="RFC4447"/>, and enjoy the toolbox developed for MPLS
+     networks. Furthermore, PWs may have an optional Control Word (CW) as part
+     of the payload encapsulation between the PSN and the emulated service that
+     is, for example, capable of frame sequencing and duplicate detection.  The
+     encapsulation layer may also provide timing  <xref target="RFC5087"/>.
+     Furthermore, advances DetNet node functions are conseptually already
+     supported by PW framework (with some added functional required), such as the
+     DetNet Relay node modeled after the Multi-Segment PWE3 <xref
+     target="RFC5254"/>.
     </t>
     <t>
      PWs can be also used if the PSN is IP, which enables the application of PWs
@@ -2455,7 +2477,7 @@ title="Enabled Adjacencies">
      
      <t hangText="#5 Packet replication and elimination (W)">
       <vspace blankLines="1"/>
-      The PW duplicate detection mechanism also exists in theory <xref
+      The PW duplicate detection mechanism is already conceptually specified <xref
       target="RFC3985"/> but no emulated service makes use of it currently.  
      <vspace blankLines="1"/></t>
      
@@ -2899,9 +2921,9 @@ title="Enabled Adjacencies">
    
    <t>MPLS is the most common technology that is used as PSN for PseudoWires;
    furthermore, MPLS is a mature technology and meets most DetNet Transport
-   layer criteria. IP can be also used as PSN and IP is a mature
+   layer criteria. IPv[46] can be also used as PSN and IPv[46] is a mature
    technology as well. Both DetNet Service layer candidates can be supported by 
-   IP.
+   IPv[46].
    </t>
   
    <t>The figure below summarizes the most suitable data plane options for 
@@ -2913,11 +2935,11 @@ title="Summary of the data plane options most suitable for DetNet">
 <artwork align="center"><![CDATA[
     .
     .
-+-----------------+
-|     PW    | RTP | DetNet Service
-~~~~~~~~~~~~~~~~~~~
-|  MPLS  |   IP   | DetNet Transport
-+-----------------+
++-------------------+
+|   PW     |   RTP  | DetNet Service
++----------|--------+
+| MPLS,IP  | UDP/IP | DetNet Transport
++-------------------+
     .
     .
 ]]></artwork>
@@ -2928,7 +2950,9 @@ title="Summary of the data plane options most suitable for DetNet">
 
 
 <section title="Security considerations">
-  <t>TBD.
+  <t>
+   This document does not add any new security considerations beyond what the
+   referenced technologies already have.
   </t>
 </section>
 
