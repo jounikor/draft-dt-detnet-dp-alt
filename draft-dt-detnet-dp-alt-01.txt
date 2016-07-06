@@ -225,21 +225,21 @@ Korhonen, et al.         Expires January 6, 2017                [Page 4]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
-
+    TSN                                                  DetNEt-enabled
      End           Edge          Transit        Relay          End
     System         Node            Node         Node          System
 
    +---------+                                              +---------+
-   |  Appl.  |<--------- End to End DetNet Service -------->|  Appl.  |
+   |  Appl.  |<------------ End to End Service ------------>|  Appl.  |
    +---------+   +---------+                  +---------+   +---------+
-   | Service |<--| Service |--- DetNet flow --| Service |-->| Service |
+   |         |   | Service |<-- DetNet flow --| Service |-->| Service |
    +---------+   +---------+    +---------+   +---------+   +---------+
-   |Transport|   |Trp| |Trp|    |Transport|   |Transport|   |Transport|
-   +-------.-+   +-.-+ +-.-+    +--.---.--+   +--.---.--+   +----.----+
-           : Link  :    /  ,-----.  \  : Link    :   :   Link    :
-           +.......+    +-[  Sub  ]-+  +.........+   +...........+
-                          [Network]
-                           `-----'
+   |Transport|   |Trp| |Trp|    |Transport|   |Trp| |Trp|   |Transport|
+   +-------.-+   +-.-+ +-.-+    +--.---.--+   +--.- -.--+   +----.----+
+           : Link  :     :  sub-net:   : Link    :   :   sub-net :
+           +.......+     +.........+   +.........+   +...........+
+       link (assume it can be a sub-net).. must provide 802.1TSN equivalent services.
+                                    
 
    |--- Admin Domain 1 ---|     |--- Admin Domain 2 ------------------|
 
@@ -298,10 +298,9 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    |   |---------|........DF2........X......DF4..........|--------|   |
    +---+   |     |     |==========|     |==========|     |   |    +---+
        ^         +-----+          +-----+          +-----+        ^
-       |     Provider Edge 1         ^        Provider Edge 3     |
+       |                             ^                            |
        |        Edge Node            |            Edge Node       |
        |                             |                            |
-       |                     PW switching point                   |
        |                         Relay Node                       |
        |                                                          |
        |<--------------- Emulated TSN Service ------------------->|
@@ -343,16 +342,15 @@ Internet-Draft       DetNet data plane alternatives            July 2016
   DetNet  (AC)         |<-Tunnel->|     |<-Tunnel->|       (AC)   DetNet
   End      |           V     1    V     V     2    V         |    End
   System   |     +-----+          +-----+          +-----+   |    System
-   +---+   |     |T-PE1|==========|S-PE1|==========|T-PE2|   |    +---+
+   +---+   |     |S-PE1|==========|S-PE2|==========|S-PE3|   |    +---+
    |  X....DFa...|.X_.......DF1.......X_....DF3........X.....DFa...X  |
    |CE1|   |     |  \  |          |  /  |          |  /  |   |    |CE2|
    |   |         |   \......DF2.....X_......DF4....../   |        |   |
    +---+         |     |==========|     |==========|     |        +---+
        ^         +-----+          +-----+          +-----+        ^
-       |     Provider Edge 1         ^         Provider Edge 3    |
+       |                             ^                            |
        |        Relay Node           |            Relay Node      |
        |                             |                            |
-       |                     PW switching point                   |
        |                         Relay Node                       |
        |                                                          |
        |<------------- End to End DetNet Service ---------------->|
@@ -370,16 +368,16 @@ Internet-Draft       DetNet data plane alternatives            July 2016
  TSN    (AC)   |     |<-Tunnel->|     |<-Tunnel->|              | DetNet
  End     |     V     V     1    V     V     2    V              | End
 System   |     +-----+          +-----+          +-----+        V System
- +---+   |     |T-PE1|==========|S-PE1|==========|T-PE2|   |    +---+
+ +---+   |     |T-PE1|==========|S-PE1|==========|S-PE2|   |    +---+
  |   |---|-----|.X_.......DF1......X......DF3........X.....DFa...X  |
  |CE1|   |     |  \  |          |     |          |  /  |   |    |CE2|
  |   |         |   \.....DF2.......X......DF4....../   |   |    |   |
  +---+         |     |==========|     |==========|     |   |    +---+
      ^         +-----+          +-----+          +-----+   |    ^
-     |     Provider Edge 1         ^       Provider Edge 3 |    |
+     |                             ^                       |    |
      |        Edge Node            |           Relay Node  |    |
      |                             |                      (AC)  |
-     |                     PW switching point           DetNet  |
+     |                                                  DetNet  |
      |                         Relay Node               Service |
      |                                                          |
      |<--------------- Emulated TSN Service ------------------->|
