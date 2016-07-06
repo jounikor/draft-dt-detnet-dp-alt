@@ -160,7 +160,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
       A set of mechanisms to increase the probability of lossless DetNet
       flow transport across a network.  Example mechanisms include
-      packet replication and dulpicate elimination.
+      packet replication and duplicate elimination.
 
 
 
@@ -246,7 +246,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
                  Figure 1: A Simple DetNet Enabled Network
 
-   In an attempt to concretise DetNet date plane this document uses
+   In an attempt to concretize DetNet date plane this document uses
    Multi-Segment Pseudowire Emulation Edge-to-Edge (PWE3) [RFC5254]
    reference model shown in Figure 2 as an example for different DetNet
    data plane deployment options and how layering could work.  Other
@@ -309,10 +309,10 @@ Internet-Draft       DetNet data plane alternatives            July 2016
                     Figure 3: IEEE 802.1TSN over DetNet
 
    Figure 4 illustrates how end to end native DetNet service could be
-   deployed.  Here the assumtion is that end systems are able to source
+   deployed.  Here the assumption is that end systems are able to source
    and receive native DetNet flows.  Like earlier the 'X' in the end
    systems, edge and relay nodes represents potential DetNet flow packet
-   replicationa and elimination points.
+   replication and elimination points.
 
 
 
@@ -406,7 +406,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    The DetNet data plane is logically divided into two layers as also
    shown in Figure 6:
 
-   DetNet Servive Layer
+   DetNet Service Layer
 
       The DetNet service layer provides adaptation of DetNet services.
       It is composed of a shim layer to carry deterministic flow
@@ -459,7 +459,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    In some networking scenarios the end system initially provides a
    DetNet flow encapsulation, which contains all information needed by
-   DetNet nodes (e.g., RTP based DetNet flow trasported over a native
+   DetNet nodes (e.g., RTP based DetNet flow transported over a native
    UDP/IP network).  In other scenarios the encapsulation formats might
    differ significantly.  As an example, a CPRI "application's" IQ data
    mapped directly to Ethernet frames may have to be transported over an
@@ -736,7 +736,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    crucial, since it basically defines the effort, time line and risks
    involved for the use of the solution in deployments.  For example,
    the maturity level can be categorized as available immediately,
-   available with small extensions, available with repurposing/
+   available with small extensions, available with re-purposing/
    redefining portions of the protocol or its header fields.  Yet
    another important measure for maturity is the deployment experience.
    This criteria concerns the maturity of the data plane protocol
@@ -1070,7 +1070,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    The IPv4 has specifications to support most of the identified DetNet
    data plane criteria today.  However, several of those have already
-   been deprecated or their wide support is not quaranteed.  The DetNet
+   been deprecated or their wide support is not guaranteed.  The DetNet
    data plane criteria that are not fully supported could be
    incrementally added.  Unfortunately, the IPv4 has had limited success
    getting its extensions deployed at large.  However, introducing new
@@ -1269,25 +1269,29 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       stack can not be used for flow identification (e.g., entropy
       label).
 
-      [Janos: Well, it is true if all kinds of fetarures are considered
+      [Janos: Well, it is true if all kinds of features are considered
       to be part of MPLS, e.g.  PWs, which is an understandable
-      argument.  However, MPLS here is ment as transport, i.e. we are at
-      the DetNet Transport layer, hence it is more about LSPs only
-      here.]
+      argument.  However, MPLS here is meant as transport, i.e. we are
+      at the DetNet Transport layer, hence it is more about LSPs only
+      here.]  [Editor's note: one can always push one more label for
+      identification purposes.]
 
 
    #4 Explicit routes (M)
 
       MPLS supports explicit routes based on how LSPs are established,
       e.g., via TE explicit routes [RFC3209].  Additional, but not
-      required, additional capabilities are being defined as part of
-      Segment Routing (SR) [I-D.ietf-spring-segment-routing].
+
 
 
 
 Korhonen, et al.         Expires January 6, 2017               [Page 23]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
+
+
+      required, additional capabilities are being defined as part of
+      Segment Routing (SR) [I-D.ietf-spring-segment-routing].
 
 
    #5 Packet replication and elimination (M/W)
@@ -1334,10 +1338,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    #10 Technical maturity (M)
 
-      MPLS as a mature technology that has been widely deployed in many
-      networks for many years.  Numerous vendor products and multiple
-      generations of MPLS hardware have been built and deployed.
-
 
 
 
@@ -1345,6 +1345,10 @@ Korhonen, et al.         Expires January 6, 2017               [Page 24]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
+
+      MPLS as a mature technology that has been widely deployed in many
+      networks for many years.  Numerous vendor products and multiple
+      generations of MPLS hardware have been built and deployed.
 
 5.1.3.4.  Summary
 
@@ -1382,10 +1386,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    Bit-Indexed Explicit Replication (BIER) layer may be considered to be
    included into Deterministic Networking data plane solution.
    Encapsulation of a BIER packet in MPLS network presented in Figure 8
-
-
-
-
 
 
 
@@ -1896,7 +1896,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       A separate procedure must be used to set up the paths and allocate
       the bits for the adjacencies.  The bits should be distributed as a
       form of tag by the route setup protocol.  This procedure requires
-      more work and is separate from the dataplane method that is
+      more work and is separate from the data plane method that is
       described here.
 
 
@@ -1914,7 +1914,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       on the loss that it enables to measure.  The net result is that a
       complex path may be installed with all the possibilities and that
       the decision of which possibilities are used is controlled in the
-      dataplane.
+      data plane.
 
 
    #6 Operations, Administration and Maintenance (W)
@@ -1948,7 +1948,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 5.1.5.3.  Summary
 
-   BIER-TE occupies a particular position in the DetNet dataplane.  In
+   BIER-TE occupies a particular position in the DetNet data plane.  In
    the one hand it is optional, and only useful if replication and
    elimination is taking place.  In the other hand, it has unique
    capabilities to:
@@ -2084,7 +2084,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       For the class of service capability, an optional code point field
       to indicate CoS of the traffic could be added into the GRE header.
       Otherwise, GRE can reuse the class and quality of service of
-      delivery protocols at ansport layer such as IPv6 and IPv4 stated
+      delivery protocols at transport layer such as IPv6 and IPv4 stated
       in Section 5.1.1 and Section 5.1.2.
 
    #10 Technical maturity (M)
@@ -2215,7 +2215,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    service that is, for example, capable of frame sequencing and
    duplicate detection.  The encapsulation layer may also provide timing
    [RFC5087].  Furthermore, advances DetNet node functions are
-   conseptually already supported by PW framework (with some added
+   conceptually already supported by PW framework (with some added
    functional required), such as the DetNet Relay node modeled after the
    Multi-Segment PWE3 [RFC5254].
 
@@ -2550,7 +2550,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
           |  #10   |             Technical maturity             |
           +--------+--------------------------------------------+
 
-                Table 5: Evaluation criteria (#7 obsolated)
+                Table 5: Evaluation criteria (#7 obsoleted)
 
    There is no single technology that could meet all the criteria on its
    own.  Distinguishing the DetNet Service and the DetNet Transport, as

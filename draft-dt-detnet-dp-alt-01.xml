@@ -244,7 +244,7 @@
    <t hangText="DetNet Reliability"><vspace blankLines="1"/>
     A set of mechanisms to increase the probability of lossless DetNet flow
     transport across a network. Example mechanisms include packet replication
-    and dulpicate elimination.
+    and duplicate elimination.
     <vspace blankLines="1"/></t>
    <t hangText="DetNet Transit Node"><vspace blankLines="1"/>
     A node that provide link layer and network layer switching across multiple
@@ -300,7 +300,7 @@ title="A Simple DetNet Enabled Network">
 </figure>
 
  <t>
-  In an attempt to concretise DetNet date plane this document uses Multi-Segment
+  In an attempt to concretize DetNet date plane this document uses Multi-Segment
   Pseudowire Emulation Edge-to-Edge (PWE3) <xref target="RFC5254"/> reference
   model shown in <xref target="fig_pw_detnet"/> as an example for different DetNet
   data plane deployment options and how layering could work. Other reference
@@ -363,10 +363,10 @@ System   |     +-----+          +-----+          +---- +   |    System
 
  <t>
   <xref target="fig_native_detnet"/> illustrates how end to end native DetNet
-  service could be deployed. Here the assumtion is that end systems are able to
+  service could be deployed. Here the assumption is that end systems are able to
   source and receive native DetNet flows.  Like earlier the 'X' in the end
   systems, edge and relay nodes represents potential DetNet flow packet
-  replicationa and elimination points.   
+  replication and elimination points.   
  </t>
 
 <figure align="center" anchor="fig_native_detnet"
@@ -445,7 +445,7 @@ System   |     +-----+          +-----+          +-----+        V System
   The DetNet data plane is logically divided into two layers as also shown in
   <xref target="fig_adaptation"/>:
    <list style="hanging">
-    <t hangText="DetNet Servive Layer"><vspace blankLines="1"/>
+    <t hangText="DetNet Service Layer"><vspace blankLines="1"/>
      The DetNet service layer provides adaptation of DetNet services.  It is
      composed of a shim layer to carry deterministic  flow specific attributes,
      which are needed during forwarding. DetNet enabled end systems originate
@@ -489,7 +489,7 @@ title="DetNet adaptation to data plane">
   <t>
    In some networking scenarios the end system initially provides a DetNet flow
    encapsulation, which contains all information needed by DetNet nodes (e.g.,
-   RTP based DetNet flow trasported over a native UDP/IP network). In other
+   RTP based DetNet flow transported over a native UDP/IP network). In other
    scenarios the encapsulation formats might differ significantly. As an
    example, a CPRI "application's" IQ data mapped directly to Ethernet frames
    may have to be transported over an MPLS based packet switched network (PSN).
@@ -753,7 +753,7 @@ title="DetNet adaptation to data plane">
      since it  basically defines the effort, time line and risks involved for
      the use of the solution in deployments. For example, the maturity level
      can be categorized as available immediately, available with small
-     extensions, available with repurposing/redefining portions of the protocol
+     extensions, available with re-purposing/redefining portions of the protocol
      or its header fields.  Yet another important measure for maturity is the
      deployment experience. This criteria concerns the maturity of the data
      plane protocol alternative as the solution alternative.  This
@@ -1065,7 +1065,7 @@ title="DetNet adaptation to data plane">
     <t>
       The IPv4 has specifications to support most of the identified DetNet data
       plane criteria today. However, several of those have already been
-      deprecated or their wide support is not quaranteed. The DetNet data plane
+      deprecated or their wide support is not guaranteed. The DetNet data plane
       criteria that are not fully supported could be incrementally added.
       Unfortunately, the IPv4 has had limited success getting its extensions
       deployed at large. However, introducing new extensions might have a better
@@ -1266,11 +1266,11 @@ title="MPLS-based Services">
 		  for flow identification (e.g., entropy label).
         <vspace blankLines="1"/>
 
-[Janos: Well, it is true if all kinds of fetarures are considered to be part of
-MPLS, e.g. PWs, which is an understandable argument. However, MPLS here is ment
+[Janos: Well, it is true if all kinds of features are considered to be part of
+MPLS, e.g. PWs, which is an understandable argument. However, MPLS here is meant
 as transport, i.e. we are at the DetNet Transport layer, hence it is more 
 about LSPs only here.]
-  
+[Editor's note: one can always push one more label for identification purposes.]
           
       <vspace blankLines="1"/> </t>
      <t hangText="#4 Explicit routes (M)">
@@ -1916,7 +1916,7 @@ title="Enabled Adjacencies">
             A separate procedure must be used to set up the paths and allocate
             the bits for the adjacencies. The bits should be distributed as a
             form of tag by the route setup protocol. This procedure requires
-            more work and is separate from the dataplane method that is
+            more work and is separate from the data plane method that is
             described here.
             <vspace blankLines="1"/> 
           </t>
@@ -1927,7 +1927,7 @@ title="Enabled Adjacencies">
             to control that process on a per packet basis, depending on the loss
             that it enables to measure. The net result is that a complex path
             may be installed with all the possibilities and that the decision of
-            which possibilities are used is controlled in the dataplane.
+            which possibilities are used is controlled in the data plane.
             <vspace blankLines="1"/> 
           </t>
           <t hangText="#6 Operations, Administration and Maintenance (W)">
@@ -1967,7 +1967,7 @@ title="Enabled Adjacencies">
   
   <section title="Summary">
    <t>
-      BIER-TE occupies a particular position in the DetNet dataplane. In the one
+      BIER-TE occupies a particular position in the DetNet data plane. In the one
       hand it is optional, and only useful if replication and elimination is
       taking place. In the other hand, it has unique capabilities to:
       <list style="symbols">
@@ -2090,7 +2090,7 @@ title="Enabled Adjacencies">
        For the class of service capability, an optional code point field to
        indicate CoS of the traffic could be added into the GRE header. Otherwise,
        GRE can reuse the class and quality of service of delivery protocols
-       at ansport layer such as IPv6 and IPv4 stated in 
+       at transport layer such as IPv6 and IPv4 stated in 
        <xref target="sec_alt_ipv6"/> and <xref target="sec_alt_ipv4"/>.
      
       <vspace blankLines="1"/></t>
@@ -2393,7 +2393,7 @@ title="Enabled Adjacencies">
      of the payload encapsulation between the PSN and the emulated service that
      is, for example, capable of frame sequencing and duplicate detection.  The
      encapsulation layer may also provide timing  <xref target="RFC5087"/>.
-     Furthermore, advances DetNet node functions are conseptually already
+     Furthermore, advances DetNet node functions are conceptually already
      supported by PW framework (with some added functional required), such as the
      DetNet Relay node modeled after the Multi-Segment PWE3 <xref
      target="RFC5254"/>.
@@ -2758,7 +2758,7 @@ title="Enabled Adjacencies">
   
 
   
- <texttable anchor="Items" title="Evaluation criteria (#7 obsolated)">
+ <texttable anchor="Items" title="Evaluation criteria (#7 obsoleted)">
           <preamble>Applicability per Alternative</preamble>
 
           <ttcol align="center">Item #</ttcol>
