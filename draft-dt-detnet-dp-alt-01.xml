@@ -566,6 +566,9 @@ System   |     +-----+          +-----+          +-----+   |    V System
     </t>
     <t hangText="#6">Operations, Administration and Maintenance (capabilities,
           performance management, packet traceability)</t>
+    <t hangText="#8">
+     Class and quality of service capabilities (DetNet Transport specific)
+    </t>
     <t hangText="#9">Packet traceability (can be part of OAM)</t>
     <t hangText="#10">Technical maturity</t>
    </list> 
@@ -1350,27 +1353,20 @@ about LSPs only here.]
           IANA</eref>.
       <vspace blankLines="1"/> </t>
      
-     <!--t hangText="#7 DetNet Service Interface (M)">
-        <vspace blankLines="1"/> The DetNet service interface is enabled through
-        the DetNet Service Layer it provides client service adaption, directly,
-        via Pseudowires <xref target="sec_alt_pwe"/> and via other label-like
-        mechanisms such as EPVN <xref target="sec_alt_evpn"/>.
-      <vspace blankLines="1"/> </t
-     -->
      <t hangText="#8 Class and quality of service capabilities (M/W)">
         <vspace blankLines="1"/>
 
       As previously mentioned, Data plane Quality of Service
       capabilities are included in the MPLS in the form of Traffic
       Engineered (TE) LSPs <xref target="RFC3209"/> and the MPLS
-          Differentiated Services (DiffServ) architecture
-          <xref target="RFC3270"/>.  Both E-LSP and L-LSP MPLS DiffServ
-          modes are defined.  The Traffic Class field (formerly the EXP
-          field) of an MPLS label follows the definition of
-          <xref target="RFC5462"/> and <xref target="RFC3270"/>.  One
-          potential open area of work is synchronized, time based
-          scheduling. Another is shaping, which is generally not supported
-          in shipping MPLS hardware.
+      Differentiated Services (DiffServ) architecture
+      <xref target="RFC3270"/>.  Both E-LSP and L-LSP MPLS DiffServ
+      modes are defined.  The Traffic Class field (formerly the EXP
+      field) of an MPLS label follows the definition of
+      <xref target="RFC5462"/> and <xref target="RFC3270"/>.  One
+      potential open area of work is synchronized, time based
+      scheduling. Another is shaping, which is generally not supported
+      in shipping MPLS hardware.
 
       <vspace blankLines="1"/>
      </t>
@@ -1987,13 +1983,11 @@ title="Enabled Adjacencies">
             the link for the user.
             <vspace blankLines="1"/> 
           </t>
-          <!--
           <t hangText="#8 Class and quality of service capabilities (N)">
             <vspace blankLines="1"/>
             BIER-TE does not signal that explicitly.
             <vspace blankLines="1"/> 
           </t>
-          -->
           <t hangText="#9 Packet traceability (W)">
             <vspace blankLines="1"/>
             This is a strong point of the solution. The solution enables to
@@ -2113,13 +2107,12 @@ title="Enabled Adjacencies">
      
      <t hangText="#5 Packet replication and elimination (W/N)">
       <vspace blankLines="1"/>
-       GRE has no packet replication and elimination in its header. It can use the
-       transport IPv4/IPv6 protocols at the transport layer to replicate the
-       packets and take the different routes as discussed
-       in <xref target="sec_alt_ipv6"/> and <xref target="sec_alt_ipv4"/>.
-       Besides, the GRE header can be extended to indicate the duplicated
-       packets by defining a flag in reserved fields or using the sequencing
-       number of a flow.
+       GRE has no packet replication and elimination in its header. It can use
+       the transport IPv4/IPv6 protocols at the transport layer to replicate the
+       packets and take the different routes as discussed in <xref
+       target="sec_alt_ipv6"/> and <xref target="sec_alt_ipv4"/>.  Besides, the
+       GRE header can be extended to indicate the duplicated packets by defining
+       a flag in reserved fields or using the sequencing number of a flow.
      <vspace blankLines="1"/></t>
      
      <t hangText="#6 Operations, Administration and Maintenance (M)">
@@ -2131,9 +2124,9 @@ title="Enabled Adjacencies">
      <t hangText="#8 Class and quality of service capabilities (W) ">
       <vspace blankLines="1"/>
        For the class of service capability, an optional code point field to
-       indicate CoS of the traffic could be added into the GRE header. Otherwise,
-       GRE can reuse the class and quality of service of delivery protocols
-       at transport layer such as IPv6 and IPv4 stated in 
+       indicate CoS of the traffic could be added into the GRE header.
+       Otherwise, GRE can reuse the class and quality of service of delivery
+       protocols at transport layer such as IPv6 and IPv4 stated in 
        <xref target="sec_alt_ipv6"/> and <xref target="sec_alt_ipv4"/>.
      
       <vspace blankLines="1"/></t>
@@ -2143,8 +2136,8 @@ title="Enabled Adjacencies">
       GRE has been developed over 20 years. The delivery protocol mostly used is
       IPv4, while the IPv6 support for GRE is to be standardized now in IETF as
       <xref target="I-D.ietf-intarea-gre-ipv6"/>. Due to its good extensibility,
-      GRE has also been extended to support network virtualization in Data Center,
-      which is NVGRE <xref target="RFC7637"/>.
+      GRE has also been extended to support network virtualization in Data
+      Center, which is NVGRE <xref target="RFC7637"/>.
       </t>
      </list></t>
     </section>
@@ -2688,11 +2681,11 @@ title="Enabled Adjacencies">
           <t hangText="#8 Class and quality of service capabilities (M/W)">
             <vspace blankLines="1"/>
 
-	    EVPN is largely silent on the topics of CoS and QoS, but the
-	    802.1 TSN Ethernet and existing MPLS TE mechanisms can be
-            directly used.  The inter-working of such is new work and within
-            the scope of DetNet. The existing MPLS mechanisms include both CoS
-            (E-LSPs and L-LSPs) and QoS (dedicated TE LSPS). 
+        EVPN is largely silent on the topics of CoS and QoS, but the 802.1 TSN
+        Ethernet and existing MPLS TE mechanisms can be directly used.  The
+        inter-working of such is new work and within the scope of DetNet. The
+        existing MPLS mechanisms include both CoS (E-LSPs and L-LSPs) and QoS
+        (dedicated TE LSPs). 
             <vspace blankLines="1"/> 
           </t>
         <!--  <t hangText="#9 Packet traceability (M)">
@@ -2899,7 +2892,7 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>N</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>W</c>
-          <!-- 8--> <c></c>
+          <!-- 8--> <c>N</c>
           <!-- 9--> <c>W</c>
           <!--10--> <c>W</c>
 

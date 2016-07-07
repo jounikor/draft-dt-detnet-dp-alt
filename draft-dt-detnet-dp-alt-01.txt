@@ -508,6 +508,8 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    #6 Operations, Administration and Maintenance (capabilities,
       performance management, packet traceability)
+   #8 Class and quality of service capabilities (DetNet Transport
+      specific)
    #9 Packet traceability (can be part of OAM)
    #10  Technical maturity
 
@@ -552,8 +554,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    [Editor's note: is in order delivery a strict requirement?  if so, it
    should be stated as such and separately from any other requirement.
    There are multiple ways to solve this criteria.]
-
-
 
 
 
@@ -1927,6 +1927,11 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       reliability of the link for the user.
 
 
+   #8 Class and quality of service capabilities (N)
+
+      BIER-TE does not signal that explicitly.
+
+
    #9 Packet traceability (W)
 
       This is a strong point of the solution.  The solution enables to
@@ -1948,11 +1953,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    elimination is taking place.  In the other hand, it has unique
    capabilities to:
 
-   o  control which replication take place on a per packet basis, so
-      that replication points can be configured but not actually
-      utilized
-   o  trace the replication activity and determine which node replicated
-      a particular packet
 
 
 
@@ -1962,6 +1962,11 @@ Korhonen, et al.         Expires January 8, 2017               [Page 35]
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
+   o  control which replication take place on a per packet basis, so
+      that replication points can be configured but not actually
+      utilized
+   o  trace the replication activity and determine which node replicated
+      a particular packet
    o  measure the quality of transmission of the actual data packet
       along the replication segments and use that in a control loop to
       adapt the setting of the bits and maintain the reliability.
@@ -2005,11 +2010,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
                      Figure 14: Format of a GRE header
 
-5.2.1.2.  Analysis and Discussion
-
-   #1 Encapsulation and overhead (M)
-
-
 
 
 
@@ -2017,6 +2017,10 @@ Korhonen, et al.         Expires January 8, 2017               [Page 36]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
+
+5.2.1.2.  Analysis and Discussion
+
+   #1 Encapsulation and overhead (M)
 
       GRE can provide encapsulation at the service layer over the
       transport layer.  A new protocol type for DetNet traffic should be
@@ -2063,16 +2067,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       delivery protocols at transport layer such as IPv6 and IPv4 stated
       in Section 5.1.1 and Section 5.1.2.
 
-   #10 Technical maturity (M)
-
-
-
 
 
 Korhonen, et al.         Expires January 8, 2017               [Page 37]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
+
+   #10 Technical maturity (M)
 
       GRE has been developed over 20 years.  The delivery protocol
       mostly used is IPv4, while the IPv6 support for GRE is to be
@@ -2120,8 +2122,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       functions provide encapsulation of the MPLS frames and for the
       transparent transport of those frames over the server layer
       network.
-
-
 
 
 
@@ -2449,7 +2449,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       TSN Ethernet and existing MPLS TE mechanisms can be directly used.
       The inter-working of such is new work and within the scope of
       DetNet.  The existing MPLS mechanisms include both CoS (E-LSPs and
-      L-LSPs) and QoS (dedicated TE LSPS).
+      L-LSPs) and QoS (dedicated TE LSPs).
 
 
    #10 Technical maturity (M)
@@ -2587,7 +2587,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
          |   IPv4   | M   | W  | W  | W/N | M   | M/W | W  | M/W |
          |   MPLS   | M   | M  | M  | M/W | M   | M/W | M  | M   |
          |   BIER   | M   | M  | M  | M/W | M/W | M/W | M  | W   |
-         | BIER-TE  | W/M | N  | N  | M/W | W   |     | W  | W   |
+         | BIER-TE  | W/M | N  | N  | M/W | W   | N   | W  | W   |
          +----------+-----+----+----+-----+-----+-----+----+-----+
 
                     Summarizing Transport capabilities
