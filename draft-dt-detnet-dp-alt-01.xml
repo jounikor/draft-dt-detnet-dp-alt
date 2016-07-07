@@ -289,7 +289,7 @@ End System       Node            Node         Node         End System
 +---------+                                                +---------+
 |  Appl.  |<-------------- End to End Service ------------>|  Appl.  |
 +---------+    +---------+                   +---------+   +---------+
-|         |    | Service |<-- DetNet flow ---| Service |-->| Service |
+|         |    | Service :<-- DetNet flow ---: Service :-->: Service |
 +---------+    +---------+    +---------+    +---------+   +---------+
 |Transport|    |Trp| |Trp|    |Transport|    |Trp| |Trp|   |Transport|
 +-------.-+    +-.-+ +-.-+    +--.----.-+    +-.-+ +-.-+   +---.-----+
