@@ -232,7 +232,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
   +---------+                                                +---------+
   |  Appl.  |<-------------- End to End Service ------------>|  Appl.  |
   +---------+    +---------+                   +---------+   +---------+
-  |         |    | Service |<-- DetNet flow ---| Service |-->| Service |
+  |         |    | Service :<-- DetNet flow ---: Service :-->: Service |
   +---------+    +---------+    +---------+    +---------+   +---------+
   |Transport|    |Trp| |Trp|    |Transport|    |Trp| |Trp|   |Transport|
   +-------.-+    +-.-+ +-.-+    +--.----.-+    +-.-+ +-.-+   +---.-----+
