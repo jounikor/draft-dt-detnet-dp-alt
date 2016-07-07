@@ -306,9 +306,12 @@ End System       Node            Node         Node         End System
  <t>
   In an attempt to concretize DetNet date plane this document uses Multi-Segment
   Pseudowire Emulation Edge-to-Edge (PWE3) <xref target="RFC5254"/> reference
-  model shown in <xref target="fig_pw_detnet"/> as an example for different
-  DetNet data plane deployment options and how layering could work. Other
-  reference models are possible but not explicitly referenced in this document.
+  model shown in <xref target="fig_pw_detnet"/> as an analogue for different
+  DetNet data plane deployment options and to illustrate layering could work. 
+  Other reference models are possible but not explicitly referenced in this 
+  document. Note that other technologies can be also used to implement DetNet, 
+  Multi-Segment PW is only used here to illustrate functions, features and 
+  layering from the perspective of the architecture.
  </t> 
   
 <figure anchor="fig_pw_detnet" align="center" 
@@ -423,9 +426,10 @@ System   |     +-----+          +-----+          +-----+   |    V System
      ingress and egress packets, which are used by the three techniques (see
      <xref target="sec_intro"/>) to ensure deterministic forwarding. <xref
      target="I-D.finn-detnet-architecture"/> does not specify the relationship
-     between layers. The goal of this document is to evaluate possible data
-     plane technologies and compare their characteristics from DetNet
-     perspective.
+     between the DetNet Service and Transport layers used in this document to 
+     investigate data plane options as explained in the following. The goal of 
+     this document is to evaluate possible data plane technologies and compare 
+     their characteristics from DetNet perspective.
     </t>
   <t>
   The DetNet data plane is logically divided into two layers (also see
@@ -473,10 +477,10 @@ title="DetNet adaptation to data plane">
    other part is "Transport" specific (e.g, LSP label, TE label(s)).
   </t>
   <t>
-   In some networking scenarios the end system initially provides a DetNet flow
+   In some networking scenarios, the end system initially provides a DetNet flow
    encapsulation, which contains all information needed by DetNet nodes (e.g.,
    RTP based DetNet flow transported over a native UDP/IP network). In other
-   scenarios the encapsulation formats might differ significantly. As an
+   scenarios, the encapsulation formats might differ significantly. As an
    example, a CPRI "application's" IQ data mapped directly to Ethernet frames
    may have to be transported over an MPLS based packet switched network (PSN).
   </t>
@@ -777,7 +781,7 @@ title="DetNet adaptation to data plane">
   
    <section title="Analysis and Discussion" anchor="sec_alt_ipv6_ana">
     <t><list style="hanging">
-     <t hangText="#1 Encapsulation and overhead (M/W)">
+     <t hangText="#1 Encapsulation and overhead (M)">
       <vspace blankLines="1"/>
       The DetNet Service layer encapsulated DetNet flows are assumed to be 
       handled natively at layer-3 by IPv6 at the first place. The fixed header 
@@ -883,12 +887,13 @@ title="DetNet adaptation to data plane">
       equipment.
     <vspace blankLines="1"/></t>
     
-    
+    <!--
      <t hangText="#8 Class and quality of service capabilities (M)">
       <vspace blankLines="1"/>
       The traffic class field of the fixed IPv6 header is designed for this
       purpose.
      <vspace blankLines="1"/></t>
+     -->
     
      <t hangText="#9 Packet traceability (M/W)">
       <vspace blankLines="1"/>
@@ -913,7 +918,7 @@ title="DetNet adaptation to data plane">
       received Routing Header was authenticated.
       <vspace blankLines="1"/></t>
     
-     <t hangText="#10 Technical maturity (M/W)">
+     <t hangText="#10 Technical maturity (M)">
       <vspace blankLines="1"/>
       IPv6 has been around about 20 years. However, large scale global and
       commercial IPv6 deployments are rather new dating only few years back to
@@ -994,7 +999,7 @@ title="DetNet adaptation to data plane">
      <vspace blankLines="1"/></t>
      
      
-     <t hangText="#4 Explicit routes (M/W)">
+     <t hangText="#4 Explicit routes (W)">
       <vspace blankLines="1"/>
       IPv4 has two source routing option specified: the loose source and record
       route option (LSRR), and the strict source and record route option (SSRR)
@@ -1019,11 +1024,12 @@ title="DetNet adaptation to data plane">
       network management.
     <vspace blankLines="1"/></t>
     
-    
+    <!--
      <t hangText="#8 Class and quality of service capabilities (M)">
       <vspace blankLines="1"/>
       The type of service (TOS) field of the fixed IPv4 header is designed for this purpose.
      <vspace blankLines="1"/></t>
+     -->
     
      <t hangText="#9 Packet traceability (W/N)">
       <vspace blankLines="1"/>
@@ -1295,7 +1301,7 @@ about LSPs only here.]
         the DetNet Service Layer it provides client service adaption, directly,
         via Pseudowires <xref target="sec_alt_pwe"/> and via other label-like
         mechanisms such as EPVN <xref target="sec_alt_evpn"/>.
-      <vspace blankLines="1"/> </t-->
+      <vspace blankLines="1"/> </t
      
      <t hangText="#8 Class and quality of service capabilities (M/W)">
         <vspace blankLines="1"/>
@@ -1312,7 +1318,7 @@ about LSPs only here.]
           scheduling. 
 
       <vspace blankLines="1"/>
-     </t>
+     </t>-->
      <t hangText="#9 Packet traceability (M/W)">
         <vspace blankLines="1"/>
        
@@ -1526,6 +1532,7 @@ title="DetNet in BIER domain">
      <xref target="I-D.mirsky-bier-path-mtu-discovery"/>.
      <vspace blankLines="1"/></t>
 
+    <!--
     <t hangText="#8 Class and quality of service capabilities (M)">
      <vspace blankLines="1"/>
      Class of Service can be inherited from the underlay of the particular BIER
@@ -1533,8 +1540,9 @@ title="DetNet in BIER domain">
      can be used among other constrains in calculating explicit path for the
      BIER sub-domain's underlay.
      <vspace blankLines="1"/></t>
+     -->
 
-    <t hangText="#9 Packet traceability (M)">
+    <t hangText="#9 Packet traceability (W)">
      <vspace blankLines="1"/>
      Ability to do passive performance measurement by using OAM field of the
      BIER over MPLS, <xref target="fig_BIER_MPLS"/>, is unmatched and significantly simplifies truly
@@ -1923,11 +1931,13 @@ title="Enabled Adjacencies">
             the link for the user.
             <vspace blankLines="1"/> 
           </t>
+          <!--
           <t hangText="#8 Class and quality of service capabilities (N)">
             <vspace blankLines="1"/>
             BIER-TE does not signal that explicitly.
             <vspace blankLines="1"/> 
           </t>
+          -->
           <t hangText="#9 Packet traceability (W)">
             <vspace blankLines="1"/>
             This is a strong point of the solution. The solution enables to
@@ -1937,7 +1947,7 @@ title="Enabled Adjacencies">
             <vspace blankLines="1"/> 
             
           </t>
-          <t hangText="#10 Technical maturity (M)">
+          <t hangText="#10 Technical maturity (W)">
             <vspace blankLines="1"/>
             Some components of the technology are already proven, e.g. segment
             routing and BIER. Yet, the overall solution has never been deployed
@@ -2570,7 +2580,7 @@ title="Enabled Adjacencies">
 
             <vspace blankLines="1"/> 
           </t>
-          <t hangText="#4 Explicit routes (M)">
+       <!--   <t hangText="#4 Explicit routes (M)">
             <vspace blankLines="1"/>
 
 	    EVPN itself doesn't offer support for explicit routes as it
@@ -2578,7 +2588,7 @@ title="Enabled Adjacencies">
 	    the DetNet transport layer would be provided via MPLS.
 
             <vspace blankLines="1"/> 
-          </t>
+          </t>-->
           <t hangText="#5 Packet replication and elimination (M/W)">
             <vspace blankLines="1"/>
 	    
@@ -2625,15 +2635,15 @@ title="Enabled Adjacencies">
 
             <vspace blankLines="1"/> 
           </t>
-          <t hangText="#9 Packet traceability (M)">
+        <!--  <t hangText="#9 Packet traceability (M)">
             <vspace blankLines="1"/>
 
 	    EVPN nodes can utilize MPLS layers tracing mechanisms.
 
             <vspace blankLines="1"/> 
             
-          </t>
-          <t hangText="#10 Technical maturity (W)">
+          </t>-->
+          <t hangText="#10 Technical maturity (M/W)">
             <vspace blankLines="1"/>
 
 	    EVPN is a second (or third) generation MPLS-based L2VPN
@@ -2786,7 +2796,7 @@ title="Enabled Adjacencies">
           <!-- 2--> <c>M/W</c>
           <!-- 4--> <c>W</c>
           <!-- 5--> <c>W</c>
-          <!-- 6--> <c>M/W</c>
+          <!-- 6--> <c>M</c>
           <!-- 9--> <c>M/W</c>
           <!--10--> <c>M</c>
           
@@ -2815,10 +2825,10 @@ title="Enabled Adjacencies">
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
           <!-- 9--> <c>M</c>
-          <!--10--> <c>W</c>
+          <!--10--> <c>M/W</c>
           
           <c>BIER-TE</c> 
-          <!-- 1--> <c>M/W</c>
+          <!-- 1--> <c>M</c>
           <!-- 2--> <c>N</c>
           <!-- 4--> <c>N</c>
           <!-- 5--> <c>M/W</c>
@@ -2874,7 +2884,7 @@ title="Enabled Adjacencies">
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
           <!-- 8--> <c>M/W</c>
-          <!--10--> <c>W</c>
+          <!--10--> <c>M/W</c>
 
 		  <c>RTP</c> 
           <!-- 1--> <c>M</c>
@@ -2899,12 +2909,12 @@ title="Enabled Adjacencies">
    
    <t>MPLS is the most common technology that is used as PSN for PseudoWires;
    furthermore, MPLS is a mature technology and meets most DetNet Transport
-   layer criteria. IPv[46] can be also used as PSN and IPv[46] is a mature
+   layer criteria. IPv6 can be also used as PSN and IPv6 is a mature
    technology as well. Both DetNet Service layer candidates can be supported by 
-   IPv[46].
+   IPv6.
    </t>
   
-   <t>The figure below summarizes the most suitable data plane options for 
+   <t><xref target="fig_sum"/> summarizes the most suitable data plane options for 
    DetNet.
    </t>
    
