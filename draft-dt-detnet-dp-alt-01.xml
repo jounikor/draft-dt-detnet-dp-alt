@@ -654,6 +654,8 @@ System   |     +-----+          +-----+          +-----+   |    V System
 
   <section title="#5 Packet replication and elimination" anchor="sec_crit_repdup">
     <t>
+      Packet replication and elimination is the first method being
+      considered to provide DetNet reliability.
       The objective for supporting packet replication and elimination is to
       enable hitless (or lossless) 1+1 protection, which is also called
       Seamless Redundancy in <xref target="I-D.finn-detnet-architecture"/>.
@@ -733,7 +735,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
      admission control, flow identification and isolation, and sometimes
      path control, traffic protection, shaping, policing and
      remarking. Example protocols that support QoS control
-     include <xref target="RFC2205">Resource ReSerVation Protocol</xref>
+     include <xref target="RFC2205">Resource ReSerVation Protocol (RSVP)</xref>
      (RSVP) and RSVP-TE <xref target="RFC3209"/> and <xref target="RFC3473"/>.
     </t>
     <t>
@@ -872,8 +874,8 @@ System   |     +-----+          +-----+          +-----+   |    V System
      
      <t hangText="#4 Explicit routes (W)">
       <vspace blankLines="1"/>
-      The general assumption is that a Software-Defined Networking (SDN)
-      <xref target="RFC7426"/> based approach is applied to compute, establish
+      One possibility is for a Software-Defined Networking (SDN)
+      <xref target="RFC7426"/> based approach to be applied to compute, establish
       and manage the explicit routes, leveraging Traffic Engineering (TE)
       extensions to routing protocols <xref target="RFC5305"/>
       <xref target="I-D.ietf-idr-ls-distribution"/> and evolving to the
@@ -908,23 +910,25 @@ System   |     +-----+          +-----+          +-----+   |    V System
      <t hangText="#6 Operations, Administration and Maintenance (M/W)">
       <vspace blankLines="1"/>
       IPv6 enjoys the existing toolbox for generic IP network management.
-      However, IPv6 specific management features are still not at the level of
-      that IPv4 has. This specifically concerns the areas that are IPv6
+      However, IPv6 specific management features are still not at the level
+      comparable to that of IPv4. Particular areas of concerns are those
+      that are IPv6
       specific, for example, related to neighbor discovery protocol (ND),
       stateless address autoconfiguration (SLAAC), subscriber identification,
       and security.  While the standards are already mostly in place the
       implementations in deployed equipment can be lacking or inadequate for
-      commercial deployments. This is largely only an issue with old existing
+      commercial deployments. This is larger issue with older existing
       equipment.
     <vspace blankLines="1"/></t>
     
-    <!--
      <t hangText="#8 Class and quality of service capabilities (M)">
-      <vspace blankLines="1"/>
-      The traffic class field of the fixed IPv6 header is designed for this
-      purpose.
-     <vspace blankLines="1"/></t>
-     -->
+       <vspace blankLines="1"/>
+       IPv6 provides support for CoS and QoS. CoS is provided by DiffServ
+       which is enabled by IP header differentiated services code point
+       (DSCP) and QoS is defined as part of <xref
+       target="RFC2205">RSVP</xref>.  DiffServ support is widely available, 
+       while RSVP for IP packets is generally not supported.
+       <vspace blankLines="1"/></t>
     
      <t hangText="#9 Packet traceability (M/W)">
       <vspace blankLines="1"/>
@@ -953,8 +957,10 @@ System   |     +-----+          +-----+          +-----+   |    V System
       <vspace blankLines="1"/>
       IPv6 has been around about 20 years. However, large scale global and
       commercial IPv6 deployments are rather new dating only few years back to
-      around 2012. While IPv6 has proven itself there are number of small issues
-      to work on as they show up once operations experience grows. 
+      around 2012. While IPv6 has proven itself for best effort traffic,
+      DiffServ usage is less common and QoS capabilities are not
+      currently present. Additional, there are number of small issues
+      to work on as they show up once operations experience grows.  
       
      <vspace blankLines="1"/>
       The <eref target="http://6lab.cisco.com/stats/">Cisco 6Lab site</eref>
@@ -973,11 +979,12 @@ System   |     +-----+          +-----+          +-----+   |    V System
  
    <section title="Summary">
     <t>
-     IPv6 supports a significant portion of the identified DetNet data plane
-     criteria today. There are aspects of the DetNet data plane that are not
-     fully supported, but these can be incrementally added. IPv6 can be a choice
-     as the DetNet Transport layer in networks where the network operator does
-     not intend to pay the tax of the MPLS control plane.
+      IPv6 supports a significant portion of the identified DetNet data
+      plane criteria today. There are aspects of the DetNet data plane that
+      are not fully supported, notably QoS, but these can be incrementally
+      added or supplemented by the underlying sub-network layer. IPv6 may be
+      a choice as the DetNet Transport layer in networks 
+      where other technologies such as MPLS are not deployed.
     </t>
    </section>
   </section>
@@ -989,9 +996,11 @@ System   |     +-----+          +-----+          +-----+   |    V System
      it has a smaller address space. However, IPv6 was designed around the fact
      that extension headers are an integral part of the protocol and operation
      from the beginning, although the practice may some times prove differently
-     <xref target="I-D.ietf-v6ops-ipv6-ehs-in-real-world"/>. IPv4 never really
-     needed any extension headers to work properly, thus support for IPv4 options
-     outside closed networks cannot typically be guaranteed. In the context of
+     <xref target="I-D.ietf-v6ops-ipv6-ehs-in-real-world"/>. IPv4 does
+     support header options, but these have historically not been supported
+     on in hardware-based forwarding so are generally blocked or handled at
+     a much slower rate.  In either case, the use of IP header options is
+     generally avoided. In the context of
      deterministic networking data plane solutions the major difference between
      IPv4 and IPv6 seems to be the practical support for header extensibility.
      Anything below and above the IP header independent of the version is
@@ -1003,8 +1012,8 @@ System   |     +-----+          +-----+          +-----+   |    V System
     <t><list style="hanging">
      <t hangText="#1 Encapsulation and overhead (M)">
       <vspace blankLines="1"/> The fixed header of an IPv4 packet is 20 bytes
-      <xref target="RFC0791"/>. IP options add overhead and the maximum IPv4
-      header size if 60 octets leaving only 40 octets for possible options.
+      <xref target="RFC0791"/>. IP options add overhead, but are not
+      generally used and are not considered as part of this document.
       <vspace blankLines="1"/></t>
      
      <t hangText="#2 Flow identification (W/N)">
@@ -1024,18 +1033,22 @@ System   |     +-----+          +-----+          +-----+   |    V System
       been deprecated <xref target="RFC6814"/>.  The conclusion is that stream
       identification does not work nicely with IPv4 header alone and a
       traditional 5-tuple identification might not also be enough in a case of a
-      flow duplication. For a working solution upper layer protocol
-      headers such as the RTP are required for unambiguous flow
-      identification.
+      flow duplication or encrypted flows. For a working solution, upper layer protocol
+      headers such as  RTP or PsedoWires may be required for unambiguous flow
+      identification.  There is also emerging work within the IETF that may
+      provide new flow identification alternatives.
      <vspace blankLines="1"/></t>
-     
      
      <t hangText="#4 Explicit routes (W)">
       <vspace blankLines="1"/>
       IPv4 has two source routing option specified: the loose source and record
       route option (LSRR), and the strict source and record route option (SSRR)
       <xref target="RFC0791"/>. The support of these options in the Internet is
-      questionable but within a closed network the support may be assumed.
+      questionable but within a closed network the support may be
+      assumed. But as both these options use IP header options, which are
+      generally not supported in hardware, use of these options are
+      questionable. Of course, the same options of SDN and SR approaches
+      discussed above for IPv6 may be equally applicable to IPv4.      
      <vspace blankLines="1"/></t>
     
      <t hangText="#5 Packet replication and elimination (W/N)">
@@ -1055,12 +1068,14 @@ System   |     +-----+          +-----+          +-----+   |    V System
       network management.
     <vspace blankLines="1"/></t>
     
-    <!--
      <t hangText="#8 Class and quality of service capabilities (M)">
-      <vspace blankLines="1"/>
-      The type of service (TOS) field of the fixed IPv4 header is designed for this purpose.
-     <vspace blankLines="1"/></t>
-     -->
+       <vspace blankLines="1"/>
+       IPv4 provides support for CoS and QoS. CoS is provided by DiffServ
+       which is enabled by IP header differentiated services code point
+       (DSCP) and QoS is defined as part of <xref
+       target="RFC2205">RSVP</xref>.  DiffServ support is widely available, 
+       while RSVP for IP packets is generally not supported.
+       <vspace blankLines="1"/></t>
     
      <t hangText="#9 Packet traceability (W/N)">
       <vspace blankLines="1"/>
@@ -1074,9 +1089,9 @@ System   |     +-----+          +-----+          +-----+   |    V System
      <t hangText="#10 Technical maturity (M/W)">
       <vspace blankLines="1"/>
       IPv4 can be considered mature technology with over 30 years of
-      implementation, deployment and operations experience. However, no new IPv4
-      standards development is "allowed" anymore <xref target="RFC6540"/><xref
-      target="I-D.ietf-sunset4-gapanalysis"/>.
+      implementation, deployment and operations experience. As with IPv6,
+      today's commercial implementations and deployments of IPv4 generally
+      lack any support for QoS.
      <vspace blankLines="1"/></t>
     </list></t>
    </section>
@@ -1086,7 +1101,8 @@ System   |     +-----+          +-----+          +-----+   |    V System
       The IPv4 has specifications to support most of the identified DetNet data
       plane criteria today. However, several of those have already been
       deprecated or their wide support is not guaranteed. The DetNet data plane
-      criteria that are not fully supported could be incrementally added.
+      criteria that are not fully supported could be incrementally added or
+      supplemented by the underlying sub-network layer. 
       Unfortunately, the IPv4 has had limited success getting its extensions
       deployed at large. However, introducing new extensions might have a better
       success in closed networks (like DetNet) than in Internet.  Due to the
@@ -1097,8 +1113,9 @@ System   |     +-----+          +-----+          +-----+   |    V System
   </section>
  
   <section title="Multiprotocol Label Switching (MPLS)" anchor="sec_alt_mpls">
-   <section title="MPLS used for DetNet">
-     
+<!--
+    <section title="MPLS used for DetNet">
+-->
     <t>
       Multiprotocol Label Switching Architecture (MPLS) <xref target="RFC3031"/>
       and its variants, MPLS with Traffic Engineering (MPLS-TE) <xref
@@ -1160,12 +1177,12 @@ title="MPLS-based Services">
       MPLS service data plane can be found below in
       <xref target="sec_alt_mpls_svc"/>.
     </t>
+<!--
    </section>
-   <section title="Solution description">
+-->
+<section title="Solution description">
     <t>
-      The following is a work in progress and draws
-      heavily from <xref target="RFC5960"/> and may be updated, replaced
-      or removed.
+      The following draws heavily from <xref target="RFC5960"/>.
     </t>
     <t>
       Encapsulation and forwarding of packets traversing MPLS LSPs
@@ -1267,7 +1284,8 @@ title="MPLS-based Services">
           protection, network layering, source routing, etc.
           <vspace blankLines="1"/>
           The number of DetNet Transport layer specific labels
-          depends on related functions and the MPLS domain characteristics
+          is flexible and support a wide range of applicable functions and
+          MPLS domain characteristics 
           (e.g., TE-tunnels, Hierarchical-LSPs, etc.).
       <vspace blankLines="1"/> </t>
      
@@ -1279,26 +1297,30 @@ title="MPLS-based Services">
           traffic classification from traffic treatment and thereby enable
           arbitrary combinations of both.
           <vspace blankLines="1"/> 
-		  For the DetNet flow identification the label stack can be 
-		  used partly or entirely. For example, using dedicated LSP per DetNet flow
-		  would simplify flow identification for intermediate transport nodes but 
-		  may challenge scalability. Some part of the labels stack can not be used 
+		  For the DetNet flow identification the MPLS label stack can be 
+		  used to support n-layers of DetNet flow identification.
+                  For example, using dedicated LSP per DetNet flow 
+		  would simplify flow identification for intermediate
+                  transport nodes, and additional hierarchical LSPs could be
+                  used to facilitate scaling.
+<!--
+                  Some part of the labels
+                  stack can not be used  
 		  for flow identification (e.g., entropy label).
         <vspace blankLines="1"/>
-
 [Janos: Well, it is true if all kinds of features are considered to be part of
 MPLS, e.g. PWs, which is an understandable argument. However, MPLS here is meant
 as transport, i.e. we are at the DetNet Transport layer, hence it is more 
 about LSPs only here.]
 [Editor's note: one can always push one more label for identification purposes.]
-          
+          -->
       <vspace blankLines="1"/> </t>
      <t hangText="#4 Explicit routes (M)">
         <vspace blankLines="1"/>
 
           MPLS supports explicit routes based on how LSPs are established,
           e.g., via TE explicit routes <xref target="RFC3209"/>.
-          Additional, but not required, additional capabilities are being
+          Additional, but not required, capabilities are being
           defined as part of Segment Routing (SR)
           <xref target="I-D.ietf-spring-segment-routing"/>. 
       <vspace blankLines="1"/> </t>
@@ -1306,16 +1328,17 @@ about LSPs only here.]
         <vspace blankLines="1"/>
 
           MPLS as DetNet Transport layer supports the replication via
-          point-to-multipoint LSPs. Duplicate elimination is a DetNet Service
-          layer function, however, at the MPLS LSP level, there are mechanisms
+          point-to-multipoint LSPs. Duplicate elimination is not provided
+          and would need to be provided within a Detnet function.  However,
+          at the MPLS LSP level, there are mechanisms 
           defined to provide 1+1 protection.  The current definitions <xref
           target="RFC6378"/> and <xref target="RFC7271"/> use OAM mechanisms to
           support and coordinate protection switching and packet loss is
           possible during a switch.  While such this level of protection may be
-          sufficient for man DetNet applications, when truly hitless (i.e.,
-          zero loss) switching is required additional mechanisms will be
+          sufficient for many DetNet applications, when truly hitless (i.e.,
+          zero loss) switching is required, additional mechanisms will be
           needed.  It is expected that these additional mechanisms will be
-          defined at the DetNet Service Layer.
+          defined at a DetNet layer.
       <vspace blankLines="1"/> </t>
      <t hangText="#6 Operations, Administration and Maintenance (M/W)">
         <vspace blankLines="1"/>
@@ -1333,7 +1356,7 @@ about LSPs only here.]
         via Pseudowires <xref target="sec_alt_pwe"/> and via other label-like
         mechanisms such as EPVN <xref target="sec_alt_evpn"/>.
       <vspace blankLines="1"/> </t
-     
+     -->
      <t hangText="#8 Class and quality of service capabilities (M/W)">
         <vspace blankLines="1"/>
 
@@ -1346,10 +1369,11 @@ about LSPs only here.]
           field) of an MPLS label follows the definition of
           <xref target="RFC5462"/> and <xref target="RFC3270"/>.  One
           potential open area of work is synchronized, time based
-          scheduling. 
+          scheduling. Another is shaping, which is generally not supported
+          in shipping MPLS hardware.
 
       <vspace blankLines="1"/>
-     </t>-->
+     </t>
      <t hangText="#9 Packet traceability (M/W)">
         <vspace blankLines="1"/>
        
@@ -1379,7 +1403,9 @@ about LSPs only here.]
       have been built and deployed.  MPLS LSPs support a significant
       portion of the identified DetNet data plane criteria
       today. Aspects of the DetNet data plane that are not fully
-      supported can be incrementally added.
+      supported can be incrementally added. It's worth noting that a number
+      of limitations are in shipping hardware, versus at the protocol
+      specification level, e.g., shaping.
     </t>
    </section>
   </section>
@@ -1526,8 +1552,8 @@ title="DetNet in BIER domain">
     <t hangText="#1 Encapsulation and overhead (M)">
      <vspace blankLines="1"/>
      BIER over MPLS network encapsulation (will refer as "BIER over MPLS"
-     further for short), <xref target="fig_BIER_MPLS"/>, is well defined [I-D.
-     ietf-bier-mpls-encapsulation].
+     further for short), <xref target="fig_BIER_MPLS"/>, is being defined [I-D.
+     ietf-bier-mpls-encapsulation] within the BIER working group.
      <vspace blankLines="1"/></t>
     
     <t hangText="#2 Flow identification (M)">
@@ -1563,7 +1589,6 @@ title="DetNet in BIER domain">
      <xref target="I-D.mirsky-bier-path-mtu-discovery"/>.
      <vspace blankLines="1"/></t>
 
-    <!--
     <t hangText="#8 Class and quality of service capabilities (M)">
      <vspace blankLines="1"/>
      Class of Service can be inherited from the underlay of the particular BIER
@@ -1571,7 +1596,6 @@ title="DetNet in BIER domain">
      can be used among other constrains in calculating explicit path for the
      BIER sub-domain's underlay.
      <vspace blankLines="1"/></t>
-     -->
 
     <t hangText="#9 Packet traceability (W)">
      <vspace blankLines="1"/>
@@ -1581,8 +1605,9 @@ title="DetNet in BIER domain">
      <vspace blankLines="1"/></t>
 
     <t hangText="#10 Technical maturity (M)">
-     <vspace blankLines="1"/>BIER over MPLS is well defined and several
-     experimental implementations are expected later this year.
+     <vspace blankLines="1"/>The BIER over MPLS is nearing finalization
+     within the BIER WG and several experimental implementations are
+     expected soon.
     </t>
    </list></t>
   </section>
@@ -1593,7 +1618,7 @@ title="DetNet in BIER domain">
       data plane requirements, including controlled packet replication, traffic
       engineering, while some requirements, e.g. duplicate and too-late packet
       elimination may be realized as function of the DetNet overlay. BIER over
-      MPLS can be a natural choice as the DetNet Transport layer in MPLS
+      MPLS is a viable candidate as the DetNet Transport layer in MPLS
       networks.
    </t>
   </section>
@@ -1980,9 +2005,9 @@ title="Enabled Adjacencies">
           </t>
           <t hangText="#10 Technical maturity (W)">
             <vspace blankLines="1"/>
-            Some components of the technology are already proven, e.g. segment
+            Some components of the technology are more mature, e.g. segment
             routing and BIER. Yet, the overall solution has never been deployed
-            in Service Provider networks.             
+            as is not fully defined.
           </t>
         </list>
       </t>
@@ -2118,7 +2143,7 @@ title="Enabled Adjacencies">
       GRE has been developed over 20 years. The delivery protocol mostly used is
       IPv4, while the IPv6 support for GRE is to be standardized now in IETF as
       <xref target="I-D.ietf-intarea-gre-ipv6"/>. Due to its good extensibility,
-      GRE is also extended to support network virtualization in Data Center,
+      GRE has also been extended to support network virtualization in Data Center,
       which is NVGRE <xref target="RFC7637"/>.
       </t>
      </list></t>
@@ -2133,7 +2158,7 @@ title="Enabled Adjacencies">
       criteria, and still some are not fully supported but can be
       incrementally added or supported by delivery protocols at as the
       transport layer. In general, GRE can be a choice as the DetNet
-      service layer and can work well with IPv6 and IPv4 as the DetNet
+      service layer and can work with IPv6 and IPv4 as the DetNet
       Transport layer.
      </t>
     </section>
@@ -2523,8 +2548,10 @@ title="Enabled Adjacencies">
       mechanism is already in place some clarifications may be required in the
       context of deterministic networking flows, for example, if some
       specific mapping between bit fields have to be done.
+     <vspace blankLines="1"/>
+     When PWs are used over MPLS, MPLS LSPs an be used to provide both CoS
+     (E-LSPs and L-LSPs) and QoS (dedicated TE LSPS).
      <vspace blankLines="1"/></t>
-     
      
      <t hangText="#10 Technical maturity (M)">
       <vspace blankLines="1"/>
@@ -2562,8 +2589,8 @@ title="Enabled Adjacencies">
     </t>
     <t>
       EVPN provides client adaptation and reuses the MPLS data plane
-      discussed above in <xref target="sec_alt_mpls_svc"/>.  In certain
-      special cases, it also uses the PW MPLS Control Word.  EVPN
+      discussed above in <xref target="sec_alt_mpls_svc"/>.  While not
+      required, the PW Control Word is also used.  EVPN
       control is via BGP, <xref target="RFC7432"/>, and may use TE-LSPs,
       e.g., controlled via <xref target="RFC3209"/> for MPLS transport.
       Additional EVPN related RFCs and in progress drafts are being
@@ -2659,11 +2686,11 @@ title="Enabled Adjacencies">
           <t hangText="#8 Class and quality of service capabilities (M/W)">
             <vspace blankLines="1"/>
 
-	    EVPN is largely silent on the topics of CoS and QoS, but  the
-	    existing Ethernet and MPLS mechanisms can be directly used.
-	    While an implementation may support such mappings today,
-	    standardized mappings do not (yet) exist. 	    
-
+	    EVPN is largely silent on the topics of CoS and QoS, but the
+	    802.1 TSN Ethernet and existing MPLS TE mechanisms can be
+            directly used.  The inter-working of such is new work and within
+            the scope of DetNet. The existing MPLS mechanisms include both CoS
+            (E-LSPs and L-LSPs) and QoS (dedicated TE LSPS). 
             <vspace blankLines="1"/> 
           </t>
         <!--  <t hangText="#9 Packet traceability (M)">
@@ -2710,7 +2737,8 @@ title="Enabled Adjacencies">
       Furthermore, even if this approach is applicable, it requires deep packet 
       inspection from the routers and switches. There are implementation 
       dependent limits how far into the packet the lookup can be done 
-      efficiently in the fast path. In general a safe bet is between 128 and 256 
+      efficiently in the fast path. When encryption is not used, a safe bet
+      is genrally between 128 and 256  
       octets for the maximum lookup depth. Various higher layer protocols can be 
       applied. Some examples are provided here for the sequence numbering feature 
       (<xref target="sec_crit_seq"/>).
