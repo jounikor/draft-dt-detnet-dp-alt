@@ -531,13 +531,25 @@ System   |     +-----+          +-----+          +-----+   |    V System
  <t>
   The criteria for the DetNet Service layer:
    <list style="hanging">
-    <t hangText="#1">Encapsulation and overhead</t>
-    <t hangText="#2">Flow identification (Service ID part of the DetNet flows)</t>
-    <t hangText="#3">Packet sequencing (sequence number)</t>
-    <t hangText="#5">Packet replication and elimination (note: only the packet deletion for
-       seamless redundancy)</t>
-    <t hangText="#6">Operations, Administration and Maintenance (capabilities)</t>
-    <t hangText="#8">Class and quality of service capabilities (DetNet Service specific)</t>
+    <t hangText="#1">
+     Encapsulation and overhead
+    </t>
+    <t hangText="#2">
+     Flow identification (Service ID part of the DetNet flows)
+    </t>
+    <t hangText="#3">
+     Packet sequencing (sequence number)
+    </t>
+    <t hangText="#5">
+     Packet replication and elimination (note: only the packet deletion for
+       DetNet Reliability)
+    </t>
+    <t hangText="#6">
+     Operations, Administration and Maintenance (capabilities)
+    </t>
+    <t hangText="#8">
+     Class and quality of service capabilities (DetNet Service specific)
+    </t>
     <t hangText="#10">Technical maturity</t>
   </list>  
  </t> 
@@ -548,8 +560,10 @@ System   |     +-----+          +-----+          +-----+   |    V System
     <t hangText="#1">Encapsulation and overhead</t>
     <t hangText="#2">Flow identification</t>
     <t hangText="#4">Explicit routes (network path)</t>
-    <t hangText="#5">Packet replication and elimination (note: only the packet replication
-           and/or flow merging for seamless redundancy)</t>
+    <t hangText="#5">
+     Packet replication and elimination (note: only the packet replication
+     and/or flow merging for DetNet Reliability)
+    </t>
     <t hangText="#6">Operations, Administration and Maintenance (capabilities,
           performance management, packet traceability)</t>
     <t hangText="#9">Packet traceability (can be part of OAM)</t>
@@ -557,12 +571,13 @@ System   |     +-----+          +-----+          +-----+   |    V System
    </list> 
  </t> 
  <t>[Editor's Note: numbering is off because #7 is removed.]</t>
+ <t>[Editor's Note: #9 should(?) be intergrated into #6.]</t>
 
  <t>
   Most of the criteria is relevant for both the DetNet Service and DetNet
   Transport layers. However, different aspects of the same criteria may relevant
   for different layers, for example, as it is the case with criteria #5 Packet
-  replication and elimination.
+      replication and elimination.
  </t> 
 
   <section title="#1 Encapsulation and overhead" anchor="sec_crit_encap">
