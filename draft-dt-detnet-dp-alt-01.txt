@@ -600,8 +600,9 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    Redundancy in [I-D.finn-detnet-architecture].  Data plane solutions
    need to meet this objective independent of the used solution.  In
    other words, a packet replication and elimination is one identified
-   method for a data plane solution to provide seamless redundancy.
-   Other methods, if so identified, are also permissible.
+   method for a data plane solution to provide seamless redundancy
+   (e.g., DetNet Reliability).  Other methods, if so identified, are
+   also permissible.
 
    The solution alternative has to provide means for end systems and/or
    relay systems to be able to replicate packets, and later eliminate
@@ -609,7 +610,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    order to ensure that one (or more) equipment failure event(s) still
    leave at least one path intact for a deterministic networking flow.
    The goal is to enable hitless 1+1 protection in a way that no packet
-
 
 
 
@@ -629,13 +629,13 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    intermediate hops and it takes additional knowledge to ensure that
    there is no single point of failure.
 
-   The IEEE 802.1CB [IEEE8021CB] is an example of Ethernet-based
-   solution that defines packet sequence numbering, packet replication,
-   and duplicate packet identification and deletion.  The deterministic
-   networking data plane solution alternative at layer-3 has to provide
-   equivalent functionality.  This criteria concerns the available
-   mechanisms for packet replication and duplicate deletion the data
-   plane protocol alternative has.
+   The IEEE 802.1CB (seamless redundancy) [IEEE8021CB] is an example of
+   Ethernet-based solution that defines packet sequence numbering,
+   packet replication, and duplicate packet identification and deletion.
+   The deterministic networking data plane solution alternative at
+   layer-3 has to provide equivalent functionality.  This criteria
+   concerns the available mechanisms for packet replication and
+   duplicate deletion the data plane protocol alternative has.
 
 4.6.  #6 Operations, Administration and Maintenance
 
@@ -759,14 +759,15 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    #1 Encapsulation and overhead (M)
 
-      The DetNet Service layer encapsulated DetNet flows are assumed to
-      be handled natively at layer-3 by IPv6 at the first place.  The
-      fixed header of an IPv6 packet is 40 bytes [RFC2460].  This
-      overhead is bigger if any Extension Header is used, and a generic
-      behaviour for host and forwarding nodes is specified in [RFC7045].
-      However, the exact overhead (Section 4.1) depends on what solution
-      is actually used to provide DetNet features, e.g., explicit
-      routing or seamless redundancy if any of these is applied.
+      IPv6 can encapsulate DetNet Service layer headers (and associated
+      DetNet flow payload) like any other upper-layer header indicated
+      by the Next Header.  The fixed header of an IPv6 packet is 40
+      bytes [RFC2460].  This overhead is bigger if any Extension Header
+      is used, and a generic behaviour for host and forwarding nodes is
+      specified in [RFC7045].  However, the exact overhead (Section 4.1)
+      depends on what solution is actually used to provide DetNet
+      features, e.g., explicit routing or DetNet Reliability if any of
+      these is applied.
 
       IPv6 has two types of Extension Headers that are processed by
       intermediate routers between the source and the final destination
@@ -776,8 +777,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       Options Header that carries optional information that must be
       examined by every node along a packet's delivery path.  The Hop-
       by-Hop Options Header, when present, must immediately follow the
-      IPv6 Header and it is not possible to limit its processing to the
-      end points of Source Routed segments.
+
 
 
 
@@ -785,6 +785,9 @@ Korhonen, et al.         Expires January 8, 2017               [Page 14]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
+
+      IPv6 Header and it is not possible to limit its processing to the
+      end points of Source Routed segments.
 
       IPv6 also provides a Destination Options Header that is used to
       carry optional information to be examined only by a packet's
@@ -830,10 +833,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       Computation Element (PCE) Architecture [RFC5440], though a number
       of issues remain to be solved [RFC7399].
 
-      Segment Routing (SR) [I-D.ietf-spring-segment-routing] is a new
-      initiative to equip IPv6 with explicit routing capabilities.  The
-      idea for the DetNet data plane would be to apply SR to IPv6 with
-      the addition of a new type of routing extension header
+
 
 
 
@@ -842,6 +842,10 @@ Korhonen, et al.         Expires January 8, 2017               [Page 15]
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
+      Segment Routing (SR) [I-D.ietf-spring-segment-routing] is a new
+      initiative to equip IPv6 with explicit routing capabilities.  The
+      idea for the DetNet data plane would be to apply SR to IPv6 with
+      the addition of a new type of routing extension header
       [I-D.ietf-6man-segment-routing-header] to explicitly signal the
       path in the data plane between the source and the destination,
       and/or between replication points and elimination points if this
@@ -886,10 +890,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    #9 Packet traceability (W)
 
-      The traceability of replicated packets involves the capability to
-      resolve which replication point issued a particular copy of a
-      packet, which segment was intended for that replica, and which
-      particular packet of which particular flow this is.  Sequence also
 
 
 
@@ -898,6 +898,10 @@ Korhonen, et al.         Expires January 8, 2017               [Page 16]
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
+      The traceability of replicated packets involves the capability to
+      resolve which replication point issued a particular copy of a
+      packet, which segment was intended for that replica, and which
+      particular packet of which particular flow this is.  Sequence also
       depends on the sequencing mechanism.  As an example, the
       replication point may be indicated as the source of the packet if
       IP-in-IP encapsulation is used to forward along segments.  Another
@@ -941,10 +945,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    plane criteria today.  There are aspects of the DetNet data plane
    that are not fully supported, notably QoS, but these can be
    incrementally added or supplemented by the underlying sub-network
-   layer.  IPv6 may be a choice as the DetNet Transport layer in
-   networks where other technologies such as MPLS are not deployed.
-
-
 
 
 
@@ -953,6 +953,9 @@ Korhonen, et al.         Expires January 8, 2017               [Page 17]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
+
+   layer.  IPv6 may be a choice as the DetNet Transport layer in
+   networks where other technologies such as MPLS are not deployed.
 
 5.1.2.  Native IPv4 transport
 
@@ -999,9 +1002,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       case of a flow duplication or encrypted flows.  For a working
       solution, upper layer protocol headers such as RTP or PWs may be
       required for unambiguous flow identification.  There is also
-      emerging work within the IETF that may provide new flow
-      identification alternatives.
-
 
 
 
@@ -1009,6 +1009,9 @@ Korhonen, et al.         Expires January 8, 2017               [Page 18]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
+
+      emerging work within the IETF that may provide new flow
+      identification alternatives.
 
    #4 Explicit routes (W)
 
@@ -1054,16 +1057,19 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    #10 Technical maturity (M/W)
 
-      IPv4 can be considered mature technology with over 30 years of
-      implementation, deployment and operations experience.  As with
-      IPv6, today's commercial implementations and deployments of IPv4
-      generally lack any support for QoS.
+
 
 
 
 Korhonen, et al.         Expires January 8, 2017               [Page 19]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
+
+
+      IPv4 can be considered mature technology with over 30 years of
+      implementation, deployment and operations experience.  As with
+      IPv6, today's commercial implementations and deployments of IPv4
+      generally lack any support for QoS.
 
 
 5.1.2.3.  Summary
@@ -1099,12 +1105,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    Pseudowires Section 5.2.3 and via other label-like mechanisms such as
    EPVN Section 5.2.4.  A representation of these options are shown in
    Figure 7.
-
-
-
-
-
-
 
 
 
@@ -2493,23 +2493,23 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 5.2.5.1.  TCP
 
    The TCP header includes a sequence number parameter, which can be
-   applied to detect and eliminate duplicate packets if seamless
-   redundancy is used.  As the TCP header is right after the IP header,
-   it does not require very deep packet inspection; the 4-byte sequence
-   number is conveyed by bits 32 through 63 of the TCP header.  In
-   addition to sequencing, the TCP header also contain source and
-   destination port information that can be used for assisting the flow
-   identification.
+   applied to detect and eliminate duplicate packets if DetNet
+   Reliability redundancy is used.  As the TCP header is right after the
+   IP header, it does not require very deep packet inspection; the
+   4-byte sequence number is conveyed by bits 32 through 63 of the TCP
+   header.  In addition to sequencing, the TCP header also contain
+   source and destination port information that can be used for
+   assisting the flow identification.
 
 5.2.5.2.  RTP
 
    RTP is often used to deliver time critical traffic in IP networks.
    RTP is is carried on top of IP and UDP [RFC3550].  The RTP header
    includes a 2-byte sequence number, which can be used to detect and
-   eliminate duplicate packets if seamless redundancy is used.  The
-   sequence number is conveyed by bits 16 through 31 of the RTP header.
-   In addition to the sequence number the RTP header has also timestamp
-   field (bits 32 through 63) that can be useful for time
+   eliminate duplicate packets if DetNet Reliability redundancy is used.
+   The sequence number is conveyed by bits 16 through 31 of the RTP
+   header.  In addition to the sequence number the RTP header has also
+   timestamp field (bits 32 through 63) that can be useful for time
    synchronization purposes.  Furthermore, the RTP header has also one
    or more synchronization sources (bits starting from 64) that can
    potentially be useful for flow identification purposes.
