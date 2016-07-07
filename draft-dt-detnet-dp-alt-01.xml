@@ -306,12 +306,93 @@ End System       Node            Node         Node         End System
                          `-----'                       `-----'
 ]]></artwork>
 </figure>
-
+    
+    <t>
+     The protocol stack model of the data plane described in <xref
+     target="I-D.finn-detnet-architecture"/> defines functional primitives for
+     ingress and egress packets, which are used by the three techniques (see
+     <xref target="sec_intro"/>) to ensure deterministic forwarding. <xref
+     target="I-D.finn-detnet-architecture"/> does not specify the relationship
+     between the DetNet Service and Transport layers used in this document to 
+     investigate data plane options as explained in the following. The goal of 
+     this document is to evaluate possible data plane technologies and compare 
+     their characteristics from DetNet perspective.
+    </t>
+  <t>
+  The DetNet data plane is logically divided into two layers (also see
+  <xref target="fig_adaptation"/>):
+   <list style="hanging">
+    <t hangText="DetNet Service Layer"><vspace blankLines="1"/>
+     The DetNet service layer provides adaptation of DetNet services.  It is
+     composed of a shim layer to carry deterministic  flow specific attributes,
+     which are needed during forwarding. DetNet enabled end systems originate
+     and terminate the DetNet Service layer and are peers at the DetNet Service
+     layer. DetNet relay and edge nodes also implement DetNet Service layer
+     functions. The DetNet service layer is used to
+     deliver traffic end to end across a DetNet domain.
+    <vspace blankLines="1"/></t>
+    <t hangText="DetNet Transport Layer"><vspace blankLines="1"/>
+     The DetNet transport layer is required on all DetNet nodes. All
+     DetNet nodes are end points and the transport layer. Non-DetNet
+     service aware transit nodes deliver traffic between DetNet nodes. 
+     The DetNet transport layer operates below and supports the DetNet
+     Service layer.  
+    </t>
+   </list>
+   Distinguishing the function of these two DetNet data plane layers helps to
+   explore and evaluate various combinations of the data plane solutions
+   available.  This separation of DetNet layers, while helpful, should not be
+   considered as formal requirement.  For example, some technologies may violate
+   these strict layers and still be able to deliver a DetNet service.
+  </t>
+<figure anchor="fig_adaptation" align="center"
+title="DetNet adaptation to data plane">
+<artwork align="center"><![CDATA[
+    .
+    .
++-----------+
+|  Service  | PW, RTP, UDP, GRE
++-----------+
+| Transport | IPv6, IPv4, MPLS LSPs, BIER, BIER-TE
++-----------+
+    .
+    .
+]]></artwork>
+</figure>
+  <t>  
+   The two logical layers defined here aim to help to identify which data
+   plane technology can be used for what purposes in the DetNet context.  This
+   layering is similar to the data plane concept of MPLS, where some part of
+   the label stack is "Service" specific (e.g., PW labels, VPN labels) and an
+   other part is "Transport" specific (e.g, LSP label, TE label(s)).
+  </t>
+  <t>
+   In some networking scenarios, the end system initially provides a DetNet flow
+   encapsulation, which contains all information needed by DetNet nodes (e.g.,
+   RTP based DetNet flow transported over a native UDP/IP network). In other
+   scenarios, the encapsulation formats might differ significantly. As an
+   example, a CPRI "application's" IQ data mapped directly to Ethernet frames
+   may have to be transported over an MPLS based packet switched network (PSN).
+  </t>
+  <t>
+   There are many valid options to create a data plane solution for DetNet
+   traffic by selecting a technology approach for the DetNet Service layer and
+   also selecting a technology approach for the DetNet Transport layer. There are
+   a high number of valid combinations. Therefore, not the combinations but the
+   different technologies are evaluated along the criteria collected in <xref
+   target="sec_crit"/>. Different criteria apply for the DetNet Service layer and
+   the DetNet Transport layer, however, some of the criteria are valid for both
+   layers.
+  </t> 
+  <t>
+   One of the most fundamental differences between different potential
+   data plane options is the basic addressing and headers used by DetNet
+   end systems.  For example, is the basic service a Layer 2 (e.g., Ethernet) or
+   Layer 3 (i.e., IP) service. This decision impacts how DetNet end systems
+   are addressed, and the basic forwarding logic for the DetNet Service layer
+  </t>
+<section title="Example DetNet Service Scenarios" anchor="sec_dt_dp_svc">
 <t>
-  [LB: Perhaps move layering from below here???]
-</t>
-
- <t>
   In an attempt to illustrate a DetNet date plane, this document uses the
   Multi-Segment
   Pseudowire Emulation Edge-to-Edge (PWE3) <xref target="RFC5254"/> reference
@@ -435,92 +516,8 @@ System   |     +-----+          +-----+          +-----+   |    V System
      |<----------------- End to End Service ------------------->|
  ]]></artwork>
 </figure>
-    
-    <t>
-     The protocol stack model of the data plane described in <xref
-     target="I-D.finn-detnet-architecture"/> defines functional primitives for
-     ingress and egress packets, which are used by the three techniques (see
-     <xref target="sec_intro"/>) to ensure deterministic forwarding. <xref
-     target="I-D.finn-detnet-architecture"/> does not specify the relationship
-     between the DetNet Service and Transport layers used in this document to 
-     investigate data plane options as explained in the following. The goal of 
-     this document is to evaluate possible data plane technologies and compare 
-     their characteristics from DetNet perspective.
-    </t>
-  <t>
-  The DetNet data plane is logically divided into two layers (also see
-  <xref target="fig_adaptation"/>):
-   <list style="hanging">
-    <t hangText="DetNet Service Layer"><vspace blankLines="1"/>
-     The DetNet service layer provides adaptation of DetNet services.  It is
-     composed of a shim layer to carry deterministic  flow specific attributes,
-     which are needed during forwarding. DetNet enabled end systems originate
-     and terminate the DetNet Service layer and are peers at the DetNet Service
-     layer. DetNet relay and edge nodes also implement DetNet Service layer
-     functions. The DetNet service layer is used to
-     deliver traffic end to end across a DetNet domain.
-    <vspace blankLines="1"/></t>
-    <t hangText="DetNet Transport Layer"><vspace blankLines="1"/>
-     The DetNet transport layer is required on all DetNet nodes. All
-     DetNet nodes are end points and the transport layer. Non-DetNet
-     service aware transit nodes deliver traffic between DetNet nodes. 
-     The DetNet transport layer operates below and supports the DetNet
-     Service layer.  
-    </t>
-   </list>
-   Distinguishing the function of these two DetNet data plane layers helps to
-   explore and evaluate various combinations of the data plane solutions
-   available.  This separation of DetNet layers, while helpful, should not be
-   considered as formal requirement.  For example, some technologies may violate
-   these strict layers and still be able to deliver a DetNet service.
-  </t>
-<figure anchor="fig_adaptation" align="center"
-title="DetNet adaptation to data plane">
-<artwork align="center"><![CDATA[
-    .
-    .
-+-----------+
-|  Service  | PW, RTP, UDP, GRE
-+-----------+
-| Transport | IPv6, IPv4, MPLS LSPs, BIER, BIER-TE
-+-----------+
-    .
-    .
-]]></artwork>
-</figure>
-  <t>  
-   The two logical layers defined here aim to help to identify which data
-   plane technology can be used for what purposes in the DetNet context.  This
-   layering is similar to the data plane concept of MPLS, where some part of
-   the label stack is "Service" specific (e.g., PW labels, VPN labels) and an
-   other part is "Transport" specific (e.g, LSP label, TE label(s)).
-  </t>
-  <t>
-   In some networking scenarios, the end system initially provides a DetNet flow
-   encapsulation, which contains all information needed by DetNet nodes (e.g.,
-   RTP based DetNet flow transported over a native UDP/IP network). In other
-   scenarios, the encapsulation formats might differ significantly. As an
-   example, a CPRI "application's" IQ data mapped directly to Ethernet frames
-   may have to be transported over an MPLS based packet switched network (PSN).
-  </t>
-  <t>
-   There are many valid options to create a data plane solution for DetNet
-   traffic by selecting a technology approach for the DetNet Service layer and
-   also selecting a technology approach for the DetNet Transport layer. There are
-   a high number of valid combinations. Therefore, not the combinations but the
-   different technologies are evaluated along the criteria collected in <xref
-   target="sec_crit"/>. Different criteria apply for the DetNet Service layer and
-   the DetNet Transport layer, however, some of the criteria are valid for both
-   layers.
-  </t> 
-  <t>
-   One of the most fundamental differences between different potential
-   data plane options is the basic addressing and headers used by DetNet
-   end systems.  For example, is the basic service a Layer 2 (e.g., Ethernet) or
-   Layer 3 (i.e., IP) service. This decision impacts how DetNet end systems
-   are addressed, and the basic forwarding logic for the DetNet Service layer
-  </t>
- </section>
+</section>
+</section>
  <section title="Criteria for data plane solution alternatives" anchor="sec_crit">
   <t>
    This section provides criteria to help to evaluate potential options.  Each
