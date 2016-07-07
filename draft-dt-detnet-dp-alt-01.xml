@@ -297,9 +297,6 @@ End System       Node            Node         Node         End System
         +........+    +-[  Sub  ]-+   +........+    +-[  Sub  ]-+
                         [Network]                     [Network] 
                          `-----'                       `-----'
-                                              
-|--- Admin Domain 1 ---|     |----- Admin Domain 2 ------------------|    
-
 ]]></artwork>
 </figure>
 
