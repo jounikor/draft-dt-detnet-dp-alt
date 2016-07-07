@@ -2738,7 +2738,7 @@ title="Enabled Adjacencies">
       inspection from the routers and switches. There are implementation 
       dependent limits how far into the packet the lookup can be done 
       efficiently in the fast path. When encryption is not used, a safe bet
-      is genrally between 128 and 256  
+      is generally between 128 and 256  
       octets for the maximum lookup depth. Various higher layer protocols can be 
       applied. Some examples are provided here for the sequence numbering feature 
       (<xref target="sec_crit_seq"/>).

@@ -609,13 +609,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    order to ensure that one (or more) equipment failure event(s) still
    leave at least one path intact for a deterministic networking flow.
    The goal is to enable hitless 1+1 protection in a way that no packet
-   gets lost or there is no ramp up time when either one of the paths
-   fails for one reason or another.
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9a703b4... general editorial pass - lost of little changes,
 
 
 
@@ -623,6 +617,9 @@ Korhonen, et al.         Expires January 8, 2017               [Page 11]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
+
+   gets lost or there is no ramp up time when either one of the paths
+   fails for one reason or another.
 
    Another concern regarding packet replication is how to enforce
    replicated packets to take different route or path while the final
@@ -668,10 +665,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    point (DSCP) field [RFC2474] and MPLS label traffic class field
    [RFC5462], and at Layer-2, by IEEE 802.1p priority code point (PCP).
 
-   Quality of Service (QoS) mechanisms for flow specific traffic
-   treatment typically includes a guarantee/agreement for the service,
-   and allocation of resources to support the service.  Example QoS
-   mechanisms include discrete resource allocation, admission control,
+
 
 
 
@@ -680,6 +674,10 @@ Korhonen, et al.         Expires January 8, 2017               [Page 12]
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
+   Quality of Service (QoS) mechanisms for flow specific traffic
+   treatment typically includes a guarantee/agreement for the service,
+   and allocation of resources to support the service.  Example QoS
+   mechanisms include discrete resource allocation, admission control,
    flow identification and isolation, and sometimes path control,
    traffic protection, shaping, policing and remarking.  Example
    protocols that support QoS control include Resource ReSerVation
@@ -723,10 +721,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    particularly important given, as previously noted, that the DetNet
    data plane solution is expected to impact, i.e., be supported in,
    hardware.
-
-
-
-
 
 
 
@@ -912,17 +906,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       Home Address option [RFC6275] and then use the address of the
       replication point as source in the IP header.
 
-<<<<<<< HEAD
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 16]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
-=======
->>>>>>> 9a703b4... general editorial pass - lost of little changes,
       The traceability also involves the capability to determine if a
       particular segment is operational.  While IPv6 as such has no
       support for reversing a path, it appears source route extensions
@@ -956,25 +939,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    IPv6 supports a significant portion of the identified DetNet data
    plane criteria today.  There are aspects of the DetNet data plane
-<<<<<<< HEAD
-   that are not fully supported, but these can be incrementally added.
-   IPv6 can be a choice as the DetNet Transport layer in networks where
-   the network operator does not intend to pay the tax of the MPLS
-   control plane.
-
-5.1.2.  Native IPv4 transport
-
-5.1.2.1.  Solution description
-
-   IPv4 [RFC0791] is in principle the same as IPv6, except that it has a
-   smaller address space.  However, IPv6 was designed around the fact
-   that extension headers are an integral part of the protocol and
-   operation from the beginning, although the practice may some times
-   prove differently [I-D.ietf-v6ops-ipv6-ehs-in-real-world].  IPv4
-   never really needed any extension headers to work properly, thus
-   support for IPv4 options outside closed networks cannot typically be
-   guaranteed.  In the context of deterministic networking data plane
-=======
    that are not fully supported, notably QoS, but these can be
    incrementally added or supplemented by the underlying sub-network
    layer.  IPv6 may be a choice as the DetNet Transport layer in
@@ -982,7 +946,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
->>>>>>> 9a703b4... general editorial pass - lost of little changes,
 
 
 
@@ -991,11 +954,6 @@ Korhonen, et al.         Expires January 8, 2017               [Page 17]
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
-<<<<<<< HEAD
-   solutions the major difference between IPv4 and IPv6 seems to be the
-   practical support for header extensibility.  Anything below and above
-   the IP header independent of the version is practically the same.
-=======
 5.1.2.  Native IPv4 transport
 
 5.1.2.1.  Solution description
@@ -1013,7 +971,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    IPv6 seems to be the practical support for header extensibility.
    Anything below and above the IP header independent of the version is
    practically the same.
->>>>>>> 9a703b4... general editorial pass - lost of little changes,
 
 5.1.2.2.  Analysis and Discussion
 
@@ -1072,23 +1029,11 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       IPv6 packet replication also applies to IPv4.  Duplicate packet
       detection for IPv4 is studied in [RFC6621] to a great detail in
       the context of simplified multicast forwarding.  In general there
-
-<<<<<<< HEAD
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 18]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
       is no good way to detect duplicated packets for IPv4 without
       additional upper layer protocol support.
 
    #6 Operations, Administration and Maintenance (M)
 
-=======
->>>>>>> 9a703b4... general editorial pass - lost of little changes,
       IPv4 enjoys the extensive and "complete" existing toolbox for
       generic IP network management.
 
@@ -1145,8 +1090,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    Explicit Replication (BIER) Section 5.1.4 and Source Packet Routing
    [3].
 
-<<<<<<< HEAD
-=======
    MPLS supports the equivalent of both the DetNet Service and DetNet
    Transport layers, and provides a very rich set of mechanisms that can
    be reused directly, and perhaps augmented in certain cases, to
@@ -1157,7 +1100,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    EPVN Section 5.2.4.  A representation of these options are shown in
    Figure 7.
 
->>>>>>> 9a703b4... general editorial pass - lost of little changes,
 
 
 
@@ -1180,19 +1122,6 @@ Korhonen, et al.         Expires January 8, 2017               [Page 20]
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
-<<<<<<< HEAD
-   MPLS supports the equivalent of both the DetNet Service and DetNet
-   Transport layers, and provides a very rich set of mechanisms that can
-   be reused directly, and perhaps augmented in certain cases, to
-   deliver DetNet services.  At the DetNet Transport layer, MPLS
-   provides forwarding, protection and OAM services.  At the DetNet
-   Service Layer it provides client service adaption, directly, via
-   Pseudowires Section 5.2.3 and via other label-like mechanisms such as
-   EPVN Section 5.2.4.  A representation of these options are shown in
-   Figure 7.
-
-=======
->>>>>>> 9a703b4... general editorial pass - lost of little changes,
    PW-Based               EVPN Labeled                 IP
    Services                  Services                Transport
  |------------|  |-----------------------------|  |------------|
@@ -1230,17 +1159,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    The following draws heavily from [RFC5960].
 
-<<<<<<< HEAD
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 20]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
-=======
->>>>>>> 9a703b4... general editorial pass - lost of little changes,
    Encapsulation and forwarding of packets traversing MPLS LSPs follows
    standard MPLS packet encapsulation and forwarding as defined in
    [RFC3031], [RFC3032], [RFC5331], and [RFC5332].
@@ -1297,17 +1215,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    A point-to-multipoint unidirectional LSP functions in the same manner
    in the data plane, with respect to basic label processing and packet-
    switching operations, as a point-to-point unidirectional LSP, with
-<<<<<<< HEAD
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 21]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
-=======
->>>>>>> 9a703b4... general editorial pass - lost of little changes,
    one difference: an LSR may have more than one (egress interface,
    outgoing label) pair associated with the LSP, and any packet it
    transmits on the LSP is transmitted out all associated egress
@@ -1355,35 +1262,11 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       classification from traffic treatment and thereby enable arbitrary
       combinations of both.
 
-<<<<<<< HEAD
-      For the DetNet flow identification the label stack can be used
-      partly or entirely.  For example, using dedicated LSP per DetNet
-      flow would simplify flow identification for intermediate transport
-      nodes but may challenge scalability.  Some part of the labels
-      stack can not be used for flow identification (e.g., entropy
-      label).
-
-      [Janos: Well, it is true if all kinds of features are considered
-      to be part of MPLS, e.g.  PWs, which is an understandable
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 22]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-=======
       For the DetNet flow identification the MPLS label stack can be
       used to support n-layers of DetNet flow identification.  For
       example, using dedicated LSP per DetNet flow would simplify flow
       identification for intermediate transport nodes, and additional
       hierarchical LSPs could be used to facilitate scaling.
->>>>>>> 9a703b4... general editorial pass - lost of little changes,
-
-
-      argument.  However, MPLS here is meant as transport, i.e. we are
-      at the DetNet Transport layer, hence it is more about LSPs only
-      here.]  [Editor's note: one can always push one more label for
-      identification purposes.]
 
 
    #4 Explicit routes (M)
@@ -1447,6 +1330,12 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    #10 Technical maturity (M)
 
+      MPLS as a mature technology that has been widely deployed in many
+      networks for many years.  Numerous vendor products and multiple
+      generations of MPLS hardware have been built and deployed.
+
+
+
 
 
 
@@ -1457,15 +1346,7 @@ Korhonen, et al.         Expires January 8, 2017               [Page 24]
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
-<<<<<<< HEAD
-      MPLS as a mature technology that has been widely deployed in many
-      networks for many years.  Numerous vendor products and multiple
-      generations of MPLS hardware have been built and deployed.
-
-5.1.3.4.  Summary
-=======
 5.1.3.3.  Summary
->>>>>>> 9a703b4... general editorial pass - lost of little changes,
 
    MPLS is a mature technology that has been widely deployed.  Numerous
    vendor products and multiple generations of MPLS hardware have been
@@ -1514,13 +1395,9 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-<<<<<<< HEAD
-Korhonen, et al.         Expires January 8, 2017               [Page 24]
-=======
 
 
 Korhonen, et al.         Expires January 8, 2017               [Page 25]
->>>>>>> 9a703b4... general editorial pass - lost of little changes,
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2608,7 +2485,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    applicable, it requires deep packet inspection from the routers and
    switches.  There are implementation dependent limits how far into the
    packet the lookup can be done efficiently in the fast path.  When
-   encryption is not used, a safe bet is genrally between 128 and 256
+   encryption is not used, a safe bet is generally between 128 and 256
    octets for the maximum lookup depth.  Various higher layer protocols
    can be applied.  Some examples are provided here for the sequence
    numbering feature (Section 4.3).
