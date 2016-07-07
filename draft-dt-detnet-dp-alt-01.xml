@@ -240,13 +240,12 @@
    <xref target="I-D.finn-detnet-architecture"/>.  Currently the following
    terms are used:
   </t>
+  <t><list style="hanging">
    <t hangText="DetNet Reliability"><vspace blankLines="1"/>
-    A set of mechanisms to increase the probability of lossless (i.e.,
-    zero loss) DetNet
-    flow delivery across a network.  Example mechanisms include
+    A set of mechanisms to increase the probability of lossless (i.e., zero
+    loss) DetNet flow delivery across a network.  Example mechanisms include
     packet replication and dulpicate elimination.
     <vspace blankLines="1"/></t>
-  <t><list style="hanging">
    <t hangText="Transit Node"><vspace blankLines="1"/>
     A node that provides link layer and network layer switching across
     multiple links and/or sub-networks. Transit nodes provide packet
@@ -412,7 +411,7 @@ System   |    +-----+          +-----+          +-----+   |    System
   <xref target="fig_iw_detnet"/> illustrates how a IEEE 802.1TSN end system
   could communicate with a native DetNet end system through an edge node
   which provides a TSN to DetNet inter-working capability.  The edge
-  node would adds and removes required DetNet data plane encapsulation
+  node would add and remove required DetNet data plane encapsulation
   as well as provide any needed address mapping. As in previous figures,
   the 'X' in the end systems, edge and relay nodes represents potential DetNet
   flow packet duplication and elimination points.   

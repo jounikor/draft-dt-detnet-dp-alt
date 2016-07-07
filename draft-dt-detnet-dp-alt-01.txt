@@ -73,37 +73,37 @@ Table of Contents
    3.  DetNet Data Plane Overview  . . . . . . . . . . . . . . . . .   4
    4.  Criteria for data plane solution alternatives . . . . . . . .   9
      4.1.  #1 Encapsulation and overhead . . . . . . . . . . . . . .  10
-     4.2.  #2 Flow identification  . . . . . . . . . . . . . . . . .  11
+     4.2.  #2 Flow identification  . . . . . . . . . . . . . . . . .  10
      4.3.  #3 Packet sequencing  . . . . . . . . . . . . . . . . . .  11
      4.4.  #4 Explicit routes  . . . . . . . . . . . . . . . . . . .  11
-     4.5.  #5 Packet replication and elimination . . . . . . . . . .  12
+     4.5.  #5 Packet replication and elimination . . . . . . . . . .  11
      4.6.  #6 Operations, Administration and Maintenance . . . . . .  12
-     4.7.  #8 Class and quality of service capabilities  . . . . . .  13
+     4.7.  #8 Class and quality of service capabilities  . . . . . .  12
      4.8.  #9 Packet traceability  . . . . . . . . . . . . . . . . .  13
-     4.9.  #10 Technical maturity  . . . . . . . . . . . . . . . . .  14
+     4.9.  #10 Technical maturity  . . . . . . . . . . . . . . . . .  13
    5.  Data plane solution alternatives  . . . . . . . . . . . . . .  14
      5.1.  DetNet Transport layer technologies . . . . . . . . . . .  14
        5.1.1.  Native IPv6 transport . . . . . . . . . . . . . . . .  14
-       5.1.2.  Native IPv4 transport . . . . . . . . . . . . . . . .  18
-       5.1.3.  Multiprotocol Label Switching (MPLS)  . . . . . . . .  20
-       5.1.4.  Bit Indexed Explicit Replication (BIER) . . . . . . .  25
-       5.1.5.  BIER - Traffic Engineering (BIER-TE)  . . . . . . . .  29
-     5.2.  DetNet Service layer technologies . . . . . . . . . . . .  36
-       5.2.1.  Generic Routing Encapsulation (GRE) . . . . . . . . .  36
-       5.2.2.  MPLS-based Services for DetNet  . . . . . . . . . . .  38
-       5.2.3.  Pseudo Wire Emulation Edge-to-Edge (PWE3) . . . . . .  39
-       5.2.4.  MPLS-Based Ethernet VPN (EVPN)  . . . . . . . . . . .  43
-       5.2.5.  Higher layer header fields  . . . . . . . . . . . . .  45
-   6.  Summary of data plane alternatives  . . . . . . . . . . . . .  46
-   7.  Security considerations . . . . . . . . . . . . . . . . . . .  48
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  48
-   9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  48
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  49
-     10.1.  Informative References . . . . . . . . . . . . . . . . .  49
-     10.2.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . .  58
+       5.1.2.  Native IPv4 transport . . . . . . . . . . . . . . . .  17
+       5.1.3.  Multiprotocol Label Switching (MPLS)  . . . . . . . .  19
+       5.1.4.  Bit Indexed Explicit Replication (BIER) . . . . . . .  24
+       5.1.5.  BIER - Traffic Engineering (BIER-TE)  . . . . . . . .  28
+     5.2.  DetNet Service layer technologies . . . . . . . . . . . .  35
+       5.2.1.  Generic Routing Encapsulation (GRE) . . . . . . . . .  35
+       5.2.2.  MPLS-based Services for DetNet  . . . . . . . . . . .  37
+       5.2.3.  Pseudo Wire Emulation Edge-to-Edge (PWE3) . . . . . .  38
+       5.2.4.  MPLS-Based Ethernet VPN (EVPN)  . . . . . . . . . . .  42
+       5.2.5.  Higher layer header fields  . . . . . . . . . . . . .  44
+   6.  Summary of data plane alternatives  . . . . . . . . . . . . .  45
+   7.  Security considerations . . . . . . . . . . . . . . . . . . .  47
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  47
+   9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  47
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  48
+     10.1.  Informative References . . . . . . . . . . . . . . . . .  48
+     10.2.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . .  57
    Appendix A.  Examples of combined DetNet Service and Transport
-                layers . . . . . . . . . . . . . . . . . . . . . . .  59
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  59
+                layers . . . . . . . . . . . . . . . . . . . . . . .  58
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  58
 
 
 
@@ -157,11 +157,11 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    DetNet architecture [I-D.finn-detnet-architecture].  Currently the
    following terms are used:
 
-   A set of mechanisms to increase the probability of lossless (i.e.,
-   zero loss) DetNet flow delivery across a network.  Example mechanisms
-   include packet replication and dulpicate elimination.
+   DetNet Reliability
 
-
+      A set of mechanisms to increase the probability of lossless (i.e.,
+      zero loss) DetNet flow delivery across a network.  Example
+      mechanisms include packet replication and dulpicate elimination.
 
 
 
@@ -241,9 +241,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
                           [Network]                     [Network]
                            `-----'                       `-----'
 
-  |--- Admin Domain 1 ---|     |----- Admin Domain 2 ------------------|
-
-
                  Figure 1: A Simple DetNet Enabled Network
 
    [LB: Perhaps move layering from below here???]
@@ -256,31 +253,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    Note that other technologies can be also used to implement DetNet,
    Multi-Segment PW is only used here to illustrate functions, features
    and layering from the perspective of the architecture.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Korhonen, et al.         Expires January 8, 2017                [Page 5]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
          Native  |<--------Multi-Segment Pseudowire----->|  Native
          Service |         PSN              PSN          |  Service
@@ -300,6 +272,15 @@ Internet-Draft       DetNet data plane alternatives            July 2016
        |<------------------- Emulated Service ------------------->|
 
               Figure 2: Pseudo Wire switching reference model
+
+
+
+
+
+Korhonen, et al.         Expires January 8, 2017                [Page 5]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
 
    Figure 3 illustrates how DetNet can provide services for IEEE
    802.1TSN end systems over a DetNet enabled network.  The edge nodes
@@ -330,6 +311,25 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    provided.  In this case, the end systems are able to send and receive
    native DetNet flows.  For example, as PseudoWire (PW) encapsulated
    IP.  Like earlier the 'X' in the end systems, edge and relay nodes
+   represents potential DetNet flow packet replication and elimination
+   points.  Here the relay nodes may change the underlying transport,
+   for example replacing IP with MPLS or tunneling IP over MPLS (e.g.,
+   via L3VPNs), or simply interconnect network domains.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -337,11 +337,6 @@ Korhonen, et al.         Expires January 8, 2017                [Page 6]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
-
-   represents potential DetNet flow packet replication and elimination
-   points.  Here the relay nodes may change the underlying transport,
-   for example replacing IP with MPLS or tunneling IP over MPLS (e.g.,
-   via L3VPNs), or simply interconnect network domains.
 
           DetNet                                           DetNet
           Service         Transit          Transit        Service
@@ -362,8 +357,8 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    Figure 5 illustrates how a IEEE 802.1TSN end system could communicate
    with a native DetNet end system through an edge node which provides a
-   TSN to DetNet inter-working capability.  The edge node would adds and
-   removes required DetNet data plane encapsulation as well as provide
+   TSN to DetNet inter-working capability.  The edge node would add and
+   remove required DetNet data plane encapsulation as well as provide
    any needed address mapping.  As in previous figures, the 'X' in the
    end systems, edge and relay nodes represents potential DetNet flow
    packet duplication and elimination points.
@@ -385,7 +380,12 @@ System   |     +-----+          +-----+          +-----+   |    V System
 
                  Figure 5: IEEE 802.1TSN to native DetNet
 
-
+   The protocol stack model of the data plane described in
+   [I-D.finn-detnet-architecture] defines functional primitives for
+   ingress and egress packets, which are used by the three techniques
+   (see Section 1) to ensure deterministic forwarding.
+   [I-D.finn-detnet-architecture] does not specify the relationship
+   between the DetNet Service and Transport layers used in this document
 
 
 
@@ -394,12 +394,6 @@ Korhonen, et al.         Expires January 8, 2017                [Page 7]
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
-   The protocol stack model of the data plane described in
-   [I-D.finn-detnet-architecture] defines functional primitives for
-   ingress and egress packets, which are used by the three techniques
-   (see Section 1) to ensure deterministic forwarding.
-   [I-D.finn-detnet-architecture] does not specify the relationship
-   between the DetNet Service and Transport layers used in this document
    to investigate data plane options as explained in the following.  The
    goal of this document is to evaluate possible data plane technologies
    and compare their characteristics from DetNet perspective.
@@ -433,23 +427,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    example, some technologies may violate these strict layers and still
    be able to deliver a DetNet service.
 
-
-
-
-
-
-
-
-
-
-
-
-
-Korhonen, et al.         Expires January 8, 2017                [Page 8]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
                 .
                 .
             +-----------+
@@ -465,6 +442,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    The two logical layers defined here aim to help to identify which
    data plane technology can be used for what purposes in the DetNet
    context.  This layering is similar to the data plane concept of MPLS,
+
+
+
+Korhonen, et al.         Expires January 8, 2017                [Page 8]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    where some part of the label stack is "Service" specific (e.g., PW
    labels, VPN labels) and an other part is "Transport" specific (e.g,
    LSP label, TE label(s)).
@@ -498,14 +483,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    This section provides criteria to help to evaluate potential options.
    Each deterministic networking data plane solution alternative is
    described and evaluated using the criteria described in this section.
-
-
-
-Korhonen, et al.         Expires January 8, 2017                [Page 9]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
    The used criteria enumerated in this section are selected so that
    they highlight the existence or lack of features that are expected or
    seen important to a solution alternative for the data plane solution.
@@ -521,6 +498,13 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    #8 Class and quality of service capabilities (DetNet Service
       specific)
    #10  Technical maturity
+
+
+
+Korhonen, et al.         Expires January 8, 2017                [Page 9]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
 
    The criteria for the DetNet Transport layer:
 
@@ -554,14 +538,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    flows natively in layer-3.  This criteria concerns what is the
    encapsulation method the solution alternative support: tunneling like
    encapsulation, protocol translation or native layer-3 transport.  In
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 10]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
    addition to the encapsulation mechanism this criteria is also
    concerned of the processing and specifically the encapsulate header
    overhead.
@@ -575,6 +551,16 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    their combination.  This criteria concerns the availability and
    details of deterministic flow identification the data plane protocol
    alternative has.
+
+
+
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 10]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
 
 4.3.  #3 Packet sequencing
 
@@ -611,13 +597,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    [I-D.ietf-isis-pcr].  This criteria concerns the available mechanisms
    for explicit routes for the data plane protocol alternative.
 
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 11]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
 4.5.  #5 Packet replication and elimination
 
    The objective for supporting packet replication and elimination is to
@@ -631,6 +610,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    The solution alternative has to provide means for end systems and/or
    relay systems to be able to replicate packets, and later eliminate
    all but one of the replicas, at multiple points in the network in
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 11]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    order to ensure that one (or more) equipment failure event(s) still
    leave at least one path intact for a deterministic networking flow.
    The goal is to enable hitless 1+1 protection in a way that no packet
@@ -666,14 +653,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    The OAM includes but is not limited to tools listed in the
    requirements for overlay networks
    [I-D.ooamdt-rtgwg-ooam-requirement].  Specifically, the performance
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 12]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
    management requirements are of interest at both service and transport
    layers.
 
@@ -686,6 +665,15 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    mechanisms that provide traffic forwarding treatment based on a
    specific DetNet flow basis.  Examples of CoS mechanisms include
    DiffServ which is enabled by IP header differentiated services code
+
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 12]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    point (DSCP) field [RFC2474] and MPLS label traffic class field
    [RFC5462], and at Layer-2, by IEEE 802.1p priority code point (PCP).
 
@@ -722,14 +710,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    in the context of data plane protocol alternative.  Packet
    traceability can also be part of OAM.
 
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 13]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
 4.9.  #10 Technical maturity
 
    The technical maturity of the data plane solution alternative is
@@ -742,6 +722,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    This criteria concerns the maturity of the data plane protocol
    alternative as the solution alternative.  This criteria is
    particularly important given, as previously noted, that the DetNet
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 13]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    data plane solution is expected to impact, i.e., be supported in,
    hardware.
 
@@ -778,14 +766,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       be handled natively at layer-3 by IPv6 at the first place.  The
       fixed header of an IPv6 packet is 40 bytes [RFC2460].  This
       overhead is bigger if any Extension Header is used, and a generic
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 14]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
       behaviour for host and forwarding nodes is specified in [RFC7045].
       However, the exact overhead (Section 4.1) depends on what solution
       is actually used to provide DetNet features, e.g., explicit
@@ -798,6 +778,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       in a strict or loose source routing way, and the Hop-by-Hop
       Options Header that carries optional information that must be
       examined by every node along a packet's delivery path.  The Hop-
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 14]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
       by-Hop Options Header, when present, must immediately follow the
       IPv6 Header and it is not possible to limit its processing to the
       end points of Source Routed segments.
@@ -833,15 +821,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       Additionally, existing implementations generally do not open APIs
       to control the flow label from the upper layers.
 
-
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 15]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
       Alternatively, the Flow identification could be transported in a
       new option in the Hop-by-Hop Options Header.
 
@@ -854,6 +833,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       [I-D.ietf-idr-ls-distribution] and evolving to the Path
       Computation Element (PCE) Architecture [RFC5440], though a number
       of issues remain to be solved [RFC7399].
+
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 15]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
 
       Segment Routing (SR) [I-D.ietf-spring-segment-routing] is a new
       initiative to equip IPv6 with explicit routing capabilities.  The
@@ -890,14 +877,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       (SLAAC), subscriber identification, and security.  While the
       standards are already mostly in place the implementations in
       deployed equipment can be lacking or inadequate for commercial
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 16]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
       deployments.  This is largely only an issue with old existing
       equipment.
 
@@ -911,6 +890,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       replication point may be indicated as the source of the packet if
       IP-in-IP encapsulation is used to forward along segments.  Another
       alternate to IP-in-IP tunneling along segments would be to protect
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 16]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
       the original source address in a destination option similar to the
       Home Address option [RFC6275] and then use the address of the
       replication point as source in the IP header.
@@ -942,18 +929,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       Statistics [2] is now above 10 percent.
 
 
-
-
-
-
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 17]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
 5.1.1.3.  Summary
 
    IPv6 supports a significant portion of the identified DetNet data
@@ -971,6 +946,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    smaller address space.  However, IPv6 was designed around the fact
    that extension headers are an integral part of the protocol and
    operation from the beginning, although the practice may some times
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 17]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    prove differently [I-D.ietf-v6ops-ipv6-ehs-in-real-world].  IPv4
    never really needed any extension headers to work properly, thus
    support for IPv4 options outside closed networks cannot typically be
@@ -1002,14 +985,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       contains a 16-bit SATNET stream identifier.  However, the option
       has been deprecated [RFC6814].  The conclusion is that stream
       identification does not work nicely with IPv4 header alone and a
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 18]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
       traditional 5-tuple identification might not also be enough in a
       case of a flow duplication.  For a working solution upper layer
       protocol headers such as the RTP are required for unambiguous flow
@@ -1027,6 +1002,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
       The functionality of replicating a packet exists in IPv4 but is
       limited to multicast flows.  In general the issue regarding the
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 18]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
       IPv6 packet replication also applies to IPv4.  Duplicate packet
       detection for IPv4 is studied in [RFC6621] to a great detail in
       the context of simplified multicast forwarding.  In general there
@@ -1058,14 +1041,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    The IPv4 has specifications to support most of the identified DetNet
    data plane criteria today.  However, several of those have already
    been deprecated or their wide support is not guaranteed.  The DetNet
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 19]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
    data plane criteria that are not fully supported could be
    incrementally added.  Unfortunately, the IPv4 has had limited success
    getting its extensions deployed at large.  However, introducing new
@@ -1083,6 +1058,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    [RFC3473], and MPLS Transport Profile (MPLS-TP) [RFC5921] is a widely
    deployed technology that switches traffic based on MPLS label stacks
    [RFC3032] and [RFC5960].  MPLS is the foundation for Pseudowire-based
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 19]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    services Section 5.2.3 and emerging technologies such as Bit-Indexed
    Explicit Replication (BIER) Section 5.1.4 and Source Packet Routing
    [3].
@@ -1096,31 +1079,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    Pseudowires Section 5.2.3 and via other label-like mechanisms such as
    EPVN Section 5.2.4.  A representation of these options are shown in
    Figure 7.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 20]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
    PW-Based               EVPN Labeled                 IP
    Services                  Services                Transport
@@ -1155,6 +1113,15 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    focus on the MPLS transport data plane, additional information on the
    MPLS service data plane can be found below in Section 5.2.2.
 
+
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 20]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
 5.1.3.2.  Solution description
 
    The following is a work in progress and draws heavily from [RFC5960]
@@ -1170,13 +1137,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    E-LSP and L-LSP MPLS DiffServ modes are defined.  The Traffic Class
    field (formerly the EXP field) of an MPLS label follows the
    definition of [RFC5462] and [RFC3270].
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 21]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
    Except for transient packet reordering that may occur, for example,
    during fault conditions, packets are delivered in order on L-LSPs,
@@ -1209,6 +1169,15 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    associated bidirectional LSP with the additional constraint that its
    two unidirectional component LSPs in each direction follow the same
    path (in terms of both nodes and links).  An important property of
+
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 21]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    co-routed bidirectional LSPs is that their unidirectional component
    LSPs share fate.
 
@@ -1225,14 +1194,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    Additional data plane capabilities include Linear Protection,
    [RFC6378] and [RFC7271].  And the in progress work on MPLS support
    for time synchronization [I-D.ietf-mpls-residence-time].
-
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 22]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
 5.1.3.3.  Analysis and Discussion
 
@@ -1265,6 +1226,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       For the DetNet flow identification the label stack can be used
       partly or entirely.  For example, using dedicated LSP per DetNet
       flow would simplify flow identification for intermediate transport
+
+
+
+Korhonen, et al.         Expires January 8, 2017               [Page 22]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
       nodes but may challenge scalability.  Some part of the labels
       stack can not be used for flow identification (e.g., entropy
       label).
@@ -1281,15 +1250,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
       MPLS supports explicit routes based on how LSPs are established,
       e.g., via TE explicit routes [RFC3209].  Additional, but not
-
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 23]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
       required, additional capabilities are being defined as part of
       Segment Routing (SR) [I-D.ietf-spring-segment-routing].
 
@@ -1324,6 +1284,12 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       On-Demand Connectivity Verification and Route Tracing [RFC6426].
 
 
+
+Korhonen, et al.         Expires January 8, 2017               [Page 23]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    #10 Technical maturity (M)
 
       MPLS as a mature technology that has been widely deployed in many
@@ -1337,14 +1303,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    built and deployed.  MPLS LSPs support a significant portion of the
    identified DetNet data plane criteria today.  Aspects of the DetNet
    data plane that are not fully supported can be incrementally added.
-
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 24]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
 5.1.4.  Bit Indexed Explicit Replication (BIER)
 
@@ -1383,21 +1341,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Korhonen, et al.         Expires January 8, 2017               [Page 25]
+Korhonen, et al.         Expires January 8, 2017               [Page 24]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -1453,7 +1397,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 26]
+Korhonen, et al.         Expires January 8, 2017               [Page 25]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -1509,7 +1453,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 27]
+Korhonen, et al.         Expires January 8, 2017               [Page 26]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -1565,7 +1509,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 28]
+Korhonen, et al.         Expires January 8, 2017               [Page 27]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -1621,7 +1565,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 29]
+Korhonen, et al.         Expires January 8, 2017               [Page 28]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -1677,7 +1621,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 30]
+Korhonen, et al.         Expires January 8, 2017               [Page 29]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -1733,7 +1677,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 31]
+Korhonen, et al.         Expires January 8, 2017               [Page 30]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -1789,7 +1733,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 32]
+Korhonen, et al.         Expires January 8, 2017               [Page 31]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -1845,7 +1789,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 33]
+Korhonen, et al.         Expires January 8, 2017               [Page 32]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -1901,7 +1845,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 34]
+Korhonen, et al.         Expires January 8, 2017               [Page 33]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -1957,7 +1901,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 35]
+Korhonen, et al.         Expires January 8, 2017               [Page 34]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2013,7 +1957,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 36]
+Korhonen, et al.         Expires January 8, 2017               [Page 35]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2069,7 +2013,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 37]
+Korhonen, et al.         Expires January 8, 2017               [Page 36]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2125,7 +2069,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 38]
+Korhonen, et al.         Expires January 8, 2017               [Page 37]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2181,7 +2125,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 39]
+Korhonen, et al.         Expires January 8, 2017               [Page 38]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2237,7 +2181,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 40]
+Korhonen, et al.         Expires January 8, 2017               [Page 39]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2293,7 +2237,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 41]
+Korhonen, et al.         Expires January 8, 2017               [Page 40]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2349,7 +2293,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 42]
+Korhonen, et al.         Expires January 8, 2017               [Page 41]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2405,7 +2349,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 43]
+Korhonen, et al.         Expires January 8, 2017               [Page 42]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2461,7 +2405,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 44]
+Korhonen, et al.         Expires January 8, 2017               [Page 43]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2517,7 +2461,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 45]
+Korhonen, et al.         Expires January 8, 2017               [Page 44]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2573,7 +2517,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 46]
+Korhonen, et al.         Expires January 8, 2017               [Page 45]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2629,7 +2573,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 47]
+Korhonen, et al.         Expires January 8, 2017               [Page 46]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2685,7 +2629,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 48]
+Korhonen, et al.         Expires January 8, 2017               [Page 47]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2741,7 +2685,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 49]
+Korhonen, et al.         Expires January 8, 2017               [Page 48]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2797,7 +2741,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 50]
+Korhonen, et al.         Expires January 8, 2017               [Page 49]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2853,7 +2797,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 51]
+Korhonen, et al.         Expires January 8, 2017               [Page 50]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2909,7 +2853,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 52]
+Korhonen, et al.         Expires January 8, 2017               [Page 51]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -2965,7 +2909,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 53]
+Korhonen, et al.         Expires January 8, 2017               [Page 52]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -3021,7 +2965,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 54]
+Korhonen, et al.         Expires January 8, 2017               [Page 53]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -3077,7 +3021,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 55]
+Korhonen, et al.         Expires January 8, 2017               [Page 54]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -3133,7 +3077,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 56]
+Korhonen, et al.         Expires January 8, 2017               [Page 55]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -3189,7 +3133,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 57]
+Korhonen, et al.         Expires January 8, 2017               [Page 56]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -3245,7 +3189,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 58]
+Korhonen, et al.         Expires January 8, 2017               [Page 57]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -3301,4 +3245,4 @@ Authors' Addresses
 
 
 
-Korhonen, et al.         Expires January 8, 2017               [Page 59]
+Korhonen, et al.         Expires January 8, 2017               [Page 58]
