@@ -857,7 +857,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
       <vspace blankLines="1"/>
       </t>
     
-     <t hangText="#2 Flow identification (M/W)">
+     <t hangText="#2 Flow identification (W)">
       <vspace blankLines="1"/>
       The 20-bit flow label field of the fixed IPv6 header is suitable to
       distinguish different deterministic flows. But guidance on the use
@@ -921,7 +921,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
       equipment.
     <vspace blankLines="1"/></t>
     
-     <t hangText="#8 Class and quality of service capabilities (M)">
+     <t hangText="#8 Class and quality of service capabilities (W)">
        <vspace blankLines="1"/>
        IPv6 provides support for CoS and QoS. CoS is provided by DiffServ
        which is enabled by IP header differentiated services code point
@@ -930,7 +930,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
        while RSVP for IP packets is generally not supported.
        <vspace blankLines="1"/></t>
     
-     <t hangText="#9 Packet traceability (M/W)">
+     <t hangText="#9 Packet traceability (W)">
       <vspace blankLines="1"/>
       The traceability of replicated packets involves the capability to resolve
       which replication point issued a particular copy of a packet, which
@@ -953,7 +953,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
       received Routing Header was authenticated.
       <vspace blankLines="1"/></t>
     
-     <t hangText="#10 Technical maturity (M)">
+     <t hangText="#10 Technical maturity (M/W)">
       <vspace blankLines="1"/>
       IPv6 has been around about 20 years. However, large scale global and
       commercial IPv6 deployments are rather new dating only few years back to
@@ -1016,7 +1016,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
       generally used and are not considered as part of this document.
       <vspace blankLines="1"/></t>
      
-     <t hangText="#2 Flow identification (W/N)">
+     <t hangText="#2 Flow identification (W)">
       <vspace blankLines="1"/>
       The IPv4 header has a 16-bit identification field that was originally
       intended for assisting fragmentation and reassembly of IPv4 packets as
@@ -1034,7 +1034,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
       identification does not work nicely with IPv4 header alone and a
       traditional 5-tuple identification might not also be enough in a case of a
       flow duplication or encrypted flows. For a working solution, upper layer protocol
-      headers such as  RTP or PsedoWires may be required for unambiguous flow
+      headers such as  RTP or PWs may be required for unambiguous flow
       identification.  There is also emerging work within the IETF that may
       provide new flow identification alternatives.
      <vspace blankLines="1"/></t>
@@ -1068,7 +1068,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
       network management.
     <vspace blankLines="1"/></t>
     
-     <t hangText="#8 Class and quality of service capabilities (M)">
+     <t hangText="#8 Class and quality of service capabilities (M/W)">
        <vspace blankLines="1"/>
        IPv4 provides support for CoS and QoS. CoS is provided by DiffServ
        which is enabled by IP header differentiated services code point
@@ -1077,7 +1077,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
        while RSVP for IP packets is generally not supported.
        <vspace blankLines="1"/></t>
     
-     <t hangText="#9 Packet traceability (W/N)">
+     <t hangText="#9 Packet traceability (W)">
       <vspace blankLines="1"/>
       The IPv4 has similar needs and requirements for traceability as IPv6 (see
       <xref target="sec_alt_ipv6_ana"/>).
@@ -1340,7 +1340,7 @@ about LSPs only here.]
           needed.  It is expected that these additional mechanisms will be
           defined at a DetNet layer.
       <vspace blankLines="1"/> </t>
-     <t hangText="#6 Operations, Administration and Maintenance (M/W)">
+     <t hangText="#6 Operations, Administration and Maintenance (M)">
         <vspace blankLines="1"/>
           MPLS already includes a rich set of OAM functions at both the
           Service and Transport Layers. This includes LSP ping [ref] and
@@ -1374,7 +1374,7 @@ about LSPs only here.]
 
       <vspace blankLines="1"/>
      </t>
-     <t hangText="#9 Packet traceability (M/W)">
+     <t hangText="#9 Packet traceability (M)">
         <vspace blankLines="1"/>
        
       MPLS supports multiple tracing mechanisms.  A control based one
@@ -1589,7 +1589,7 @@ title="DetNet in BIER domain">
      <xref target="I-D.mirsky-bier-path-mtu-discovery"/>.
      <vspace blankLines="1"/></t>
 
-    <t hangText="#8 Class and quality of service capabilities (M)">
+    <t hangText="#8 Class and quality of service capabilities (M/W)">
      <vspace blankLines="1"/>
      Class of Service can be inherited from the underlay of the particular BIER
      sub-domain. Quality of Service, i.e. scheduling and bandwidth reservations
@@ -1604,7 +1604,7 @@ title="DetNet in BIER domain">
      passive tracing of selected flows and packets within them.
      <vspace blankLines="1"/></t>
 
-    <t hangText="#10 Technical maturity (M)">
+    <t hangText="#10 Technical maturity (W)">
      <vspace blankLines="1"/>The BIER over MPLS is nearing finalization
      within the BIER WG and several experimental implementations are
      expected soon.
@@ -2534,7 +2534,7 @@ title="Enabled Adjacencies">
       mentioned control planes.
      <vspace blankLines="1"/></t>
      
-     <t hangText="#8 Class and quality of service capabilities (M)">
+     <t hangText="#8 Class and quality of service capabilities (M/W)">
       <vspace blankLines="1"/>
       In a case of IP PSN the 6-bit differentiated services code point (DSCP)
       field can be used for indicating the class of service <xref
@@ -2549,7 +2549,7 @@ title="Enabled Adjacencies">
       context of deterministic networking flows, for example, if some
       specific mapping between bit fields have to be done.
      <vspace blankLines="1"/>
-     When PWs are used over MPLS, MPLS LSPs an be used to provide both CoS
+     When PWs are used over MPLS, MPLS LSPs can be used to provide both CoS
      (E-LSPs and L-LSPs) and QoS (dedicated TE LSPS).
      <vspace blankLines="1"/></t>
      
@@ -2617,18 +2617,20 @@ title="Enabled Adjacencies">
 	    EVPN currently uses labels to identify flows per  
 	    {Ethernet Segment Identifier, VLAN} or per MAC
 	    level. Additional definition will be needed to standardize
-	    identification of finer granularity DetNet flows.
+	    identification of finer granularity DetNet flows as well as
+            mapping of TSN services to DetNet Services.
 
             <vspace blankLines="1"/> 
           </t>
-          <t hangText="#3 Packet sequencing (M/W)">
+          <t hangText="#3 Packet sequencing (M)">
             <vspace blankLines="1"/>
 
 	    Like MPLS, EVPN generally orders packets similar to
 	    Ethernet. Reordering is possible primarily during path
 	    changes and protection switching.  In order to avoid
 	    misordering due to ECMP, EVPN uses the "Preferred PW MPLS
-	    Control Word" <xref target="RFC4385"/> or the entropy labels
+	    Control Word" <xref target="RFC4385"/> (in which case EVPN
+            inherits this function from PWs) or the entropy labels
 	    <xref target="RFC6790"/>.
 
             <vspace blankLines="1"/> 
@@ -2701,7 +2703,7 @@ title="Enabled Adjacencies">
             <vspace blankLines="1"/> 
             
           </t>-->
-          <t hangText="#10 Technical maturity (M/W)">
+          <t hangText="#10 Technical maturity (M)">
             <vspace blankLines="1"/>
 
 	    EVPN is a second (or third) generation MPLS-based L2VPN
@@ -2847,25 +2849,28 @@ title="Enabled Adjacencies">
           <ttcol align="left"> #4</ttcol>
           <ttcol align="left"> #5</ttcol>
           <ttcol align="left"> #6</ttcol>
+          <ttcol align="left"> #8</ttcol>
           <ttcol align="left"> #9</ttcol>
           <ttcol align="left">#10</ttcol>
 
           <c>IPv6</c> 
           <!-- 1--> <c>M</c>
-          <!-- 2--> <c>M/W</c>
+          <!-- 2--> <c>W</c>
           <!-- 4--> <c>W</c>
           <!-- 5--> <c>W</c>
           <!-- 6--> <c>M</c>
-          <!-- 9--> <c>M/W</c>
-          <!--10--> <c>M</c>
+          <!-- 8--> <c>W</c>
+          <!-- 9--> <c>W</c>
+          <!--10--> <c>M/W</c>
           
           <c>IPv4</c> 
           <!-- 1--> <c>M</c>
-          <!-- 2--> <c>W/N</c>
+          <!-- 2--> <c>W</c>
           <!-- 4--> <c>W</c>
           <!-- 5--> <c>W/N</c>
           <!-- 6--> <c>M</c>
-          <!-- 9--> <c>W/N</c>
+          <!-- 8--> <c>M/W</c>
+          <!-- 9--> <c>W</c>
           <!--10--> <c>M/W</c>
 
           <c>MPLS</c>
@@ -2873,8 +2878,9 @@ title="Enabled Adjacencies">
           <!-- 2--> <c>M</c>
           <!-- 4--> <c>M</c>
           <!-- 5--> <c>M/W</c>
-          <!-- 6--> <c>M/W</c>
-          <!-- 9--> <c>M/W</c>
+          <!-- 6--> <c>M</c>
+          <!-- 8--> <c>M/W</c>
+          <!-- 9--> <c>M</c>
           <!--10--> <c>M</c>
 
           <c>BIER</c> 
@@ -2883,15 +2889,17 @@ title="Enabled Adjacencies">
           <!-- 4--> <c>M</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
+          <!-- 8--> <c>M/W</c>
           <!-- 9--> <c>M</c>
-          <!--10--> <c>M/W</c>
+          <!--10--> <c>W</c>
           
           <c>BIER-TE</c> 
-          <!-- 1--> <c>M</c>
+          <!-- 1--> <c>W/M</c>
           <!-- 2--> <c>N</c>
           <!-- 4--> <c>N</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>W</c>
+          <!-- 8--> <c></c>
           <!-- 9--> <c>W</c>
           <!--10--> <c>W</c>
 
@@ -2933,27 +2941,27 @@ title="Enabled Adjacencies">
           <!-- 3--> <c>M</c>
           <!-- 5--> <c>W</c>
           <!-- 6--> <c>M/W</c>
-          <!-- 8--> <c>M</c>
+          <!-- 8--> <c>M/W</c>
           <!--10--> <c>M</c>
           
           <c>EVPN</c> 
           <!-- 1--> <c>M</c>
           <!-- 2--> <c>W</c>
-          <!-- 3--> <c>M/W</c>
+          <!-- 3--> <c>M</c>
           <!-- 5--> <c>M/W</c>
           <!-- 6--> <c>M/W</c>
           <!-- 8--> <c>M/W</c>
-          <!--10--> <c>M/W</c>
+          <!--10--> <c>M</c>
 
-		  <c>RTP</c> 
-          <!-- 1--> <c>M</c>
+	  <c>RTP</c> 
+          <!-- 1--> <c>M/N</c>
           <!-- 2--> <c>M</c>
           <!-- 3--> <c>M</c>
           <!-- 5--> <c>W</c>
           <!-- 6--> <c>M</c>
           <!-- 8--> <c>W</c>
           <!--10--> <c>M</c>
-          
+  
 
           <postamble>Summarizing Service capabilities
           </postamble>
@@ -2961,38 +2969,18 @@ title="Enabled Adjacencies">
   
    <t>PseudoWire (<xref target="sec_alt_pwe"/>) is the technology that is 
    mature and meets most of the criteria for the DetNet Service layer as shown 
-   in the table above. From upper layer protocols RTP can be a candidate for 
+   in the table above. From upper layer protocols PWs or RTP can be a candidate for 
    non-MPLS PSNs. The identified work is to figure out how to implement 
    duplicate detection for these protocols (e.g., based on <xref target="RFC3985"/>).
    </t>
    
-   <t>MPLS is the most common technology that is used as PSN for PseudoWires;
+   <t>PWs can be carried over MPLS or IP.  MPLS is the most common
+   technology that is used as PSN for PseudoWires; 
    furthermore, MPLS is a mature technology and meets most DetNet Transport
-   layer criteria. IPv6 can be also used as PSN and IPv6 is a mature
-   technology as well. Both DetNet Service layer candidates can be supported by 
-   IPv6.
+   layer criteria. IPv4 and v6 can be also used as PSN and both are mature
+   technologies, although both generally only support CoS (DiffServ)  in
+   deployed networks.  
    </t>
-  
-   <t><xref target="fig_sum"/> summarizes the most suitable data plane options for 
-   DetNet.
-   </t>
-   
- <figure anchor="fig_sum" align="center"
-title="Summary of the data plane options most suitable for DetNet">
-<artwork align="center"><![CDATA[
-    .
-    .
-+-------------------+
-|   PW     |   RTP  | DetNet Service
-+----------|--------+
-| MPLS,IP  | UDP/IP | DetNet Transport
-+-------------------+
-    .
-    .
-]]></artwork>
-</figure> 
-  
-  
 </section>
 
 
