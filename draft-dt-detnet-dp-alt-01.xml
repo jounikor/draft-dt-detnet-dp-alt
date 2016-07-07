@@ -212,7 +212,8 @@
      <list style="symbols">
       <t>Bandwidth reservation and enforcement,</t>
       <t>explicit routes,</t>
-      <t>packet replication and elimination.</t>
+      <t>packet loss protection, initially provided by replication and
+      elimination.</t> 
      </list>
    This document identifies existing IP and Multiprotocol Label Switching (MPLS)
    <xref target="RFC3031"/>, layer-2 or layer-3 encapsulations and transport
@@ -235,20 +236,22 @@
 
  <section title="Terminology">
   <t>
-   This document uses the terminology established in the DetNet architecture
-   <xref target="I-D.finn-detnet-architecture"/> with the following
-   clarifications and/or additions:
+   This document will eventually use the terminology established in the DetNet architecture
+   <xref target="I-D.finn-detnet-architecture"/>.  Currently the following
+   terms are used:
   </t>
    <t hangText="DetNet Reliability"><vspace blankLines="1"/>
-    A set of mechanisms to increase the probability of lossless DetNet
-    flow transport across a network.  Example mechanisms include
+    A set of mechanisms to increase the probability of lossless (i.e.,
+    zero loss) DetNet
+    flow delivery across a network.  Example mechanisms include
     packet replication and dulpicate elimination.
     <vspace blankLines="1"/></t>
   <t><list style="hanging">
    <t hangText="Transit Node"><vspace blankLines="1"/>
     A node that provides link layer and network layer switching across
-    multiple links and/or sub-networks.  An MPLS LSR is an example of
-    a transit node.
+    multiple links and/or sub-networks. Transit nodes provide packet
+    forwarding services to DetNet nodes.   An MPLS LSR, or IP router are example
+    transit nodes. 
     <vspace blankLines="1"/></t>
    <t hangText="Relay Node"><vspace blankLines="1"/>
     A DetNet Service aware middle box that interconnects different
@@ -260,7 +263,8 @@
     <vspace blankLines="1"/></t>
    <t hangText="Edge Node"><vspace blankLines="1"/>
     A relay node with application level knowledge (i.e., basically a
-    "proxy" node). Egde nodes are needed when interfacing with nodes or
+    "proxy" node). Egde nodes include DetNet application level
+    functions and are needed when interfacing (or inter-working) with nodes and
     end systems that are not DetNet-enabled.
     </t>
   </list></t>
@@ -268,13 +272,17 @@
 
 <section title="DetNet Data Plane Overview" anchor="sec_dt_dp">
  <t>
-   A "Deterministic Network" will be composed of DetNet enabled node i.e., End
-   Systems, Edge Nodes, Relay Nodes and Transit Nodes.  DetNet enabled nodes
-   will provide a DetNet services.  All DetNet enabled nodes are interconnected
-   by sub-networks (a link is also considered as a sub-network). These
+   A "Deterministic Network" will be composed of DetNet enabled nodes i.e., End
+   Systems, Edge Nodes, Relay Nodes and collectively deliver DetNet
+   services.  DetNet enabled nodes are interconnected via Transit Nodes
+   (i.e., routers) which support DetNet, but are not DetNet service
+   aware.  Transit nodes see DetNet nodes as end points.   
+   All DetNet enabled nodes are connect to
+   sub-networks, where a point-to-point link is also considered as a
+   simple sub-network. These 
    sub-networks will provide DetNet compatible service for support of DetNet
-   traffic.  Examples of sub-networks include IEEE 802.1TSN and a point-to-point
-   OTN links.  Of course, multi-layer DetNet systems may also be possible, where
+   traffic.  Examples of sub-networks include IEEE 802.1TSN and 
+   OTN.  Of course, multi-layer DetNet systems may also be possible, where
    one DetNet appears as a sub-network, and provides service to, a higher layer
    DetNet system. A simple DetNet concept network is shown in <xref
    target="fig_detnet"/>.
@@ -286,10 +294,10 @@ title="A Simple DetNet Enabled Network">
 TSN              Edge          Transit        Relay        DetNet
 End System       Node            Node         Node         End System
 
-+---------+                                                +---------+
-|  Appl.  |<-------------- End to End Service ------------>|  Appl.  |
++---------+    +.........+                                 +---------+
+|  Appl.  |<---:Svc Proxy:-- End to End Service ---------->|  Appl.  |
 +---------+    +---------+                   +---------+   +---------+
-|         |    | Service :<-- DetNet flow ---: Service :-->: Service |
+|   TSN   |    |TSN| |Svc|<-- DetNet flow ---: Service :-->| Service |
 +---------+    +---------+    +---------+    +---------+   +---------+
 |Transport|    |Trp| |Trp|    |Transport|    |Trp| |Trp|   |Transport|
 +-------.-+    +-.-+ +-.-+    +--.----.-+    +-.-+ +-.-+   +---.-----+
@@ -300,12 +308,17 @@ End System       Node            Node         Node         End System
 ]]></artwork>
 </figure>
 
+<t>
+  [LB: Perhaps move layering from below here???]
+</t>
+
  <t>
-  In an attempt to concretize DetNet date plane this document uses Multi-Segment
+  In an attempt to illustrate a DetNet date plane, this document uses the
+  Multi-Segment
   Pseudowire Emulation Edge-to-Edge (PWE3) <xref target="RFC5254"/> reference
-  model shown in <xref target="fig_pw_detnet"/> as an analogue for different
-  DetNet data plane deployment options and to illustrate layering could work. 
-  Other reference models are possible but not explicitly referenced in this 
+  model shown in <xref target="fig_pw_detnet"/> as the foundation for different
+  DetNet data plane deployment options and how layering could work. 
+  Other reference models are possible but not covered in this 
   document. Note that other technologies can be also used to implement DetNet, 
   Multi-Segment PW is only used here to illustrate functions, features and 
   layering from the perspective of the architecture.
@@ -334,11 +347,13 @@ title="Pseudo Wire switching reference model">
 </figure>
 
  <t>
-  <xref target="fig_8021_detnet"/> illustrates how DetNet provides services for
-  IEEE 802.1TSN end systems over packet switched, potentially routed network.
-  The edge nodes insert and also remove required DetNet data plane
-  encapsulation. The 'X' in the edge and relay nodes represents a potential
-  DetNet flow packet replication and elimination point.   
+  <xref target="fig_8021_detnet"/> illustrates how DetNet can provide services for
+  IEEE 802.1TSN end systems over a DetNet enabled network.  
+  The edge nodes insert and remove required DetNet data plane
+  encapsulation.  The 'X' in the edge and relay nodes represents a potential
+  DetNet flow packet replication and elimination point.  This
+  conceptually parallels L2VPN services, and could leverage existing
+  related solutions as discussed below.
  </t>
 
 <figure align="center" anchor="fig_8021_detnet"
@@ -363,11 +378,14 @@ System  |     +-----+          +-----+          +---- +   |    System
 
  <t>
   <xref target="fig_native_detnet"/> illustrates how end to end native DetNet
-  service could be deployed. The assumption here is that end systems are able
-  to source and receive native DetNet flows, which in the example case of
-  PseudoWires (PW) would mean adequete PW encapsulation.  Like earlier the 'X'
+  service can be provided. In this case, the end systems are able
+  to send and receive native DetNet flows.  For example, as PseudoWire
+  (PW) encapsulated IP.  Like earlier the 'X'
   in the end systems, edge and relay nodes represents potential DetNet flow
-  packet replication and elimination points.   
+  packet replication and elimination points. Here the relay nodes may
+  change the underlying transport, for example replacing IP with MPLS or
+  tunneling IP over MPLS (e.g., via L3VPNs), or simply interconnect
+  network domains.
  </t>
 
 <figure align="center" anchor="fig_native_detnet"
@@ -392,8 +410,10 @@ System   |    +-----+          +-----+          +-----+   |    System
 
  <t>
   <xref target="fig_iw_detnet"/> illustrates how a IEEE 802.1TSN end system
-  could communicate with a native DetNet end system through an edge node, which
-  adds and removes required DetNet data plane encapsulation.  Just like earlier
+  could communicate with a native DetNet end system through an edge node
+  which provides a TSN to DetNet inter-working capability.  The edge
+  node would adds and removes required DetNet data plane encapsulation
+  as well as provide any needed address mapping. As in previous figures,
   the 'X' in the end systems, edge and relay nodes represents potential DetNet
   flow packet duplication and elimination points.   
  </t>
@@ -438,12 +458,15 @@ System   |     +-----+          +-----+          +-----+   |    V System
      which are needed during forwarding. DetNet enabled end systems originate
      and terminate the DetNet Service layer and are peers at the DetNet Service
      layer. DetNet relay and edge nodes also implement DetNet Service layer
-     functions.
+     functions. The DetNet service layer is used to
+     deliver traffic end to end across a DetNet domain.
     <vspace blankLines="1"/></t>
     <t hangText="DetNet Transport Layer"><vspace blankLines="1"/>
-     The DetNet transport layer is supported by all DetNet nodes.  It operates
-     below the DetNet Service layer. The DetNet Transport layer is used to
-     forward traffic end to end across a DetNet domain.
+     The DetNet transport layer is required on all DetNet nodes. All
+     DetNet nodes are end points and the transport layer. Non-DetNet
+     service aware transit nodes deliver traffic between DetNet nodes. 
+     The DetNet transport layer operates below and supports the DetNet
+     Service layer.  
     </t>
    </list>
    Distinguishing the function of these two DetNet data plane layers helps to
