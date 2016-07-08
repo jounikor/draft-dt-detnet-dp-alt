@@ -245,7 +245,7 @@
    <t hangText="DetNet Reliability"><vspace blankLines="1"/>
     A set of mechanisms to increase the probability of lossless (i.e., zero
     loss) DetNet flow delivery across a network.  Example mechanisms include
-    packet replication and dulpicate elimination.
+    packet replication and duplicate elimination.
     <vspace blankLines="1"/></t>
    <t hangText="Transit Node"><vspace blankLines="1"/>
     A node that provides link layer and network layer switching across
@@ -575,7 +575,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
    </list> 
  </t> 
  <t>[Editor's Note: numbering is off because #7 is removed.]</t>
- <t>[Editor's Note: #9 should(?) be intergrated into #6.]</t>
+ <t>[Editor's Note: #9 should(?) be integrated into #6.]</t>
 
  <t>
   Most of the criteria is relevant for both the DetNet Service and DetNet
@@ -2779,7 +2779,7 @@ title="Enabled Adjacencies">
     <t><list style="hanging">
      <t hangText="#1 Encapsulation and overhead (M)">
       <vspace blankLines="1"/>
-      RTP adds minumum 12 octets of header overhead. Typically 8 octets overhead
+      RTP adds minimum 12 octets of header overhead. Typically 8 octets overhead
       of UDP header has to be also added, at least in a case when RTP is
       transported over IP. Although RTCP packets do not contribute to the media
       payload transport they still consume overall network capacity, since all
@@ -2804,7 +2804,7 @@ title="Enabled Adjacencies">
      <t hangText="#5 Packet replication and elimination (M/W)">
       <vspace blankLines="1"/>
       RTP has precedence of being used for hitless protection switching <xref
-      target="ST20227"/>, which essentially is equivalent to DetNet Reliablity.
+      target="ST20227"/>, which essentially is equivalent to DetNet Reliability.
       Furthermore, recent work in IETF for RTP stream duplication <xref
       target="RFC7198"/> as a mechanism to protect media flows from packet loss
       is again equivalent to Detnet Reliability. 

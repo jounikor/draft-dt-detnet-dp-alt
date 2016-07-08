@@ -161,7 +161,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
       A set of mechanisms to increase the probability of lossless (i.e.,
       zero loss) DetNet flow delivery across a network.  Example
-      mechanisms include packet replication and dulpicate elimination.
+      mechanisms include packet replication and duplicate elimination.
 
 
 
@@ -515,7 +515,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    [Editor's Note: numbering is off because #7 is removed.]
 
-   [Editor's Note: #9 should(?) be intergrated into #6.]
+   [Editor's Note: #9 should(?) be integrated into #6.]
 
    Most of the criteria is relevant for both the DetNet Service and
    DetNet Transport layers.  However, different aspects of the same
@@ -2536,7 +2536,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    #1 Encapsulation and overhead (M)
 
-      RTP adds minumum 12 octets of header overhead.  Typically 8 octets
+      RTP adds minimum 12 octets of header overhead.  Typically 8 octets
       overhead of UDP header has to be also added, at least in a case
       when RTP is transported over IP.  Although RTCP packets do not
       contribute to the media payload transport they still consume
@@ -2557,7 +2557,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    #5 Packet replication and elimination (M/W)
 
       RTP has precedence of being used for hitless protection switching
-      [ST20227], which essentially is equivalent to DetNet Reliablity.
+      [ST20227], which essentially is equivalent to DetNet Reliability.
       Furthermore, recent work in IETF for RTP stream duplication
       [RFC7198] as a mechanism to protect media flows from packet loss
       is again equivalent to Detnet Reliability.
