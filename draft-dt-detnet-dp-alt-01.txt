@@ -95,16 +95,16 @@ Table of Contents
        5.2.3.  Pseudo Wire Emulation Edge-to-Edge (PWE3) . . . . . .  39
        5.2.4.  MPLS-Based Ethernet VPN (EVPN)  . . . . . . . . . . .  43
        5.2.5.  Higher layer header fields  . . . . . . . . . . . . .  45
-   6.  Summary of data plane alternatives  . . . . . . . . . . . . .  46
-   7.  Security considerations . . . . . . . . . . . . . . . . . . .  48
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  48
-   9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  48
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  48
-     10.1.  Informative References . . . . . . . . . . . . . . . . .  48
-     10.2.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . .  58
+   6.  Summary of data plane alternatives  . . . . . . . . . . . . .  47
+   7.  Security considerations . . . . . . . . . . . . . . . . . . .  49
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  49
+   9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  49
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  50
+     10.1.  Informative References . . . . . . . . . . . . . . . . .  50
+     10.2.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . .  59
    Appendix A.  Examples of combined DetNet Service and Transport
-                layers . . . . . . . . . . . . . . . . . . . . . . .  59
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  59
+                layers . . . . . . . . . . . . . . . . . . . . . . .  60
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  60
 
 
 
@@ -2503,16 +2503,16 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 5.2.5.2.  RTP
 
+5.2.5.2.1.  Solution Description
+
    RTP is often used to deliver time critical traffic in IP networks.
-   RTP is is carried on top of IP and UDP [RFC3550].  The RTP header
-   includes a 2-byte sequence number, which can be used to detect and
-   eliminate duplicate packets if DetNet Reliability redundancy is used.
-   The sequence number is conveyed by bits 16 through 31 of the RTP
-   header.  In addition to the sequence number the RTP header has also
-   timestamp field (bits 32 through 63) that can be useful for time
-   synchronization purposes.  Furthermore, the RTP header has also one
-   or more synchronization sources (bits starting from 64) that can
-   potentially be useful for flow identification purposes.
+   RTP is typically carried on top of UDP/IP [RFC3550].  RTP is also
+   augmented by its own control protocol RTCP, which monitors of the
+   data delivery and provides minimal control and identification
+   functionality.  RTCP packets do not carry "media payload".  Although
+   both RTP and RTCP are typically used with UDP/IP transport they are
+   designed to be independent of the underlying transport and network
+   layers.
 
 
 
@@ -2521,6 +2521,83 @@ Korhonen, et al.         Expires January 9, 2017               [Page 45]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
+
+   The RTP header includes a 2-byte sequence number, which can be used
+   to detect and eliminate duplicate packets if DetNet Reliability
+   redundancy is used.  The sequence number is conveyed by bits 16
+   through 31 of the RTP header.  In addition to the sequence number the
+   RTP header has also timestamp field (bits 32 through 63) that can be
+   useful for time synchronization purposes.  Furthermore, the RTP
+   header has also one or more synchronization sources (bits starting
+   from 64) that can potentially be useful for flow identification
+   purposes.
+
+5.2.5.2.2.  Analysis and Discussion
+
+   #1 Encapsulation and overhead (M)
+
+      RTP adds minumum 12 octets of header overhead.  Typically 8 octets
+      overhead of UDP header has to be also added, at least in a case
+      when RTP is transported over IP.  Although RTCP packets do not
+      contribute to the media payload transport they still consume
+      overall network capacity, since all participants to an RTP session
+      including talkers and multicast session listeners are expected to
+      send RTCP reports.
+
+   #2 Flow identification (M)
+
+      The RTP header contains a synchronization source (SSRC)
+      identifier.  The intent is that no two synchronization sources
+      within the same RTP session has the same SSRC identifier.
+
+   #3 Packet sequencing (M)
+
+      The RTP header contains a 16 bit sequence number.
+
+   #5 Packet replication and elimination (M/W)
+
+      RTP has precedence of being used for hitless protection switching
+      [ST20227], which essentially is equivalent to DetNet Reliablity.
+      Furthermore, recent work in IETF for RTP stream duplication
+      [RFC7198] as a mechanism to protect media flows from packet loss
+      is again equivalent to Detnet Reliability.
+
+   #6 Operations, Administration and Maintenance (M)
+
+      RTP has its own control protocol RTCP for (minimal) management and
+      stream monitoring purposes.  Existing IP OAM tools can directly
+      leveraged when RTP is deployed over IP transport.
+
+   #8 Class and quality of service capabilities (M/W)
+
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 46]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
+      TBD.  [Editor's note: relies on lower layers to provide CoS/QoS]
+
+   #10 Technical maturity (M)
+
+      RTP has been deployed and used in large commercial systems for
+      over ten years and can be considered a mature technology.
+
+
+5.2.5.2.3.  Summary
+
+   RTP appears to be a good candidate as the deterministic networking
+   data plane solution alternative for the DetNet Service layer.  The
+   strong points are the technical maturity and the fact it was designed
+   for transporting time-sensitive payload from the beginning.  RTP is
+   specifically well suited to be used with (UDP)/IP transport.
+
+   Extensions may be required to realize the packet replication and
+   duplicate detection features of the deterministic networking data
+   plane.  However, there is already precedence of similar solutions
+   that could potentially be leveraged [ST20227][RFC7198].
 
 6.  Summary of data plane alternatives
 
@@ -2549,6 +2626,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    own.  Distinguishing the DetNet Service and the DetNet Transport, as
    explained in (Section 3), allows a number of combinations, which can
    meet most of the criteria.  There is no room here to evaluate all
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 47]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    possible combinations.  Therefore, only some combinations are
    highlighted here, which are selected based on the number of criteria
    that are met and the maturity of the technology (#10).
@@ -2557,26 +2642,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    options that can be used for the DetNet Transport Layer against the
    evaluation criteria.  Each value in the table is from the
    corresponding section.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 46]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
                   Applicability per Transport Alternative
 
@@ -2601,14 +2666,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
                    Applicability per Service Alternative
 
-           +----------+-----+----+----+-----+-----+-----+-----+
-           | Solution | #1  | #2 | #3 | #5  | #6  | #8  | #10 |
-           +----------+-----+----+----+-----+-----+-----+-----+
-           |   GRE    | M   | W  | M  | W/N | M   | W   | M   |
-           |   PWE3   | M   | M  | M  | W   | M/W | M/W | M   |
-           |   EVPN   | M   | W  | M  | M/W | M/W | M/W | M   |
-           |   RTP    | M/N | M  | M  | W   | M   | W   | M   |
-           +----------+-----+----+----+-----+-----+-----+-----+
+            +----------+----+----+----+-----+-----+-----+-----+
+            | Solution | #1 | #2 | #3 | #5  | #6  | #8  | #10 |
+            +----------+----+----+----+-----+-----+-----+-----+
+            |   GRE    | M  | W  | M  | W/N | M   | W   | M   |
+            |   PWE3   | M  | M  | M  | W   | M/W | M/W | M   |
+            |   EVPN   | M  | W  | M  | M/W | M/W | M/W | M   |
+            |   RTP    | M  | M  | M  | M/W | M   | M/W | M   |
+            +----------+----+----+----+-----+-----+-----+-----+
 
                      Summarizing Service capabilities
 
@@ -2617,25 +2682,27 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    PseudoWire (Section 5.2.3) is the technology that is mature and meets
    most of the criteria for the DetNet Service layer as shown in the
    table above.  From upper layer protocols PWs or RTP can be a
-   candidate for non-MPLS PSNs.  The identified work is to figure out
-   how to implement duplicate detection for these protocols (e.g., based
-   on [RFC3985]).
-
-   PWs can be carried over MPLS or IP.  MPLS is the most common
-   technology that is used as PSN for PseudoWires; furthermore, MPLS is
-   a mature technology and meets most DetNet Transport layer criteria.
-   IPv4 and v6 can be also used as PSN and both are mature technologies,
 
 
 
-
-Korhonen, et al.         Expires January 9, 2017               [Page 47]
+Korhonen, et al.         Expires January 9, 2017               [Page 48]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
+   candidate for non-MPLS PSNs.  The identified work for PWs is to
+   figure out how to implement duplicate detection for these protocols
+   (e.g., based on [RFC3985]).  In a case of RTP there is precedence of
+   implementing packet duplication and duplicate elimination
+   [ST20227][RFC7198].
+
+   PWs can be carried over MPLS or IP.  MPLS is the most common
+   technology that is used as PSN for PseudoWires; furthermore, MPLS is
+   a mature technology and meets most DetNet Transport layer criteria.
+   IPv[46] can be also used as PSN and both are mature technologies,
    although both generally only support CoS (DiffServ) in deployed
-   networks.
+   networks.  RTP is independent of the underlying transport technology
+   and network.  However, it is well suited for UDP/IP transport.
 
 7.  Security considerations
 
@@ -2669,6 +2736,16 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       Lou Berger
       Pat Thaler
 
+
+
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 49]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
 10.  References
 
 10.1.  Informative References
@@ -2678,17 +2755,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               Engineering for Bit Index Explicit Replication BIER-TE",
               draft-eckert-bier-te-arch-03 (work in progress), March
               2016.
-
-
-
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 48]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
    [I-D.finn-detnet-architecture]
               Finn, N., Thubert, P., and M. Teener, "Deterministic
@@ -2728,23 +2794,19 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               for Generic Routing Encapsulation (GRE)", draft-ietf-
               intarea-gre-ipv6-14 (work in progress), September 2015.
 
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 50]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    [I-D.ietf-isis-pcr]
               Farkas, J., Bragg, N., Unbehagen, P., Parsons, G.,
               Ashwood-Smith, P., and C. Bowers, "IS-IS Path Computation
               and Reservation", draft-ietf-isis-pcr-05 (work in
               progress), February 2016.
-
-
-
-
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 49]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
    [I-D.ietf-mpls-residence-time]
               Mirsky, G., Ruffini, S., Gray, E., Drake, J., Bryant, S.,
@@ -2786,21 +2848,22 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               Index Explicit Replication (BIER) Layer", draft-mirsky-
               bier-pmmm-oam-01 (work in progress), March 2016.
 
+
+
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 51]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    [I-D.ooamdt-rtgwg-oam-gap-analysis]
               Mirsky, G., Nordmark, E., Pignataro, C., Kumar, N., Kumar,
               D., Chen, M., Mozes, D., and J. Networks, "Operations,
               Administration and Maintenance (OAM) for Overlay Networks:
               Gap Analysis", draft-ooamdt-rtgwg-oam-gap-analysis-01
               (work in progress), March 2016.
-
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 50]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
    [I-D.ooamdt-rtgwg-ooam-requirement]
               Kumar, N., Pignataro, C., Kumar, D., Mirsky, G., Chen, M.,
@@ -2843,20 +2906,17 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               DOI 10.17487/RFC1393, January 1993,
               <http://www.rfc-editor.org/info/rfc1393>.
 
-   [RFC1700]  Reynolds, J. and J. Postel, "Assigned Numbers", RFC 1700,
-              DOI 10.17487/RFC1700, October 1994,
-              <http://www.rfc-editor.org/info/rfc1700>.
 
 
 
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 51]
+Korhonen, et al.         Expires January 9, 2017               [Page 52]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
+
+   [RFC1700]  Reynolds, J. and J. Postel, "Assigned Numbers", RFC 1700,
+              DOI 10.17487/RFC1700, October 1994,
+              <http://www.rfc-editor.org/info/rfc1700>.
 
    [RFC2205]  Braden, R., Ed., Zhang, L., Berson, S., Herzog, S., and S.
               Jamin, "Resource ReSerVation Protocol (RSVP) -- Version 1
@@ -2902,17 +2962,18 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               RFC 3168, DOI 10.17487/RFC3168, September 2001,
               <http://www.rfc-editor.org/info/rfc3168>.
 
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 53]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    [RFC3209]  Awduche, D., Berger, L., Gan, D., Li, T., Srinivasan, V.,
               and G. Swallow, "RSVP-TE: Extensions to RSVP for LSP
               Tunnels", RFC 3209, DOI 10.17487/RFC3209, December 2001,
               <http://www.rfc-editor.org/info/rfc3209>.
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 52]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
    [RFC3270]  Le Faucheur, F., Wu, L., Davie, B., Davari, S., Vaananen,
               P., Krishnan, R., Cheval, P., and J. Heinanen, "Multi-
@@ -2956,19 +3017,20 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               DOI 10.17487/RFC4446, April 2006,
               <http://www.rfc-editor.org/info/rfc4446>.
 
+
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 54]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    [RFC4447]  Martini, L., Ed., Rosen, E., El-Aawar, N., Smith, T., and
               G. Heron, "Pseudowire Setup and Maintenance Using the
               Label Distribution Protocol (LDP)", RFC 4447,
               DOI 10.17487/RFC4447, April 2006,
               <http://www.rfc-editor.org/info/rfc4447>.
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 53]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
    [RFC4448]  Martini, L., Ed., Rosen, E., El-Aawar, N., and G. Heron,
               "Encapsulation Methods for Transport of Ethernet over MPLS
@@ -3012,19 +3074,17 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               to-Edge (PWE3)", RFC 5254, DOI 10.17487/RFC5254, October
               2008, <http://www.rfc-editor.org/info/rfc5254>.
 
-   [RFC5305]  Li, T. and H. Smit, "IS-IS Extensions for Traffic
-              Engineering", RFC 5305, DOI 10.17487/RFC5305, October
-              2008, <http://www.rfc-editor.org/info/rfc5305>.
 
 
 
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 54]
+Korhonen, et al.         Expires January 9, 2017               [Page 55]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
+
+   [RFC5305]  Li, T. and H. Smit, "IS-IS Extensions for Traffic
+              Engineering", RFC 5305, DOI 10.17487/RFC5305, October
+              2008, <http://www.rfc-editor.org/info/rfc5305>.
 
    [RFC5331]  Aggarwal, R., Rekhter, Y., and E. Rosen, "MPLS Upstream
               Label Assignment and Context-Specific Label Space",
@@ -3071,16 +3131,16 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               DOI 10.17487/RFC6073, January 2011,
               <http://www.rfc-editor.org/info/rfc6073>.
 
-   [RFC6275]  Perkins, C., Ed., Johnson, D., and J. Arkko, "Mobility
-              Support in IPv6", RFC 6275, DOI 10.17487/RFC6275, July
-              2011, <http://www.rfc-editor.org/info/rfc6275>.
 
 
-
-Korhonen, et al.         Expires January 9, 2017               [Page 55]
+Korhonen, et al.         Expires January 9, 2017               [Page 56]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
+
+   [RFC6275]  Perkins, C., Ed., Johnson, D., and J. Arkko, "Mobility
+              Support in IPv6", RFC 6275, DOI 10.17487/RFC6275, July
+              2011, <http://www.rfc-editor.org/info/rfc6275>.
 
    [RFC6371]  Busi, I., Ed. and D. Allan, Ed., "Operations,
               Administration, and Maintenance Framework for MPLS-Based
@@ -3127,16 +3187,16 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               RFC 6658, DOI 10.17487/RFC6658, July 2012,
               <http://www.rfc-editor.org/info/rfc6658>.
 
-   [RFC6718]  Muley, P., Aissaoui, M., and M. Bocci, "Pseudowire
-              Redundancy", RFC 6718, DOI 10.17487/RFC6718, August 2012,
-              <http://www.rfc-editor.org/info/rfc6718>.
 
 
-
-Korhonen, et al.         Expires January 9, 2017               [Page 56]
+Korhonen, et al.         Expires January 9, 2017               [Page 57]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
+
+   [RFC6718]  Muley, P., Aissaoui, M., and M. Bocci, "Pseudowire
+              Redundancy", RFC 6718, DOI 10.17487/RFC6718, August 2012,
+              <http://www.rfc-editor.org/info/rfc6718>.
 
    [RFC6733]  Fajardo, V., Ed., Arkko, J., Loughney, J., and G. Zorn,
               Ed., "Diameter Base Protocol", RFC 6733,
@@ -3166,6 +3226,10 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               Networks", RFC 7167, DOI 10.17487/RFC7167, April 2014,
               <http://www.rfc-editor.org/info/rfc7167>.
 
+   [RFC7198]  Begen, A. and C. Perkins, "Duplicating RTP Streams",
+              RFC 7198, DOI 10.17487/RFC7198, April 2014,
+              <http://www.rfc-editor.org/info/rfc7198>.
+
    [RFC7209]  Sajassi, A., Aggarwal, R., Uttaro, J., Bitar, N.,
               Henderickx, W., and A. Isaac, "Requirements for Ethernet
               VPN (EVPN)", RFC 7209, DOI 10.17487/RFC7209, May 2014,
@@ -3179,20 +3243,17 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               Operators", RFC 7271, DOI 10.17487/RFC7271, June 2014,
               <http://www.rfc-editor.org/info/rfc7271>.
 
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 58]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    [RFC7399]  Farrel, A. and D. King, "Unanswered Questions in the Path
               Computation Element Architecture", RFC 7399,
               DOI 10.17487/RFC7399, October 2014,
               <http://www.rfc-editor.org/info/rfc7399>.
-
-
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 57]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
    [RFC7426]  Haleplidis, E., Ed., Pentikousis, K., Ed., Denazis, S.,
               Hadi Salim, J., Meyer, D., and O. Koufopavlou, "Software-
@@ -3240,12 +3301,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 58]
+Korhonen, et al.         Expires January 9, 2017               [Page 59]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
@@ -3301,4 +3357,4 @@ Authors' Addresses
 
 
 
-Korhonen, et al.         Expires January 9, 2017               [Page 59]
+Korhonen, et al.         Expires January 9, 2017               [Page 60]
