@@ -103,8 +103,8 @@ Table of Contents
      10.1.  Informative References . . . . . . . . . . . . . . . . .  50
      10.2.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . .  59
    Appendix A.  Examples of combined DetNet Service and Transport
-                layers . . . . . . . . . . . . . . . . . . . . . . .  60
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  60
+                layers . . . . . . . . . . . . . . . . . . . . . . .  59
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  59
 
 
 
@@ -588,8 +588,8 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    pinned data paths for established LSPs.  At Layer-2, the IEEE
    802.1Qca [IEEE802.1Qca] specification defines how to do explicit path
    control in a bridged network and its IETF counter part is defined in
-   [I-D.ietf-isis-pcr].  This criteria concerns the available mechanisms
-   for explicit routes for the data plane protocol alternative.
+   [RFC7813].  This criteria concerns the available mechanisms for
+   explicit routes for the data plane protocol alternative.
 
 4.5.  #5 Packet replication and elimination
 
@@ -828,12 +828,12 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       One possibility is for a Software-Defined Networking (SDN)
       [RFC7426] based approach to be applied to compute, establish and
       manage the explicit routes, leveraging Traffic Engineering (TE)
-      extensions to routing protocols [RFC5305]
-      [I-D.ietf-idr-ls-distribution] and evolving to the Path
-      Computation Element (PCE) Architecture [RFC5440], though a number
-      of issues remain to be solved [RFC7399].
+      extensions to routing protocols [RFC5305] [RFC7752] and evolving
+      to the Path Computation Element (PCE) Architecture [RFC5440],
+      though a number of issues remain to be solved [RFC7399].
 
-
+      Segment Routing (SR) [I-D.ietf-spring-segment-routing] is a new
+      initiative to equip IPv6 with explicit routing capabilities.  The
 
 
 
@@ -842,8 +842,6 @@ Korhonen, et al.         Expires January 9, 2017               [Page 15]
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
-      Segment Routing (SR) [I-D.ietf-spring-segment-routing] is a new
-      initiative to equip IPv6 with explicit routing capabilities.  The
       idea for the DetNet data plane would be to apply SR to IPv6 with
       the addition of a new type of routing extension header
       [I-D.ietf-6man-segment-routing-header] to explicitly signal the
@@ -890,6 +888,8 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
    #9 Packet traceability (W)
 
+      The traceability of replicated packets involves the capability to
+      resolve which replication point issued a particular copy of a
 
 
 
@@ -898,8 +898,6 @@ Korhonen, et al.         Expires January 9, 2017               [Page 16]
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
-      The traceability of replicated packets involves the capability to
-      resolve which replication point issued a particular copy of a
       packet, which segment was intended for that replica, and which
       particular packet of which particular flow this is.  Sequence also
       depends on the sequencing mechanism.  As an example, the
@@ -945,6 +943,8 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    plane criteria today.  There are aspects of the DetNet data plane
    that are not fully supported, notably QoS, but these can be
    incrementally added or supplemented by the underlying sub-network
+   layer.  IPv6 may be a choice as the DetNet Transport layer in
+   networks where other technologies such as MPLS are not deployed.
 
 
 
@@ -954,9 +954,6 @@ Korhonen, et al.         Expires January 9, 2017               [Page 17]
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
-   layer.  IPv6 may be a choice as the DetNet Transport layer in
-   networks where other technologies such as MPLS are not deployed.
-
 5.1.2.  Native IPv4 transport
 
 5.1.2.1.  Solution description
@@ -965,15 +962,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    smaller address space.  However, IPv6 was designed around the fact
    that extension headers are an integral part of the protocol and
    operation from the beginning, although the practice may some times
-   prove differently [I-D.ietf-v6ops-ipv6-ehs-in-real-world].  IPv4 does
-   support header options, but these have historically not been
-   supported on in hardware-based forwarding so are generally blocked or
-   handled at a much slower rate.  In either case, the use of IP header
-   options is generally avoided.  In the context of deterministic
-   networking data plane solutions the major difference between IPv4 and
-   IPv6 seems to be the practical support for header extensibility.
-   Anything below and above the IP header independent of the version is
-   practically the same.
+   prove differently [RFC7872].  IPv4 does support header options, but
+   these have historically not been supported on in hardware-based
+   forwarding so are generally blocked or handled at a much slower rate.
+   In either case, the use of IP header options is generally avoided.
+   In the context of deterministic networking data plane solutions the
+   major difference between IPv4 and IPv6 seems to be the practical
+   support for header extensibility.  Anything below and above the IP
+   header independent of the version is practically the same.
 
 5.1.2.2.  Analysis and Discussion
 
@@ -1002,6 +998,10 @@ Internet-Draft       DetNet data plane alternatives            July 2016
       case of a flow duplication or encrypted flows.  For a working
       solution, upper layer protocol headers such as RTP or PWs may be
       required for unambiguous flow identification.  There is also
+      emerging work within the IETF that may provide new flow
+      identification alternatives.
+
+   #4 Explicit routes (W)
 
 
 
@@ -1009,11 +1009,6 @@ Korhonen, et al.         Expires January 9, 2017               [Page 18]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
-
-      emerging work within the IETF that may provide new flow
-      identification alternatives.
-
-   #4 Explicit routes (W)
 
       IPv4 has two source routing option specified: the loose source and
       record route option (LSRR), and the strict source and record route
@@ -1052,10 +1047,15 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
       The IPv4 has similar needs and requirements for traceability as
       IPv6 (see Section 5.1.1.2).  The IPv4 has a traceroute option
-      [RFC1393] that could be used to record the route the packet took.
+      [RFC6814] that could be used to record the route the packet took.
       However, the option has been deprecated [RFC6814].
 
    #10 Technical maturity (M/W)
+
+      IPv4 can be considered mature technology with over 30 years of
+      implementation, deployment and operations experience.  As with
+      IPv6, today's commercial implementations and deployments of IPv4
+      generally lack any support for QoS.
 
 
 
@@ -1064,12 +1064,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 Korhonen, et al.         Expires January 9, 2017               [Page 19]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
-
-
-      IPv4 can be considered mature technology with over 30 years of
-      implementation, deployment and operations experience.  As with
-      IPv6, today's commercial implementations and deployments of IPv4
-      generally lack any support for QoS.
 
 
 5.1.2.3.  Summary
@@ -1105,6 +1099,12 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    Pseudowires Section 5.2.3 and via other label-like mechanisms such as
    EPVN Section 5.2.4.  A representation of these options are shown in
    Figure 7.
+
+
+
+
+
+
 
 
 
@@ -2024,7 +2024,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
       GRE can provide encapsulation at the service layer over the
       transport layer.  A new protocol type for DetNet traffic should be
-      allocated as an "Ether Type" in [RFC1700] and in IANA Ethernet
+      allocated as an "Ether Type" in [RFC3232] and in IANA Ethernet
       Numbers [5].  The fixed header of a GRE packet is 4 octets while
       the maximum header is 16 octets with optional fields in Figure 14.
 
@@ -2078,9 +2078,9 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
       GRE has been developed over 20 years.  The delivery protocol
       mostly used is IPv4, while the IPv6 support for GRE is to be
-      standardized now in IETF as [I-D.ietf-intarea-gre-ipv6].  Due to
-      its good extensibility, GRE has also been extended to support
-      network virtualization in Data Center, which is NVGRE [RFC7637].
+      standardized now in IETF as [RFC7676].  Due to its good
+      extensibility, GRE has also been extended to support network
+      virtualization in Data Center, which is NVGRE [RFC7637].
 
 5.2.1.3.  Summary
 
@@ -2783,31 +2783,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               Statement", draft-ietf-detnet-problem-statement-00 (work
               in progress), April 2016.
 
-   [I-D.ietf-idr-ls-distribution]
-              Gredler, H., Medved, J., Previdi, S., Farrel, A., and S.
-              Ray, "North-Bound Distribution of Link-State and TE
-              Information using BGP", draft-ietf-idr-ls-distribution-13
-              (work in progress), October 2015.
-
-   [I-D.ietf-intarea-gre-ipv6]
-              Pignataro, C., Bonica, R., and S. Krishnan, "IPv6 Support
-              for Generic Routing Encapsulation (GRE)", draft-ietf-
-              intarea-gre-ipv6-14 (work in progress), September 2015.
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 50]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
-   [I-D.ietf-isis-pcr]
-              Farkas, J., Bragg, N., Unbehagen, P., Parsons, G.,
-              Ashwood-Smith, P., and C. Bowers, "IS-IS Path Computation
-              and Reservation", draft-ietf-isis-pcr-05 (work in
-              progress), February 2016.
-
    [I-D.ietf-mpls-residence-time]
               Mirsky, G., Ruffini, S., Gray, E., Drake, J., Bryant, S.,
               and S. Vainshtein, "Residence Time Measurement in MPLS
@@ -2819,17 +2794,18 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               and R. Shakir, "Segment Routing Architecture", draft-ietf-
               spring-segment-routing-09 (work in progress), July 2016.
 
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 50]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    [I-D.ietf-sunset4-gapanalysis]
               Perreault, S., Tsou, T., Zhou, C., and P. Fan, "Gap
               Analysis for IPv4 Sunset", draft-ietf-
               sunset4-gapanalysis-07 (work in progress), April 2015.
-
-   [I-D.ietf-v6ops-ipv6-ehs-in-real-world]
-              Gont, F., Linkova, J., Chown, T., and S. LIU,
-              "Observations on the Dropping of Packets with IPv6
-              Extension Headers in the Real World", draft-ietf-v6ops-
-              ipv6-ehs-in-real-world-02 (work in progress), December
-              2015.
 
    [I-D.kumarzheng-bier-ping]
               Kumar, N., Pignataro, C., Akiya, N., Zheng, L., Chen, M.,
@@ -2847,16 +2823,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               "Performance Measurement (PM) with Marking Method in Bit
               Index Explicit Replication (BIER) Layer", draft-mirsky-
               bier-pmmm-oam-01 (work in progress), March 2016.
-
-
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 51]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
    [I-D.ooamdt-rtgwg-oam-gap-analysis]
               Mirsky, G., Nordmark, E., Pignataro, C., Kumar, N., Kumar,
@@ -2882,6 +2848,16 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               <https://standards.ieee.org/findstds/standard/802.1Qca-
               2015.html>.
 
+
+
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 51]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    [IEEE802.1Qch]
               IEEE, "Cyclic Queuing and Forwarding", 2016,
               <http://www.ieee802.org/1/files/private/ch-drafts/>.
@@ -2902,22 +2878,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               DOI 10.17487/RFC1122, October 1989,
               <http://www.rfc-editor.org/info/rfc1122>.
 
-   [RFC1393]  Malkin, G., "Traceroute Using an IP Option", RFC 1393,
-              DOI 10.17487/RFC1393, January 1993,
-              <http://www.rfc-editor.org/info/rfc1393>.
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 52]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
-   [RFC1700]  Reynolds, J. and J. Postel, "Assigned Numbers", RFC 1700,
-              DOI 10.17487/RFC1700, October 1994,
-              <http://www.rfc-editor.org/info/rfc1700>.
-
    [RFC2205]  Braden, R., Ed., Zhang, L., Berson, S., Herzog, S., and S.
               Jamin, "Resource ReSerVation Protocol (RSVP) -- Version 1
               Functional Specification", RFC 2205, DOI 10.17487/RFC2205,
@@ -2933,11 +2893,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               DOI 10.17487/RFC2474, December 1998,
               <http://www.rfc-editor.org/info/rfc2474>.
 
-   [RFC2702]  Awduche, D., Malcolm, J., Agogbua, J., O'Dell, M., and J.
-              McManus, "Requirements for Traffic Engineering Over MPLS",
-              RFC 2702, DOI 10.17487/RFC2702, September 1999,
-              <http://www.rfc-editor.org/info/rfc2702>.
-
    [RFC2784]  Farinacci, D., Li, T., Hanks, S., Meyer, D., and P.
               Traina, "Generic Routing Encapsulation (GRE)", RFC 2784,
               DOI 10.17487/RFC2784, March 2000,
@@ -2952,6 +2907,13 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               DOI 10.17487/RFC3031, January 2001,
               <http://www.rfc-editor.org/info/rfc3031>.
 
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 52]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    [RFC3032]  Rosen, E., Tappan, D., Fedorkow, G., Rekhter, Y.,
               Farinacci, D., Li, T., and A. Conta, "MPLS Label Stack
               Encoding", RFC 3032, DOI 10.17487/RFC3032, January 2001,
@@ -2962,18 +2924,14 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               RFC 3168, DOI 10.17487/RFC3168, September 2001,
               <http://www.rfc-editor.org/info/rfc3168>.
 
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 53]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
    [RFC3209]  Awduche, D., Berger, L., Gan, D., Li, T., Srinivasan, V.,
               and G. Swallow, "RSVP-TE: Extensions to RSVP for LSP
               Tunnels", RFC 3209, DOI 10.17487/RFC3209, December 2001,
               <http://www.rfc-editor.org/info/rfc3209>.
+
+   [RFC3232]  Reynolds, J., Ed., "Assigned Numbers: RFC 1700 is Replaced
+              by an On-line Database", RFC 3232, DOI 10.17487/RFC3232,
+              January 2002, <http://www.rfc-editor.org/info/rfc3232>.
 
    [RFC3270]  Le Faucheur, F., Wu, L., Davie, B., Davari, S., Vaananen,
               P., Krishnan, R., Cheval, P., and J. Heinanen, "Multi-
@@ -3002,6 +2960,16 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               DOI 10.17487/RFC3985, March 2005,
               <http://www.rfc-editor.org/info/rfc3985>.
 
+
+
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 53]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    [RFC4023]  Worster, T., Rekhter, Y., and E. Rosen, Ed.,
               "Encapsulating MPLS in IP or Generic Routing Encapsulation
               (GRE)", RFC 4023, DOI 10.17487/RFC4023, March 2005,
@@ -3016,15 +2984,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               Emulation (PWE3)", BCP 116, RFC 4446,
               DOI 10.17487/RFC4446, April 2006,
               <http://www.rfc-editor.org/info/rfc4446>.
-
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 54]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
    [RFC4447]  Martini, L., Ed., Rosen, E., El-Aawar, N., Smith, T., and
               G. Heron, "Pseudowire Setup and Maintenance Using the
@@ -3054,16 +3013,18 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               DOI 10.17487/RFC4875, May 2007,
               <http://www.rfc-editor.org/info/rfc4875>.
 
-   [RFC5086]  Vainshtein, A., Ed., Sasson, I., Metz, E., Frost, T., and
-              P. Pate, "Structure-Aware Time Division Multiplexed (TDM)
-              Circuit Emulation Service over Packet Switched Network
-              (CESoPSN)", RFC 5086, DOI 10.17487/RFC5086, December 2007,
-              <http://www.rfc-editor.org/info/rfc5086>.
-
    [RFC5087]  Stein, Y(J)., Shashoua, R., Insler, R., and M. Anavi,
               "Time Division Multiplexing over IP (TDMoIP)", RFC 5087,
               DOI 10.17487/RFC5087, December 2007,
               <http://www.rfc-editor.org/info/rfc5087>.
+
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 54]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
 
    [RFC5129]  Davie, B., Briscoe, B., and J. Tay, "Explicit Congestion
               Marking in MPLS", RFC 5129, DOI 10.17487/RFC5129, January
@@ -3073,14 +3034,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               "Requirements for Multi-Segment Pseudowire Emulation Edge-
               to-Edge (PWE3)", RFC 5254, DOI 10.17487/RFC5254, October
               2008, <http://www.rfc-editor.org/info/rfc5254>.
-
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 55]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
    [RFC5305]  Li, T. and H. Smit, "IS-IS Extensions for Traffic
               Engineering", RFC 5305, DOI 10.17487/RFC5305, October
@@ -3121,22 +3074,18 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               Networks", RFC 5921, DOI 10.17487/RFC5921, July 2010,
               <http://www.rfc-editor.org/info/rfc5921>.
 
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 55]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    [RFC5960]  Frost, D., Ed., Bryant, S., Ed., and M. Bocci, Ed., "MPLS
               Transport Profile Data Plane Architecture", RFC 5960,
               DOI 10.17487/RFC5960, August 2010,
               <http://www.rfc-editor.org/info/rfc5960>.
-
-   [RFC6073]  Martini, L., Metz, C., Nadeau, T., Bocci, M., and M.
-              Aissaoui, "Segmented Pseudowire", RFC 6073,
-              DOI 10.17487/RFC6073, January 2011,
-              <http://www.rfc-editor.org/info/rfc6073>.
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 56]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
    [RFC6275]  Perkins, C., Ed., Johnson, D., and J. Arkko, "Mobility
               Support in IPv6", RFC 6275, DOI 10.17487/RFC6275, July
@@ -3168,11 +3117,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               DOI 10.17487/RFC6437, November 2011,
               <http://www.rfc-editor.org/info/rfc6437>.
 
-   [RFC6540]  George, W., Donley, C., Liljenstolpe, C., and L. Howard,
-              "IPv6 Support Required for All IP-Capable Nodes", BCP 177,
-              RFC 6540, DOI 10.17487/RFC6540, April 2012,
-              <http://www.rfc-editor.org/info/rfc6540>.
-
    [RFC6564]  Krishnan, S., Woodyatt, J., Kline, E., Hoagland, J., and
               M. Bhatia, "A Uniform Format for IPv6 Extension Headers",
               RFC 6564, DOI 10.17487/RFC6564, April 2012,
@@ -3189,19 +3133,10 @@ Internet-Draft       DetNet data plane alternatives            July 2016
 
 
 
-Korhonen, et al.         Expires January 9, 2017               [Page 57]
+Korhonen, et al.         Expires January 9, 2017               [Page 56]
 
 Internet-Draft       DetNet data plane alternatives            July 2016
 
-
-   [RFC6718]  Muley, P., Aissaoui, M., and M. Bocci, "Pseudowire
-              Redundancy", RFC 6718, DOI 10.17487/RFC6718, August 2012,
-              <http://www.rfc-editor.org/info/rfc6718>.
-
-   [RFC6733]  Fajardo, V., Ed., Arkko, J., Loughney, J., and G. Zorn,
-              Ed., "Diameter Base Protocol", RFC 6733,
-              DOI 10.17487/RFC6733, October 2012,
-              <http://www.rfc-editor.org/info/rfc6733>.
 
    [RFC6790]  Kompella, K., Drake, J., Amante, S., Henderickx, W., and
               L. Yong, "The Use of Entropy Labels in MPLS Forwarding",
@@ -3221,11 +3156,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               DOI 10.17487/RFC7045, December 2013,
               <http://www.rfc-editor.org/info/rfc7045>.
 
-   [RFC7167]  Frost, D., Bryant, S., Bocci, M., and L. Berger, "A
-              Framework for Point-to-Multipoint MPLS in Transport
-              Networks", RFC 7167, DOI 10.17487/RFC7167, April 2014,
-              <http://www.rfc-editor.org/info/rfc7167>.
-
    [RFC7198]  Begen, A. and C. Perkins, "Duplicating RTP Streams",
               RFC 7198, DOI 10.17487/RFC7198, April 2014,
               <http://www.rfc-editor.org/info/rfc7198>.
@@ -3243,13 +3173,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               Operators", RFC 7271, DOI 10.17487/RFC7271, June 2014,
               <http://www.rfc-editor.org/info/rfc7271>.
 
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 58]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
-
    [RFC7399]  Farrel, A. and D. King, "Unanswered Questions in the Path
               Computation Element Architecture", RFC 7399,
               DOI 10.17487/RFC7399, October 2014,
@@ -3260,6 +3183,16 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               Defined Networking (SDN): Layers and Architecture
               Terminology", RFC 7426, DOI 10.17487/RFC7426, January
               2015, <http://www.rfc-editor.org/info/rfc7426>.
+
+
+
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 57]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
 
    [RFC7432]  Sajassi, A., Ed., Aggarwal, R., Bitar, N., Isaac, A.,
               Uttaro, J., Drake, J., and W. Henderickx, "BGP MPLS-Based
@@ -3276,6 +3209,28 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               RFC 7637, DOI 10.17487/RFC7637, September 2015,
               <http://www.rfc-editor.org/info/rfc7637>.
 
+   [RFC7676]  Pignataro, C., Bonica, R., and S. Krishnan, "IPv6 Support
+              for Generic Routing Encapsulation (GRE)", RFC 7676,
+              DOI 10.17487/RFC7676, October 2015,
+              <http://www.rfc-editor.org/info/rfc7676>.
+
+   [RFC7752]  Gredler, H., Ed., Medved, J., Previdi, S., Farrel, A., and
+              S. Ray, "North-Bound Distribution of Link-State and
+              Traffic Engineering (TE) Information Using BGP", RFC 7752,
+              DOI 10.17487/RFC7752, March 2016,
+              <http://www.rfc-editor.org/info/rfc7752>.
+
+   [RFC7813]  Farkas, J., Ed., Bragg, N., Unbehagen, P., Parsons, G.,
+              Ashwood-Smith, P., and C. Bowers, "IS-IS Path Control and
+              Reservation", RFC 7813, DOI 10.17487/RFC7813, June 2016,
+              <http://www.rfc-editor.org/info/rfc7813>.
+
+   [RFC7872]  Gont, F., Linkova, J., Chown, T., and W. Liu,
+              "Observations on the Dropping of Packets with IPv6
+              Extension Headers in the Real World", RFC 7872,
+              DOI 10.17487/RFC7872, June 2016,
+              <http://www.rfc-editor.org/info/rfc7872>.
+
    [ST20227]  SMPTE 2022, "Seamless Protection Switching of SMPTE ST
               2022 IP Datagrams", ST 2022-7:2013, 2013,
               <https://www.smpte.org/digital-library>.
@@ -3283,6 +3238,17 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    [TSNTG]    IEEE Standards Association, "IEEE 802.1 Time-Sensitive
               Networks Task Group", 2013,
               <http://www.IEEE802.org/1/pages/avbridges.html>.
+
+
+
+
+
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 58]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
 
 10.2.  URIs
 
@@ -3298,13 +3264,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    [5] http://ftp.isi.edu/in-notes/iana/assignments/ethernet-numbers
 
    [6] https://tools.ietf.org/wg/bess/
-
-
-
-Korhonen, et al.         Expires January 9, 2017               [Page 59]
-
-Internet-Draft       DetNet data plane alternatives            July 2016
-
 
 Appendix A.  Examples of combined DetNet Service and Transport layers
 
@@ -3340,6 +3299,13 @@ Authors' Addresses
    Email: pthubert@cisco.com
 
 
+
+
+Korhonen, et al.         Expires January 9, 2017               [Page 59]
+
+Internet-Draft       DetNet data plane alternatives            July 2016
+
+
    Yan Zhuang
    Huawei
 
@@ -3350,6 +3316,40 @@ Authors' Addresses
    LabN Consulting, L.L.C.
 
    Email: lberger@labn.net
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
