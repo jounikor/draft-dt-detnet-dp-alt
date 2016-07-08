@@ -70,8 +70,8 @@
 <!ENTITY rfc7510 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7510.xml">
 <!ENTITY rfc7637 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7637.xml">
 
-<!ENTITY I-D.finn-detnet-problem-statement PUBLIC "" "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-finn-detnet-problem-statement-04.xml">
-<!ENTITY I-D.finn-detnet-architecture PUBLIC "" "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-finn-detnet-architecture-02.xml">
+<!ENTITY I-D.ietf-detnet-problem-statement PUBLIC "" "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-detnet-problem-statement.xml">
+<!ENTITY I-D.finn-detnet-architecture PUBLIC "" "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.finn-detnet-architecture.xml">
 <!ENTITY I-D.ietf-isis-pcr SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-isis-pcr.xml">
 <!ENTITY I-D.ietf-6man-segment-routing-header SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-6man-segment-routing-header.xml">
 <!ENTITY I-D.ietf-spring-segment-routing SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing.xml">
@@ -197,7 +197,7 @@
  <section title="Introduction" anchor="sec_intro">
   <t>
     Deterministic Networking (DetNet) <xref
-    target="I-D.finn-detnet-problem-statement"/> provides a capability to carry
+    target="I-D.ietf-detnet-problem-statement"/> provides a capability to carry
     unicast or multicast data flows for real-time applications with extremely
     low data loss rates, timely delivery and bounded packet delay variation
     <xref target="I-D.finn-detnet-architecture"/>. The deterministic networking
@@ -3089,7 +3089,7 @@ title="Enabled Adjacencies">
    &rfc7510;
    &rfc7637;
    &I-D.finn-detnet-architecture;
-   &I-D.finn-detnet-problem-statement;
+   &I-D.ietf-detnet-problem-statement;
    &I-D.ietf-6man-rfc2460bis;
    &I-D.ietf-6man-segment-routing-header;
    &I-D.ietf-bier-architecture;
