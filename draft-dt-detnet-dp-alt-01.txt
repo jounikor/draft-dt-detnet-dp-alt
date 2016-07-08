@@ -586,7 +586,7 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    intermediate node along the path is part of the named explicit route.
    RSVP-TE [RFC3209] supports explicit routes, and typically provides
    pinned data paths for established LSPs.  At Layer-2, the IEEE
-   802.1Qca [IEEE8021Qca] specification defines how to do explicit path
+   802.1Qca [IEEE802.1Qca] specification defines how to do explicit path
    control in a bridged network and its IETF counter part is defined in
    [I-D.ietf-isis-pcr].  This criteria concerns the available mechanisms
    for explicit routes for the data plane protocol alternative.
@@ -2812,6 +2812,13 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               IEEE, "Enhancements for Scheduled Traffic", 2016,
               <http://www.ieee802.org/1/files/private/bv-drafts/>.
 
+   [IEEE802.1Qca]
+              IEEE 802.1, "IEEE 802.1Qca Bridges and Bridged Networks -
+              Amendment 24: Path Control and Reservation", IEEE
+              P802.1Qca/D2.1 P802.1Qca, June 2015,
+              <https://standards.ieee.org/findstds/standard/802.1Qca-
+              2015.html>.
+
    [IEEE802.1Qch]
               IEEE, "Cyclic Queuing and Forwarding", 2016,
               <http://www.ieee802.org/1/files/private/ch-drafts/>.
@@ -2822,13 +2829,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
               /D2.1 P802.1CB, December 2015,
               <http://www.ieee802.org/1/files/private/cb-drafts/
               d2/802-1CB-d2-1.pdf>.
-
-   [IEEE8021Qca]
-              IEEE 802.1, "IEEE 802.1Qca Bridges and Bridged Networks -
-              Amendment 24: Path Control and Reservation", IEEE
-              P802.1Qca/D2.1 P802.1Qca, June 2015,
-              <http://www.ieee802.org/1/files/private/ca-drafts/
-              d2/802-1Qca-d2-1.pdf>.
 
    [RFC0791]  Postel, J., "Internet Protocol", STD 5, RFC 791,
               DOI 10.17487/RFC0791, September 1981,

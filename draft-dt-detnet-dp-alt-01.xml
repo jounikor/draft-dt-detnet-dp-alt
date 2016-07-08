@@ -647,7 +647,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
      is part of the named explicit route. RSVP-TE <xref target="RFC3209"/> 
      supports explicit routes, and typically provides pinned data paths
      for established LSPs. At Layer-2, the IEEE 802.1Qca <xref 
-     target="IEEE8021Qca"/> specification defines how to do explicit path
+     target="IEEE802.1Qca"/> specification defines how to do explicit path
      control in a bridged network and its IETF counter part is defined in 
      <xref target="I-D.ietf-isis-pcr"/>. This criteria concerns the
      available mechanisms for explicit routes for the data plane protocol
@@ -3006,7 +3006,7 @@ title="Enabled Adjacencies">
   <t>
    Substantial contributions were received from:
    <list style="bullets">
-    <t>Balazs Varga (service model)</t>
+    <t>Bal&aacute;zs Varga (service model)</t>
    </list>
   </t>
   <t>
@@ -3155,9 +3155,10 @@ title="Enabled Adjacencies">
      </front>
    </reference>
    
-   <reference anchor="IEEE8021Qca"
-     target="http://www.ieee802.org/1/files/private/ca-drafts/d2/802-1Qca-d2-1.pdf">
-    <front>
+	  <reference anchor="IEEE802.1Qca"
+		  target="https://standards.ieee.org/findstds/standard/802.1Qca-2015.html">
+		  <front>
+
      <title>IEEE 802.1Qca Bridges and Bridged Networks - Amendment 24: Path Control and Reservation</title>
      <author>
       <organization>IEEE 802.1</organization>
