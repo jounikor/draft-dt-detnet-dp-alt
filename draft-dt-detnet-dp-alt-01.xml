@@ -1637,9 +1637,9 @@ title="DetNet in BIER domain">
    is passed to the controller, which in turn can modify the active adjacencies
    for the next packets.
    </t><t>
-   The value is that the replication can be controlled and monitored with the
-   granularity of a packet and a adjacency in a control loops that involves an
-   external controller.
+   The value is that the replication can be controlled and monitored in a loop
+   that may involve an external controller, with the granularity of a packet and
+   an adjacency .
   </t>
   
   <section title="Solution description">
