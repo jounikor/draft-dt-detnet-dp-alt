@@ -236,6 +236,12 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    example, some technologies may violate these strict layers and still
    be able to deliver a DetNet service.
 
+   [Editor's note: arch-07 and this document have slightly different
+   view of the placement of specific functions between service and
+   transport layers.  This is to be fixed in forthcoming revisions of
+   this document.  The description in arch-07 is considered
+   authoritative.]
+
           .
           .
       +-----------+
@@ -268,12 +274,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    Service layer and also selecting a technology approach for the DetNet
    Transport layer.  There are a high number of valid combinations.
    Therefore, not the combinations but the different technologies are
-   evaluated along the criteria collected in Section 4.  Different
-   criteria apply for the DetNet Service layer and the DetNet Transport
-   layer, however, some of the criteria are valid for both layers.
-
-   One of the most fundamental differences between different potential
-   data plane options is the basic addressing and headers used by DetNet
 
 
 
@@ -282,6 +282,12 @@ Korhonen, et al.        Expires January 28, 2017                [Page 5]
 Internet-Draft       DetNet data plane alternatives            July 2016
 
 
+   evaluated along the criteria collected in Section 4.  Different
+   criteria apply for the DetNet Service layer and the DetNet Transport
+   layer, however, some of the criteria are valid for both layers.
+
+   One of the most fundamental differences between different potential
+   data plane options is the basic addressing and headers used by DetNet
    end systems.  For example, is the basic service a Layer 2 (e.g.,
    Ethernet) or Layer 3 (i.e., IP) service.  This decision impacts how
    DetNet end systems are addressed, and the basic forwarding logic for
@@ -324,12 +330,6 @@ Internet-Draft       DetNet data plane alternatives            July 2016
    replication and elimination point.  This conceptually parallels L2VPN
    services, and could leverage existing related solutions as discussed
    below.
-
-
-
-
-
-
 
 
 

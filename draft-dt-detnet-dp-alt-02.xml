@@ -322,6 +322,14 @@ End System       Node            Node         Node         End System
    considered as formal requirement.  For example, some technologies may violate
    these strict layers and still be able to deliver a DetNet service.
   </t>
+  <t>
+   [Editor's note: arch-07 and this document have slightly different view
+    of the placement of specific functions between service and transport
+    layers. This is to be fixed in forthcoming revisions of this 
+    document. The description in arch-07 is considered authoritative.]
+  </t>
+
+
 <figure anchor="fig_adaptation" align="center"
 title="DetNet adaptation to data plane">
 <artwork align="center"><![CDATA[
