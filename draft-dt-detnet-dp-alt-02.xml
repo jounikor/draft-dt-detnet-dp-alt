@@ -28,6 +28,7 @@
 <!ENTITY rfc4446 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4446.xml">
 <!ENTITY rfc4447 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4447.xml">
 <!ENTITY rfc4448 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4448.xml">
+<!ENTITY rfc4553 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4553.xml">
 <!ENTITY rfc4664 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4664.xml">
 <!ENTITY rfc4817 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4817.xml">
 <!ENTITY rfc4875 PUBLIC "" "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4875.xml">
@@ -345,10 +346,11 @@ title="DetNet adaptation to data plane">
    other part is "Transport" specific (e.g, LSP label, TE label(s)).
   </t>
   <t>
-   In some networking scenarios, the end system initially provides a DetNet flow
-   encapsulation, which contains all information needed by DetNet nodes (e.g.,
-   RTP based DetNet flow transported over a native UDP/IP network). In other
-   scenarios, the encapsulation formats might differ significantly. As an
+   In some networking scenarios, the end system initially provides a DetNet
+   flow encapsulation, which contains all information needed by DetNet nodes
+   (e.g., Real-time Transport Protocol (RTP) <xref target="RFC3550"/> based
+   DetNet flow transported over a native UDP/IP network or PseudoWire). In
+   other scenarios, the encapsulation formats might differ significantly. As an
    example, a CPRI "application's" I/Q data mapped directly to Ethernet frames
    may have to be transported over an MPLS-based packet switched network (PSN).
   </t>
@@ -2022,21 +2024,21 @@ title="Enabled Adjacencies">
       identification. The size of Key field is 4 octets.
      <vspace blankLines="1"/></t>
      
-     <t hangText="#3 Packet sequencing (M)">
+     <t hangText="#3 Packet sequencing and duplicate elimination (M/W)">
       <vspace blankLines="1"/>
       As stated in <xref target="sec_alt_gre"/>, GRE provides an optional
       sequencing number in its header to provide sequencing services for
-      packets. The size of the sequencing number is 32 bits.
+      packets. The size of the sequencing number is 32 bits.  The GRE header
+      could be extended to indicate the duplicated packets by defining a flag
+      in reserved fields or using the sequencing number of a flow.
      <vspace blankLines="1"/></t>
      
-     <t hangText="#5 Packet replication and elimination (W/N)">
+     <t hangText="#5 Flow duplication and merging (W/N)">
       <vspace blankLines="1"/>
-       GRE has no packet replication and elimination in its header. It can use
-       the transport IPv4/IPv6 protocols at the transport layer to replicate the
-       packets and take the different routes as discussed in <xref
-       target="sec_alt_ipv6"/> and <xref target="sec_alt_ipv4"/>.  Besides, the
-       GRE header can be extended to indicate the duplicated packets by defining
-       a flag in reserved fields or using the sequencing number of a flow.
+       GRE has no flow/packet replication and merging support in its header. It
+       can use the transport IPv4/IPv6 protocols at the transport layer to
+       replicate the packets and take the different routes as discussed in
+       <xref target="sec_alt_ipv6"/> and <xref target="sec_alt_ipv4"/>.
      <vspace blankLines="1"/></t>
      
      <t hangText="#6 Operations, Administration and Maintenance (M)">
@@ -2190,14 +2192,16 @@ title="Enabled Adjacencies">
      PWs appear as a good data plane solution alternative for a number of
      reasons. PWs are a proven and deployed technology with a rich OAM control
      plane <xref target="RFC4447"/>, and enjoy the toolbox developed for MPLS
-     networks. Furthermore, PWs may have an optional Control Word (CW) as part
-     of the payload encapsulation between the PSN and the emulated service that
-     is, for example, capable of frame sequencing and duplicate detection.  The
-     encapsulation layer may also provide timing  <xref target="RFC5087"/>.
-     Furthermore, advances DetNet node functions are conceptually already
-     supported by PW framework (with some added functional required), such as
-     the DetNet Relay node modeled after the Multi-Segment PWE3 <xref
-     target="RFC5254"/>.
+     networks in a case of MPLS-based PSN. Furthermore, PWs may have an
+     optional Control Word (CW) as part of the payload encapsulation between
+     the PSN and the emulated service that is, for example, capable of frame
+     sequencing and duplicate detection.  The encapsulation layer may also
+     provide timing using RTP as described in Sections 5.2.2, 5.4.1 and 5.4.2
+     of <xref target="RFC3985"/> and utilized by <xref target="RFC4553"/><xref
+     target="RFC5087"/>.  Furthermore, advanced DetNet node functions are
+     conceptually already supported by PW framework (with some added functional
+     required), such as the DetNet Relay node modeled after the Multi-Segment
+     PWE3 <xref target="RFC5254"/>.
     </t>
     <t>
      PWs can be also used if the PSN is IP, which enables the application of PWs
@@ -2471,13 +2475,17 @@ title="Enabled Adjacencies">
     <section title="RTP">
      <section title="Solution Description">
       <t>
-       RTP is often used to deliver time critical traffic in IP networks. RTP is
-       typically carried on top of UDP/IP <xref target="RFC3550"/>.  RTP is also
-       augmented by its own control protocol RTCP, which monitors of the data
-       delivery and  provides minimal control and identification functionality.
-       RTCP packets do not carry "media payload".  Although both RTP and RTCP
-       are typically used with UDP/IP transport they are designed to be
-       independent of the underlying transport and network layers.
+       Real-time Transport Protocol (RTP) <xref target="RFC3550"/> is often
+       used to deliver time critical traffic in IP networks. RTP is typically
+       carried on top of UDP/IP. However, as noted earlier in <xref
+       target="sec_alt_pwe"/> PseudoWires also have a well-defined way of
+       embedding and transposting RTP header as part of its payload
+       encapsulation headers/sub-layer.    RTP is also augmented by its own
+       control protocol RTCP, which monitors of the data delivery and  provides
+       minimal control and identification functionality.  RTCP packets do not
+       carry "media payload".  Although both RTP and RTCP are typically used
+       with UDP/IP transport they are designed to be independent of the
+       underlying transport and network layers.
       </t>
       <t>
        The RTP header includes a 2-byte sequence number, which can be used to
@@ -2720,7 +2728,7 @@ title="Enabled Adjacencies">
           <c>GRE</c> 
           <!-- 1--> <c>M</c>
           <!-- 2--> <c>W</c>
-          <!-- 3--> <c>M</c>
+          <!-- 3--> <c>M/W</c>
           <!-- 5--> <c>W/N</c>
           <!-- 6--> <c>M</c>
           <!-- 8--> <c>W</c>
@@ -2776,7 +2784,7 @@ title="Enabled Adjacencies">
     and both are mature technologies, although both generally only support CoS
     (DiffServ)  in deployed networks.  RTP is independent of the underlying
     transport technology and network. However, it is well suited for UDP/IP
-    transport.
+    transport or embedded as a part of the PseudoWire timing sub-layer.
    </t>
 </section>
 
@@ -2850,6 +2858,7 @@ title="Enabled Adjacencies">
    &rfc4446;
    &rfc4447;
    &rfc4448;
+   &rfc4553;
    &rfc4664;
    &rfc4817;
    &rfc4875;
