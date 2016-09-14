@@ -96,8 +96,7 @@
 <!ENTITY I-D.kumarzheng-bier-ping SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.kumarzheng-bier-ping.xml">
 <!ENTITY I-D.mirsky-bier-path-mtu-discovery SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.mirsky-bier-path-mtu-discovery.xml">
 <!ENTITY I-D.ooamdt-rtgwg-ooam-requirement SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ooamdt-rtgwg-ooam-requirement.xml">
-
-
+<!ENTITY I-D.ietf-bier-mpls-encapsulation SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-bier-mpls-encapsulation.xml">
 
 ]>
 
@@ -311,7 +310,7 @@ End System       Node            Node         Node         End System
     <vspace blankLines="1"/></t>
     <t hangText="DetNet Transport Layer"><vspace blankLines="1"/>
      The DetNet transport layer is required on all DetNet nodes. All DetNet
-     nodes are end points and the transport layer. Non-DetNet service aware
+     nodes are end points at the transport layer. Non-DetNet service aware
      transit nodes deliver traffic between DetNet nodes.  The DetNet transport
      layer operates below and supports the DetNet Service layer and optionally
      provides congestion protection for DetNet flows.  
@@ -573,8 +572,8 @@ System   |     +-----+          +-----+          +-----+   |    V System
       natively in layer-3.  This criteria concerns what is the encapsulation
       method the solution alternative support: tunneling like encapsulation,
       protocol translation or native layer-3 transport. In addition to the
-      encapsulation mechanism this criteria is also concerned of the processing
-      and specifically the encapsulate header overhead.
+      encapsulation mechanism this criteria is also concerned with the processing
+      and specifically the encapsulation header overhead.
     </t>
   </section>
 
@@ -582,7 +581,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
     <t>
      The solution alternative has to provide means to identify specific
      deterministic flows. The flow identification can, for example,
-     be explicit field in the data plane encapsulation header or implicitly
+     be an explicit field in the data plane encapsulation header or implicitly
      encoded into the addressing scheme of the used data plane protocol or their
      combination. This criteria concerns the availability and details of 
      deterministic flow identification the data plane protocol alternative has.
@@ -593,7 +592,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
     <t>
      The solution alternative has to provide means for end systems to number
      packets sequentially and transport that sequencing information along with
-     the sent packets. In addition to possible reordering packets other
+     the sent packets. In addition to possible reordering of packets other
      important uses for sequencing are detecting duplicates and lost packets. 
     </t>
      <t>    
@@ -661,7 +660,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
 
   <section title="#6 Operations, Administration and Maintenance" anchor="sec_crit_oam" >
     <t>
-     The solution alternative should demonstrate an availability of appropriate
+     The solution alternative should demonstrate availability of appropriate
      standardized OAM tools that can be extended for deterministic networking
      purposes with a reasonable effort, when required. The OAM tools do not
      necessarily need to be specific to the data plane protocol as it could be
@@ -709,7 +708,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
     <t>
      In the context of the data plane solution there should be means for flow
      identification, which then can be used to map a flow against specific
-     resources and treatment in a node enforcing the QoS.  Hereto, certain
+     resources and treatment in a node enforcing the QoS.  For DetNet, certain
      aspects of CoS and QoS may be provided by the underlying sub-net
      technology, e.g., actual queuing or IEEE 802.3x priority flow control
      (PFC).
@@ -957,7 +956,7 @@ System   |     +-----+          +-----+          +-----+   |    V System
      that extension headers are an integral part of the protocol and operation
      from the beginning, although the practice may some times prove differently
      <xref target="RFC7872"/>. IPv4 does support header options, but these have
-     historically not been supported on in hardware-based forwarding so are
+     historically not been supported in hardware-based forwarding so are
      generally blocked or handled at a much slower rate.  In either case, the
      use of IP header options is generally avoided. In the context of
      deterministic networking data plane solutions the major difference between
@@ -1129,7 +1128,6 @@ title="MPLS-based Services">
       control can be found in <xref target="RFC5921"/>.  A summary of
       MPLS control plane related functions can be found in
       <xref target="RFC6373"/>. The remainder of this section will focus
-      <xref target="RFC6373"/>. The remainder of this section will focus
       on the MPLS transport data plane, additional information on the
       MPLS service data plane can be found below in
       <xref target="sec_alt_mpls_svc"/>.
@@ -1230,7 +1228,7 @@ title="MPLS-based Services">
       <xref format="counter" target="sec_alt_pwe"/> and <xref format="counter"
       target="sec_alt_evpn"/>.
       <vspace blankLines="1"/> 
-      The second perspective relates to encapsulation, if any, is needed to
+      The second perspective relates to encapsulation, if any, which is needed to
       transport packets across network.  In this case, the MPLS label stack,
       <xref target="RFC3032"/> is used to identify flows across a network.
       MPLS labels are compact and highly flexible.  They can be stacked to
@@ -1264,7 +1262,7 @@ title="MPLS-based Services">
       <vspace blankLines="1"/>
       MPLS as DetNet Transport layer supports the replication via
       point-to-multipoint LSPs.  At the MPLS LSP level, there are mechanisms
-      defined to provide 1+1 protection, which could help realizing the flow
+      defined to provide 1+1 protection, which could help in realizing the flow
       merging function.  The current definitions <xref target="RFC6378"/> and
       <xref target="RFC7271"/> use OAM mechanisms to support and coordinate
       protection switching and packet loss is possible during a switch.  While
@@ -1339,13 +1337,13 @@ title="MPLS-based Services">
    the individual destinations and 2) the BIER control plane is a simple extension 
    of the unicast routing as opposed to a dedicated multicast data plane, which 
    represents a considerable reduction in OPEX. For this reason, the technology
-   faces a lot of traction from Service Providers. <xref target="sec_alt_bier"/>
-   discusses the applicability of BIER for replication in the DetNet. 
+   is getting a lot of traction from Service Providers. In the context of DetNet,
+   BIER may be applicable for implementing packet replication, as described in
+   <xref target="sec_alt_bier"/>. 
   </t>
   <t>
-   Bit-Indexed Explicit Replication (BIER) layer may be considered to be
-   included into Deterministic Networking data plane solution. Encapsulation of
-   a BIER packet in MPLS network presented in <xref target="fig_BIER_MPLS"/>
+   The encapsulation of a BIER packet in an MPLS network is shown in
+   <xref target="fig_BIER_MPLS"/>
   </t>
   
 <figure anchor="fig_BIER_MPLS" align="center"
@@ -1374,21 +1372,21 @@ title="BIER packet in MPLS encapsulation">
 </figure>
 
   <section title="Solution description">
-  <t>  
-   The DetNet may be presented in BIER as distinctive payload type with its own 
-   Proto(col) ID. Then it is likely that DetNet will have the header that would 
-   identify:
+  <t> 
+   A distinctive BIER payload type (with its own Proto(col) ID) would be created
+   for DetNet, providing a header that would identify: 
    <list style="symbols">
     <t>Version;</t>
     <t>Sequence Number;</t>
     <t>Timestamp;</t>
     <t>Payload type, e.g. data vs. OAM.</t>
    </list>
-   DetNet node, collocated with BFIR, may use multiple BIER sub-domains to
-   create replicated flows. Downstream DetNet nodes, collocated with BFER, would
-   terminate redundant flows based on Sequence Number and/or Timestamp
-   information. Such DetNet may be BFER in one BIER sub-domain and BFIR in
-   another. Thus DetNet flow would traverse several BIER sub-domains.
+    A DetNet node, collocated with a BFIR (Bit-Forwarding Ingress Router) may use
+    multiple BIER sub-domains to create replicated flows. Downstream DetNet
+    nodes, collocated with BFER (Bit-Forwarding Ingress Router) would terminate
+    redundant flows based on Sequence Number and/or Timestamp information. Thus a
+    DetNet node may be collocated with a BFER in one BIER sub- domain and with a
+    BFIR in another, and a DetNet flow could traverse several BIER sub-domains.
   </t>
    
 <figure anchor="fig_BIER_DetNet" align="center"
@@ -1431,7 +1429,7 @@ title="DetNet in BIER domain">
 </figure>
 
   <t>
-   Consider DetNet flow that must traverse BIER enabled domain from A to G and H.
+   Consider a DetNet flow that must traverse BIER enabled domain from A to G and H.
    DetNet may use three BIER subdomains:
    <list style="symbols">
     <t>A-B-D-E-G (dash-dot): A is BFIR, E and G are BFERs,</t>
@@ -1443,7 +1441,7 @@ title="DetNet in BIER domain">
   <t>
    DetNet node A sends DetNet into red and purple BIER sub-domains. DetNet node
    E receives DetNet packet and sends into green sub-domain while terminating
-   duplicates and those that deemed too-late.
+   duplicates and those that are deemed "too-late".
   </t>
 
   <t>
@@ -1456,9 +1454,9 @@ title="DetNet in BIER domain">
    <t><list style="hanging">
     <t hangText="#1 Encapsulation and overhead (M)">
      <vspace blankLines="1"/>
-     BIER over MPLS network encapsulation (will refer as "BIER over MPLS"
-     further for short), <xref target="fig_BIER_MPLS"/>, is being defined [I-D.
-     ietf-bier-mpls-encapsulation] within the BIER working group.
+     BIER over MPLS network encapsulation ("BIER over MPLS"), <xref
+     target="fig_BIER_MPLS"/>, is being defined <xref
+     target="I-D.ietf-bier-mpls-encapsulation"/> within the BIER working group.
      <vspace blankLines="1"/></t>
     
     <t hangText="#2 Flow identification (M)">
@@ -1476,7 +1474,7 @@ title="DetNet in BIER domain">
 
     <t hangText="#5 Flow duplication and merging (M/W)">
      <vspace blankLines="1"/>
-     Packet replication, as indicated by its name, is core function of the
+     Packet replication, as indicated by its name, is a core function of the
      Bit-Indexed Explicit Replication. Elimination of the duplicates and/or
      too-late packets cannot be done within BIER sub-domain but may be done at
      DetNet overlay at the edge of the BIER sub-domain.
@@ -1487,11 +1485,11 @@ title="DetNet in BIER domain">
     <t hangText="#6 Operations, Administration and Maintenance (M/W)">
      <vspace blankLines="1"/>
      BIER over MPLS guarantees that OAM is fate-sharing, i.e. in-band with a
-     data flow being monitored or measured. Additionally, BIER over MPLS
-     enables passive performance measurement, e.g. with the marking method
-     <xref target="I-D.mirsky-bier-pmmm-oam"/>. Some OAM protocols, e.g. can be
-     applied and used in BIER over MPLS as demonstrated <xref
-     target="I-D.ooamdt-rtgwg-oam-gap-analysis"/>, while new protocols being
+     data flow being monitored or measured. Additionally, BIER over MPLS enables
+     passive performance measurement, e.g. with the marking method <xref
+     target="I-D.mirsky-bier-pmmm-oam"/>. Existing OAM protocols can be applied
+     and used in BIER over MPLS as demonstrated in <xref
+     target="I-D.ooamdt-rtgwg-oam-gap-analysis"/>, while new protocols are being
      worked on, e.g. ping/traceroute <xref target="I-D.kumarzheng-bier-ping"/>
      or Path MTU Discovery <xref target="I-D.mirsky-bier-path-mtu-discovery"/>.
      <vspace blankLines="1"/></t>
@@ -1500,7 +1498,7 @@ title="DetNet in BIER domain">
      <vspace blankLines="1"/>
      Class of Service can be inherited from the underlay of the particular BIER
      sub-domain. Quality of Service, i.e. scheduling and bandwidth reservations
-     can be used among other constrains in calculating explicit path for the
+     can be used among other constraints in calculating explicit paths for the
      BIER sub-domain's underlay.
      <vspace blankLines="1"/></t>
 
@@ -1664,10 +1662,10 @@ title="DetNet in BIER domain">
     
   <section title="MPLS-based Services for DetNet" anchor="sec_alt_mpls_svc">
     <t>
-      MPLS based technologies supports both the DetNet Service and DetNet
+      MPLS based technologies support both the DetNet Service and DetNet
       Transport layers.  This, as well as a general overview of MPLS, is
-      covered above in <xref target="sec_alt_mpls"/>. These sections focus 
-	  on the DetNet Service Layer it provides client service
+      covered above in <xref target="sec_alt_mpls"/>. Following sections focus 
+	  on the DetNet Service Layer which provides client service
       adaption, via Pseudowires  <xref 
       target="sec_alt_pwe"/> and via native and other label-like
       mechanisms such as EPVN in <xref 
@@ -1696,7 +1694,7 @@ title="DetNet in BIER domain">
 
       <t>
        MPLS may itself be a client of an underlying server layer.  MPLS
-       can thus also bounded by a set of adaptation functions to this
+       can thus also be bounded by a set of adaptation functions to this
        server layer network, which may itself be MPLS.  These adaptation
        functions provide encapsulation of the MPLS frames and for the
        transparent transport of those frames over the server layer
@@ -1704,7 +1702,7 @@ title="DetNet in BIER domain">
       <vspace blankLines="1"/></t>
 
       <t>
-       While MPLS service can provided on and true end-system to end-system
+       While MPLS service can provided on a true end-system to end-system
        basis, it's more likely that DetNet service will be provided over
        Pseudowires as described in <xref target="sec_alt_pwe"/> or via an
        EPVN-based service described in <xref target="sec_alt_evpn"/> .
@@ -1811,8 +1809,8 @@ title="DetNet in BIER domain">
     <t><list style="hanging">
      <t hangText="#1 Encapsulation and overhead (M)">
       <vspace blankLines="1"/>
-      PWs offer encapsulation services practically for any types of payloads
-      over any PSN.  New PW types need a code point allocation <xref
+      PWs offer encapsulation services practically for practically any type of
+      payload over any PSN.  New PW types need a code point allocation <xref
       target="RFC4446"/> and in some cases an emulated service specific
       document.
       <vspace blankLines="1"/>
@@ -1839,7 +1837,7 @@ title="DetNet in BIER domain">
       of the MPLS PSN. The PWs are typically prepended with an endpoint specific
       PW label that can be used to identify a specific PW per endpoint.
       Furthermore, the MPLS PSN also uses one or more labels to transport
-      packets over a specific label switched paths (that then would carry PWs).
+      packets over specific label switched paths (that then would carry PWs).
       So, a DetNet flow can be identified in this example by the service and
       transport layer labels.  IP (and other) PSNs may need other mechanisms,
       such as, UDP port numbers, upper layer protocol header (like RTP) or some
@@ -1862,15 +1860,15 @@ title="DetNet in BIER domain">
       PWs could use a (extended) version of existing transport layer provided
       protection mechanisms (e.g., hitless 1+1 protection) for both flow
       duplication and flow merging. The service layer has to provide the
-      functionality to map DetNet flows into appropriate transport leyer
-      connection, though.
+      functionality to map DetNet flows into appropriate transport layer
+      connection.
       <vspace blankLines="1"/></t>
      
      <t hangText="#6 Operations, Administration and Maintenance (M/W)">
       <vspace blankLines="1"/>
       PWs have rich control plane for OAM and in a case of the MPLS PSN enjoy
       the full control plane toolbox developed for MPLS network OAM likewise
-      IP PSN have the full toolbox of IP network  OAM tools. There could be,
+      IP PSN has the full toolbox of IP network  OAM tools. There could be,
       however, need for deterministic networking specific extensions for the
       mentioned control planes.
      <vspace blankLines="1"/></t>
@@ -1885,7 +1883,7 @@ title="DetNet in BIER domain">
       the label reserved for for both  Explicitly TC-encoded-PSC LSPs (E-LSP)
       <xref target="RFC3270"/> and ECN <xref target="RFC5129"/>.  Due to the
       limited number of bits in the TC field, their use for QoS and ECN
-      functions restricted and intended to be flexible. Although the QoS/CoS
+      functions is restricted and intended to be flexible. Although the QoS/CoS
       mechanism is already in place some clarifications may be required in the
       context of deterministic networking flows, for example, if some
       specific mapping between bit fields have to be done.
@@ -1899,7 +1897,7 @@ title="DetNet in BIER domain">
       PWs, IP and MPLS are proven technologies with wide variety of deployments
       and years of operational experience. Furthermore, the estimated work for
       missing functionality (packet replication and elimination) does not appear
-      to be extensive, since the existing protection mechanism already get close
+      to be extensive, since the existing protection mechanism already gets close
       to what is needed from the deterministic networking data plane solution.
      <vspace blankLines="1"/></t>
     </list></t>
@@ -2058,9 +2056,9 @@ title="DetNet in BIER domain">
        used to deliver time critical traffic in IP networks. RTP is typically
        carried on top of UDP/IP. However, as noted earlier in <xref
        target="sec_alt_pwe"/> PseudoWires also have a well-defined way of
-       embedding and transposting RTP header as part of its payload
+       embedding and transposting RTP headers as part of its payload
        encapsulation headers/sub-layer.    RTP is also augmented by its own
-       control protocol RTCP, which monitors of the data delivery and  provides
+       control protocol RTCP, which monitors the data delivery and  provides
        minimal control and identification functionality.  RTCP packets do not
        carry "media payload".  Although both RTP and RTCP are typically used
        with UDP/IP transport they are designed to be independent of the
@@ -2093,7 +2091,7 @@ title="DetNet in BIER domain">
       <vspace blankLines="1"/>
       The RTP header contains a 
       synchronization source (SSRC) identifier. The intent is that no two
-            synchronization sources within the same RTP session has the
+            synchronization sources within the same RTP session have the
                   same SSRC identifier.
      <vspace blankLines="1"/></t>
      
@@ -2480,6 +2478,7 @@ title="DetNet in BIER domain">
    &I-D.kumarzheng-bier-ping;
    &I-D.mirsky-bier-path-mtu-discovery;
    &I-D.ooamdt-rtgwg-ooam-requirement;
+   &I-D.ietf-bier-mpls-encapsulation;
 
    
    <reference anchor="ST20227"
