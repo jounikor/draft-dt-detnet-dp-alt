@@ -143,20 +143,6 @@
    </address>
   </author>
   
-  <!-- author fullname="Norman Finn" initials="N." surname="Finn">
-   <organization abbrev="Cisco">Cisco</organization>
-   <address>
-    <email>nfinn@cisco.com</email>
-   </address>
-  </author -->
-  
-  <!-- author fullname="Olivier Marce" initials="O." surname="Marce">
-   <organization abbrev="Nokia Bell Labs">Nokia Bell Labs</organization>
-   <address>
-    <email>Olivier.Marce@nokia.com</email>
-   </address>
-  </author -->
-  
   <author fullname="Gregory Mirsky" initials="G." surname="Mirsky">
    <organization abbrev="Ericsson">Ericsson</organization>
    <address>
